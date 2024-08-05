@@ -1,0 +1,278 @@
+\chapter{Classification of likely functional class for ligand binding sites identified from fragment screening}
+
+\section{Summary}
+
+\section{Introduction}
+
+\section{Methods}
+
+\subsection{Structure dataset}
+
+The Pan-Dataset Density Analysis (PanDDA) algorithm characterises a set of related crystallographic data sets of the same crystal form and identifies binding events by isomorphous difference maps \cite{PEARCE_2017_PANDDA}.  Initially, 3,021 three-dimensional structures determined by X-ray crystallography were selected by querying the PDBe \cite{wwPDB_2019_PDB} for entries containing the string ``PanDDA'' in their title. 1,542 of the structures included bound ligands for 39 different proteins. Four proteins which were in multi-protein complexes including additional ligands were excluded to leave protein-ligand complexes coming from 35 different proteins and a total of 1,450 three-dimensional structures. The structures presented resolutions from 0.9-3.3\AA{}, with a mean resolution of $\approx$1.5\AA{}. The preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from the PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. 
+
+\subsection{Binding site definition}
+
+Ligand binding site definition or prediction approaches are usually based on the spatial superposition and clustering of the atomic coordinates of ligands according to Euclidean distances or RMSD \cite{SHIN_2005_PDBLIGAND, KOZAKOV_2005_CLUSTERING, WASS_2010_3DLIGANDSITE, MCGREIG_2022_3DLIGANDSITE}. These methods rely on structural superposition but can be computationally expensive when dealing with large numbers of structures. Here, we define sites from protein-ligand interactions without the need for superposition (Figure \ref{fig:fragsys_bs_def}).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG8_bs_def_CROP.pdf}
+    \caption[Ligand binding site definition algorithm]{\textbf{Ligand binding site definition algorithm.} The method defines ligand binding sites from a set of three-dimensional structures portraying the complex of a protein of interest bound to ligands. \textbf{(A)} Protein-ligand complex (P18031); \textbf{(B)} Ligand binding fingerprint, comprised by protein residue numbers interacting with ligand; \textbf{(C)} Formula of the similarity metric: relative intersection, $I_{rel}$; \textbf{(D)} Hierarchical clustering tree resulting from the similarity matrix, cut at threshold to determine distinct clusters of ligands; \textbf{(E)} Three-dimensional structure of all ligands binding to protein, coloured according to the cluster they group into. Only ligands found in clusters 1-7 are in coloured based on their cluster membership. The rest are coloured in grey. The tree on d represents only a part of the tree, showing 7/18 binding sites defined on P18031. This is represented by a dash line pointing downwards on the tree.}
+    \label{fig:fragsys_bs_def}
+\end{figure}
+
+Only non-ion ligands of interest were used for the binding site definition. These do not include water molecules, nor other by-products of the experimental conditions. Ligand contacts were determined with Arpeggio \cite{JUBB_2017_ARPEGGIO}. For a given ligand, a binding fingerprint is defined as the UniProt residue numbers the ligand interacts with. For a pair of ligands $L_{A}$ and $L_{B}$, with their interaction fingerprints $A$ and $B$, their relative intersection, $I_{rel}$, is defined (Equation \ref{eq:relative_intersection}) by dividing the intersection of sets $A$ and $B$ by the maximum possible intersection between the two sets, given by the minimum fingerprint length (Equation \ref{eq:max_intersection}). $I_{rel}$ ranges from 0-1.
+
+\begin{equation}
+    I_{\mathrm{rel}} = \frac{A \cap B}{A \cap B_{\mathrm{max}}}
+\label{eq:relative_intersection} % Label for the equation
+\end{equation}
+
+\begin{equation}
+    A \cap B_{\mathrm{max}} = \min(\mathrm{len}(A), \mathrm{len}(B))
+\label{eq:max_intersection}
+\end{equation}
+
+
+$I_{rel}$ is thus a similarity metric that can be used to perform hierarchical clustering on the ligands. Single-linkage hierarchical clustering was performed with the OC software \cite{BARTON_1993_OC}. After exploring several threshold $I_{rel}$ values to cut the resulting tree, we settled on $I_{rel}$ = 0.66. Since this is a similarity metric, it means that a ligand shares at least two thirds of its binding residues with at least one other member of the same cluster. A total of 293 ligand binding sites across 37 protein domains were defined this way. For each protein, all structures were multiply aligned by STAMP \cite{RUSSELL_1992_STAMP}. Ligand binding sites were visualised in UCSF Chimera \cite{PETTERSEN_2004_CHIMERA}.
+
+\subsection{Multiple sequence alignments}
+
+Two of the 35 proteins included fragment screening experiments targeting multiple domains, or protein products, resulting in 39 protein-fragments sets. A representative sequence was selected for each of the 39 sets of structures, and used to search SwissProt \cite{BOUTET_2016_UNIPROT} for homologues with jackHMMER \cite{EDDY_1995_HMMER} with default parameters and 5 iterations to generate multiple sequence alignments. Evolutionary divergence within the alignments was quantified with the Shenkin divergence score, $V_{Shenkin}$, \cite{SHENKIN_1991_SCORE} and the normalised $N_{Shenkin}$, as defined by Utgés \textit{et al.} \cite{UTGES_2021_ANKS}.
+
+\subsection{Human variants and enrichment}
+
+VarAlign \cite{MACGOWAN_2020_DRSASP} was used to retrieve genetic variants from gnomAD v2.1 \cite{KARCZEWSKI_2020_GNOMAD} found in the human sequences within the multiple sequence alignment generated for each target protein. gnomAD contains exomes and genomes of 141,456 unrelated individuals with no known phenotypic conditions and is therefore a reasonable representation of the general healthy population. Variants found in the human sequences within the alignments were mapped to individual alignment columns and missense enrichment scores (MES) were calculated. MES represents the enrichment in missense variants of an alignment column relative to the average of the other columns in the alignment \cite{MACGOWAN_2017_VARIANTS, MACGOWAN_2024_VARIANTS}. 95\% confidence intervals (CI) and p-values were used to assess the significance of these ratios \cite{SZUMILAS_2010_ODDSRATIOS}. MES was also calculated for the defined ligand binding sites. The MES of a binding site represents the enrichment in missense variants of a binding site relative to the rest of protein residues. Alignment columns as well as binding sites were classified as enriched (MES $>$ 0), depleted (MES $<$ 0) or neutral (MES = 0). Enrichment was not calculated for two of the 39 proteins since no human homologues were identified.
+
+\subsection{Binding site clustering}
+
+Secondary structures were defined with DSSP \cite{KABSCH_1983_DSSP} via ProIntVar, and relative solvent accessibility (RSA) was calculated with the method of  Tien \textit{et al.} \cite{TIEN_2013_RSA}. The defined binding sites were grouped according to the pattern of RSA as follows and summarised in Figure \ref{fig:fragsys_bs_clust}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG9_bs_clust.pdf}
+    \caption[Binding site clustering algorithm]{\textbf{Binding site clustering algorithm.} The method here clusters ligand binding sites defined across different proteins based on their solvent accessibility profiles. \textbf{(A)} Example of a defined ligand binding site; \textbf{(B)} Relative solvent accessibility profile of a binding site, represented by the RSA of the site residues; \textbf{(C)} Formula of our distance metric: distance U, $U_{D}$; \textbf{(D)} Multidimensional scaling (MDS) representation of binding sites coloured according to the four clusters determined by the K-means algorithm. Dashed lines represent the cluster limits.}
+    \label{fig:fragsys_bs_clust}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/ch_FRAGSYS/SUPP_FIG1_ward_clust.pdf}
+    \caption[Binding sites Ward clustering]{\textbf{Binding sites Ward clustering.} Cluster map of the U distance, $U_{D}$, matrix of the 293 defined binding sites clustered by the Ward hierarchical clustering method implemented in SciPy. The tree is cut at $D_{Ward}$ = 1.8, giving four clear clusters. These clusters are labelled so they correspond to the ones obtained with K-means. Clusters in the heat map are represented by dark squares around the diagonal. $U_{D}$ is a distance; therefore, clusters include sites that are similar to each other, and present lower distances (dark colour).}
+    \label{fig:fragsys_bs_clust_ward}
+\end{figure}
+
+Given two binding sites, $A$ and $B$, with RSA profiles $r_{A}$ and $r_{B}$ and sizes $n_{A}$ and $n_{B}$ respectively, in amino acid residues, $U_{A}$ and $U_{B}$ can be calculated (Equation \ref{eq:mann_whitney_U}). The Mann-Whitney U statistic \cite{MANN_WHITNEY_1947_TEST}, as implemented in SciPy \cite{VIRTANEN_2020_SCIPY}, was chosen as it has a maximum theoretical value ($U_{max}$) (Equation \ref{eq:maximum_U}). A relative U value, $U_{rel}$, ranging 0-1 is obtained by dividing the U value by $U_{max}$. The more similar $r_{A}$ and $r_{B}$ are, the bigger U and $U_{rel}$ are. Thus, $U_{rel}$ is a similarity score. Subtracting $U_{rel}$ from 1 gives the U distance, $U_{D}$, (Equation \ref{eq:relative_U}). $U_{D}$ is indicative of how different $r_{A}$ and $r_{B}$ are and can be used to cluster binding sites according to their RSA profiles.
+
+\begin{equation}
+U_A = R_A - \frac{n_A(n_A + 1)}{2}, \quad U_B = R_B - \frac{n_B(n_B + 1)}{2} \quad
+\label{eq:mann_whitney_U}
+\end{equation}
+
+\begin{equation}
+U_A + U_B = n_A n_B, \quad U = \min(U_A, U_B) \rightarrow U_{\max} = \frac{n_A n_B}{2} \quad
+\label{eq:maximum_U} 
+\end{equation}
+
+\begin{equation}
+U_{\text{rel}} = \frac{U}{U_{\max}} \rightarrow U_D = 1 - U_{\text{rel}} \quad 
+\label{eq:relative_U}
+\end{equation}
+
+After calculating pairwise distances between the RSA profiles of the defined binding sites, K-means clustering \cite{LLOYD_1982_KMEANS} was performed. Several clustering algorithms were tried to realise this task, including some hierarchical, or connectivity-based, such as single and complete-linkage \cite{SORENSEN_1948_CL}, unweighted average linkage clustering (UPGMA) \cite{SOKAL_1958_UPGMA}, or Ward linkage \cite{WARD_1963_CLUSTERING}, as well as centroid-based, such as K-means. Overall, the clusters obtained by the different methods were similar. Ward linkage and K-means resulted in the most similar clusters, displaying an average similarity between clusters of 85\% (Figure \ref{fig:fragsys_bs_clust_ward}).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/SUPP_FIG2_KNN_robustness.pdf}
+    \caption[K-means clustering robustness]{\textbf{K-means clustering robustness.} Cluster analysis to assess the quality of the K-means clustering. For each $K \in$ [2, 14], clustering is bootstrapped 1,000 times with different initial random states. Error bars indicate 1 SD. \textbf{(A)} Calinski-Harabasz Index (CHI); \textbf{(B)} Davies-Bouldin Index (DBI); \textbf{(C)} Inertia; \textbf{(D)} Silhouette. All methods agree the optimal clustering of this dataset lies in $K \in$ [4, 6].}
+    \label{fig:kmeans_robustness}
+\end{figure}
+
+Finally, multidimensional scaling (MDS) \cite{MEAD_1992_MDS} with $N$ = 2 dimensions was performed to visualise the clusters. We settled on K-means, as it presented better contained clusters, i.e., less overlapping between members of distinct clusters. The silhouette \cite{ROUSSEEUW_1987_SILHOUETTES}, elbow \cite{THORNDIKE_1953_ELBOW}, as well as Calinski-Harabasz index (CHI) \cite{CALINSKI_1974_CHI} and Davies-Bouldin index (DBI) \cite{DAVIES_1979_DBI} methods were used for finding optimal $K$ (Figure \ref{fig:kmeans_robustness}), in conjunction with the MDS, trees resulting from hierarchical clustering algorithms, and the visual representation of the RSA profiles, to decide on a final number of $K$ = 4 clusters: C1, C2, C3, and C4. Clustering was repeated 1,000 times with different random states and 289/293 (98.6\%) sites were always present in the same cluster, thus suggesting the clusters are robust.
+
+\subsection{Binding site cluster prediction}
+
+Two different predictive models were developed with the aim of classifying binding sites into the defined RSA-based clusters obtained with K-means, as described above. The first  uses the K-nearest neighbour (KNN) algorithm as implemented in Scikit-learn \cite{PEDREGOSA_2011_SKLEARN}, with $K$ = 3. The input for this KNN model is the rows of the $U_{D}$ matrix, containing the distances between pairs of binding site RSA profiles.
+
+The second model is a multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP}, a type of artificial neural network (ANN) constructed with Keras \cite{CHOLLET_2015_KERAS} with a single hidden fully connected layer between the input layer of 11 neurons, and the output layer of 4 neurons, one for each cluster label. RSA profiles present different lengths depending on the size (number of amino acids) of the binding site. As this input is not suitable for the neural network, binding sites were encoded as an 11-element vector. The first element of the vector encodes the size of the binding site relative to the maximum site size of 40 residues. The other 10 elements represent the proportion of residues forming the binding site with an RSA \% within a 10-unit interval: [0, 10), [10, 20), …, and [90, 100]. In developing the method, we explored the hyperparameter space including number of hidden layers, neurons per layer, activation and loss functions, weight initialisers and optimisers (See Supplementary Note 1, Figure 3 and Table 1).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/SUPP_FIG3_MLP_ablation.pdf}
+    \caption[MLP ablation study]{\textbf{MLP ablation study.} Ablation study performed on the MLP. Sixty-four single hyperparameter changes are conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current machine learning setup, labelled as \textit{current}. Box and whiskers represent the distribution of validation accuracy across 100 random seeds. Dashed lines mark the separation between different hyperparameters: number of layers, neurons, activation, loss functions, weight initialisers, optimisers, learning, dropout rates, and regularisation techniques.}
+    \label{fig:mlp_ablation}
+\end{figure}
+
+The complete dataset (N = 293) was split into a blind test set (1/11 = 27), and a training set (10/11 = 266). Ten repeats of a stratified 10-fold cross-validation were performed to assess the robustness of the ANN and compare it with the KNN model, as well as a baseline of the same models trained on randomly shuffled data and completely random label assignment (p = 0.25). The reliability of the ANN predictions was assessed by means of a confidence score calculated as in \cite{CUFF_2000_PROFILES}, which represents how certain the MLP is of each individual prediction (Equation \ref{eq:confidence_score}). The score is based on the difference between the top- and second-class probabilities assigned by the network to each of the classes, $p_{1}$, and $p_{2}$, respectively. For example, if the output of the network were $P$ = [0.95, 0.02, 0.03, 0.0]. The probabilities would be sorted, so $p_{1}$ = 0.95, $p_{2}$ = 0.03, and a confidence score of 9 would be obtained.
+
+\begin{equation}
+\text{confidence score} = \left\lfloor 10 \times (p_1 - p_2) \right\rfloor
+\label{eq:confidence_score}
+\end{equation}
+
+The KNN is based on distances to all training data and so, as expected, consistently gives higher classification accuracy than the ANN model where sites are represented by their binned RSA profile, and are thus completely unaware of other sites, and their distances to them (Figure \ref{fig:MLP_CV_blind_test}A). Both methods are significantly better than random. The average cross-validation accuracy across all repeats is of 98\%, 90\%, 33\%, 31\%, and 24\% for KNN, ANN models, their randomly trained versions, and completely random label assignment, respectively. The baseline accuracy of the randomly trained models is higher than 25\% since the dataset is unbalanced, with classes, C1 and C2 overrepresented.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG10_ml_results.pdf}
+    \caption[MLP cross-validation and blind test results]{\textbf{MLP cross-validation and blind test results.} \textbf{(A)} Average accuracy of the 10-repeat 10-fold ($N$ = 100) cross-validation of the KNN, and ANN predictive models compared to a baseline of the same models trained on randomly shuffled data, as well as complete random prediction ($p$ = 0.25). The box represents the central 50\% of the data, i.e., Q1 – median (Q2) – Q3, also known as interquartile range (IQR). Whiskers extend to 1.5 $\times$ IQR, and beyond them are the outliers; \textbf{(B)} Cross-validation accuracy and proportion of binding sites against cumulative confidence score from the trained ANN. Sites presenting a confidence score greater or equal to 5, the average accuracy is 97\%, and the percentage of sites with this score is 75\%. Predictions are for the 2,660 cross-validation data points, 10 different repeats of 10 distinct splits of 26-27 binding sites each. Accuracy error bars indicate 95\% CI of the proportion \cite{WILSON_197_PROP_CI}; \textbf{(C)} MDS representation of the 293 binding sites. Training data are coloured according to the average confidence of their prediction in the cross-validation. Test data are coloured according to whether they were correctly predicted or not. Dashed lines indicate the limits of K-means clusters.}
+    \label{fig:MLP_CV_blind_test}
+\end{figure}
+
+Figure \ref{fig:MLP_CV_blind_test}B shows the confidence of the ANN predictions across the 10 repeats of the 10-fold cross-validation. The overall accuracy is 90\%. Those predictions presenting a confidence score greater or equal to 5 present an accuracy of 97\% and cover 75\% of all predictions. Finally, Figure \ref{fig:MLP_CV_blind_test}C shows the same two-dimensional representation of the K-means clusters found on Figure \ref{fig:fragsys_bs_clust}D and demonstrates that those binding sites with lower prediction confidence are mostly located at the borders between clusters. Sites that switch cluster labels depending on the seed are also located in these regions.
+
+Once the model hyperparameters were optimised, 50 models were trained on 10/11 of the data ($N$ = 266) for the 10 different seeds used to initialise the models. From a final pool of 500 models, the one presenting the highest validation accuracy and lowest validation loss was chosen, with a validation accuracy of 96\%. This model, as well as KNN were used to predict on the blind test set. There is no significant difference in performance of the ANN and KNN models. Accuracies are 26/27 = 0.96, 95\% CI = [0.82, 0.99], and 27/27 = 1.0, 95\% CI = [0.88, 1.0], for ANN and KNN, respectively. The adjusted Rand index (ARI) \cite{RAND_1971_ARI, HUBERT_1985_ARI}, as well as adjusted mutual information (AMI) \cite{VINH_2009_AMI, VINH_2010_AMI} were calculated. $ARI_{ANN}$ = 0.93, 95\% CI = [0.81, 1.0] \cite{STEINLEY_2016_ARI}, $AMI_{ANN}$ = 0.93, 95\% CI = [0.82, 1.0]. $ARI_{KNN}$ = 1.0, $AMI_{KNN}$ = 1.0. 95\% CI of AMI was calculated by bootstrap resampling ($N$ = 10,000). The three metrics all agree on the high performance of the MLP. Figure \ref{fig:MLP_CV_blind_test}C illustrates how the binding site, which label was wrongly predicted by the ANN model is located on the limits between adjacent clusters C3 and C4. This result agrees with the K-means clustering reliability, and confidence score analysis of the cross-validation, where the same inter-cluster regions are highlighted due to their lower clustering reliability, and low confidence prediction. This suggests that the core of the clusters is stable, and that the ANN confidence score may be used to identify binding sites that are at the borders of clusters.
+
+\subsection{Site function classification}
+
+Ligand binding sites were divided into two groups \textit{known function} and \textit{unknown function} by searching UniProt \cite{UNIPROT_2019_UNIPROT} for feature annotations indicative of function, e.g., metal, substrate binding, active site, etc via the UniProt proteins API \cite{NIGHTINGALE_2017_API}. Seventeen out of the 35 proteins presented at least one UniProt annotated residue in one binding site. Manual curation using protein homology within the proteins in the data set added 9 more functionally annotated proteins. This gave a total of 44 sites from 26 proteins classified as of known function. All other sites were classified as unknown function.
+
+\subsection {Statistics and reproducibility}
+
+All data analysis was carried out primarily with  the following Python libraries: NumPy \cite{HARRIS_2020_NUMPY}, Pandas \cite{MCKINNEY_2010_PANDAS,PANDAS_2022_PANDAS} and SciPy. Keras and Scikit-learn were used for machine learning, with Matplotlib \cite{HUNTER_2007_MATPLOTLIB}, and Seaborn \cite{WASKOM_2021_SEABORN} for plotting. All statistical tests performed are two-tailed, and significance level $\alpha$ = 0.05. Sample sizes and measures of significance are reported and described in the text, figures and legends.
+
+\subsection{Data availability}
+
+The main summary result tables resulting from this analysis are available in the following repository: https://github.com/bartongroup/FRAGSYS (DOI: 10.5281/zenodo.10606595) \cite{UTGES_2024_FRAGSYS_ZENODO}.
+
+\subsection{Code availability}
+
+Software developed to carry out this analysis is also found in our GitHub repository: https://github.com/bartongroup/FRAGSYS (DOI: 10.5281/zenodo.10606595).
+
+\section{Results}
+
+\subsection{Defined binding sites}
+
+The focus here is on human proteins to allow the additional information from human population variation data to be explored. For this reason, two of the 39 protein domains (products of the Replicase polyprotein 1ab from \textit{SARS-CoV-2} (P0DTD1)) were removed since they did not include any human homologues. The remaining 37 protein domains accounted for 1,309 three-dimensional structures that included interactions with 1,601 ligands of interest, of which 998 were unique. 293 ligand binding sites were defined across these domains, formed by 2,664 unique ligand binding residues. The total number of binding sites per domain ranges from 1 to 24, with 33/37 domains presenting more than one defined binding site. The median number of sites per domain is seven.
+
+Figure \ref{fig:bs_def_examples} illustrates three examples of the 37 domains for which ligand binding sites were defined by the algorithm presented in this work. The grouping of the ligands into the defined sites reflects the similarity between the interaction fingerprints of the different ligands with the target protein domain.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG1_bs_examples.pdf}
+    \caption[Ligand clusters defined by the binding site definition algorithm]{\textbf{Ligand clusters defined by the binding site definition algorithm.} For simplicity, only one protein chain ribbon is shown in white for each example. Ligands are coloured according to the site they bind to. Identifiers are from UniProt. \textbf{(A)} There were 110 structures depicting human tyrosine-protein phosphatase non-receptor type 1 (\textit{PTPN1}), P18031, binding 143 ligand molecules, 104 of which were unique. 18 binding sites were defined; \textbf{(B)} The 68 ligands, 30 unique, found across 50 structures of the chestnut blight fungus endothiapepsin (\textit{EAPA}), P11838, were classified in 12 distinct binding sites; \textbf{(C)} For mouse mitogen-activated protein kinase 14 (\textit{Mapk14}), P47811, 52 structures portrayed the interaction with 53 ligand molecules, 50 unique, which clustered in 10 ligand binding sites.}
+    \label{fig:bs_def_examples}
+\end{figure}
+
+Figure \ref{fig:bss_features} shows the 293 defined binding sites are diverse in size (number of amino acids), solvent accessibility, evolutionary divergence, and missense depletion. Binding site size ranges from 2-40 residues with a median of 9, while median site RSA ranges from 4-80\%, with a median of 30\%. For evolutionary divergence, the average site $N_{Shenkin}$ spread from 0-80, peaking at 40. Lastly, MES spans \textminus0.75 to 1.0, peaking at neutrality (MES $\approx$ 0).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG2_bs_feats.pdf}
+    \caption[Variation in binding site features]{\textbf{Variation in binding site features.} Distribution of size \textbf{(A)}, median RSA \textbf{(B)} , $N_{Shenkin}$ \textbf{(C)} and MES \textbf{(D)} across the 293 binding sites defined from our data set. Black dashed lines indicate the median of each distribution.}
+    \label{fig:bss_features}
+\end{figure}
+
+Despite the diversity among sites, some general trends can be observed. Figure 3a shows that larger binding sites tend to be less accessible to solvent ($r$ = \textminus0.4, p $\approx$ 0). Figure 3b illustrates that larger sites are less divergent across homologues ($r$ = \textminus0.21, $p$ = $10^{-4}$) while Figure 3c presents how larger sites show lower enrichment in neutral missense variants within the human population, i.e., are on average more depleted in missense variants than sites of a smaller size ($r$ = \textminus0.15, $p$ = 0.008). Correlations between MES and $N_{Shenkin}$, and RSA and $N_{Shenkin}$ were not significant, i.e., 95\% CI $r \ni$ 0.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG3_bs_feats_corr.pdf}
+    \caption[Relation between different binding site properties]{\textbf{Relation between different binding site properties.} A regression line is fitted to all data points previous to binning, ($N$ = 293 binding sites), Pearson’s correlation coefficient $r$ \cite{RODGERS_1988_CORRELATION}, associated $p$-value and 95\% CI of $r$ \cite{BOWLEY_1928_R_CI}. Data points are grouped into bins according to different binding site size intervals, represented by box and swarm plots. \textbf{(A)} Median site RSA \% \textit{vs} binding site size, in amino acids; \textbf{(B)} Average $N_{Shenkin}$ \textit{vs} binding site size; \textbf{(C)} Average site MES \textit{vs} site size. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR.}
+    \label{fig:bss_feats_corr}
+\end{figure}
+
+\subsection{RSA-based binding site clustering}
+
+Figure 4a depicts the four clusters defined by our method and the RSA profiles of the sites within them while Figure 4b illustrates six binding sites from each cluster to highlight the range of binding site size. Cluster 1 includes 46 sites, whereas 127 sites are found on C2, 91 in C3 and 29 in C4. The proportion of residues with an RSA \textless 25\% in Figure 4a follows a different profile in each cluster, which is confirmed in Figure 5a. C1 is the most buried with a proportion of residues with RSA \textless 25\% of 0.68, $(p_{RSA<25\%}) \approx$ 0.68), followed by C2 with $(p_{RSA<25\%}) \approx$ 0.47, then C3, $(p_{RSA<25\%}) \approx$ 0.30, and lastly C4 with $(p_{RSA<25\%}) \approx$ 0.10. Figure 5b displays the difference in binding site size between the clusters. There is variation within clusters in site size, but certain patterns are still apparent. C1 includes the largest sites, with an average size of $\bar{s}$ = 15 residues, followed by C2 with $\bar{s}$ = 11, then C3 with $\bar{s}$ = 8, and finally C4 with $\bar{s}$ = 5. Figure 5c shows the two-dimensional MDS representation of the binding sites, also shown in Figures 9d, and 10c in the Methods section. C1 and C4 are the most distinct amongst the clusters while there is some overlap between clusters. Sites near the cluster borders are those that switch groups depending on the random initialisation of the clustering. To summarise, C1 includes on average the largest, most buried sites, whereas C4 includes the smallest and most accessible. C2 and C3 are not as different as C1 and C4, but still differ in size and burial proportion with C2 including larger and overall, less accessible sites than C3.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/ch_FRAGSYS/FIG4_bs_clust_results_OPT4.pdf}
+    \captionof{figure}[RSA-based binding site clusters and examples]{\textbf{RSA-based binding site clusters and examples.} \textbf{(A)} RSA profiles of the 293 binding sites that were grouped in four, C1-C4, clusters by K-means based on the difference between their RSA profiles ($U_{D}$). Each binding site is represented by a vector, plotted as a bar here. The elements of the vector represent the residues that form the binding site and are sorted according to their RSA, so buried residues are at the beginning of the vector (bottom), and more accessible residues towards the end (top). Each element of the vector, or section of the bar, is coloured according to RSA, using the matplotlib  \textit{cividis} colour palette. Within each cluster, binding sites are sorted based on the number of amino acids. Over each cluster, a line is drawn at RSA = 25\%; \textbf{(B)} Six examples of binding sites are shown in structure for each cluster. Examples were selected to represent the range of binding site sizes within each cluster. IDs are UniProt accession codes. Binding site residues are coloured according to their RSA, using the \textit{cividis} colour scheme. The rest of the protein is coloured in white. Ligands binding to the site in question are coloured in red.}
+\label{fig:bss_clust_results}
+\end{figure}
+
+These results support $U_{D}$ as a metric that effectively quantifies the difference between the solvent exposure and size properties of different binding sites with the four clusters encapsulating differences in RSA and binding site size. This effect might be explained by the negative correlation between solvent accessibility and binding site size shown in Figure \ref{fig:bss_feats_corr}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG5_bs_clust_feats.pdf}
+    \caption[Binding site cluster features]{\textbf{Binding site cluster features.} \textbf{(A)} Box plot of the proportion of residues with RSA \textless 25\% per binding site across the four clusters defined by K-means clustering;\textbf{(B)} Box plot of the binding site size, in amino acids, across clusters. Pairwise Mann-Whitney-Wilcoxon tests were performed to assess the differences between the clusters. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR. $p$-value annotation legend: ns: $p >$ 0.05, *: 0.01 $< p \leq$ 0.05, **: $10^{-2} < p \leq 10^{-3}$, ***: $10^{-4} < p \leq 10^{-3}$, ****: $p \leq 10^{-4}$; \textbf{(C)} MDS representation of the 293 binding sites on 2 dimensions. Data points represent binding sites and are coloured based on the cluster they group in; \textbf{(D)} Histogram of RSA \% of the residues found within the ligand binding sites in each cluster; \textbf{(E)} Histogram of $N_{Shenkin}$ within cluster residues; \textbf{(F)} MES histogram plots for the 4 clusters defined.}
+    \label{fig:bs_clusts_feats}
+\end{figure}
+
+Figure \ref{fig:bs_clusts_feats}D shows the RSA distribution of all residues forming the binding sites within the defined clusters. This definition agrees, as expected, with Figures 4a, and  \ref{fig:bs_clusts_feats}A. C1 presents a distribution clearly different to the rest of clusters, peaking at RSA $\approx$ 5\%, indicating a high density of buried residues. C2 still presents an excess of buried residues relative to clusters 3-4, though not as high as C1. C4 presents the most different distribution to C1, peaking around RSA $\approx$ 50-70\%.
+
+To further characterise the defined clusters, the distributions of the normalised Shenkin divergence score ($N_{Shenkin}$) and Missense Enrichment Score (MES) of the residues found in the clusters were analysed (Figures \ref{fig:bs_clusts_feats}E, F). Regarding evolutionary divergence (Figure  \ref{fig:bs_clusts_feats}E), C1 also presents a different distribution to the rest of the clusters, with a peak at $N_{Shenkin} \approx$ 5, i.e., most of the residues conforming the sites within this cluster are highly conserved. The other clusters present flatter distributions with increasing proportion of divergent residues ($N_{Shenkin} >$ 25) $p_{C2}$ = 0.55, $p_{C3}$ = 0.67, and $p_{C4}$ = 0.69. $N_{Shenkin}$ is a divergence score ranging from 0-100, therefore residues with $N_{Shenkin} <$ 25, $p_{C1}$ = 0.58, $p_{C2}$ = 0.45, $p_{C3}$ = 0.33, and $p_{C4}$ = 0.31, represent stronger residue conservation, or lower divergence, than $N_{Shenkin} >$ 25. This agrees with the pattern observed on the RSA distributions (Figure 5d), as buried residues tend to be evolutionarily conserved \cite{CHOTHIA_1986_CONSERVATION, RUSSELL_1994_UNCONSERVATION}. In terms of missense depletion (Figure  \ref{fig:bs_clusts_feats}F), the distribution of C1 is slightly shifted to the left, towards more negative values, i.e., more missense depleted residues, with $\overline{\text{MES}}_{C1}$ = \textminus 0.17. The distributions of C2-4 are not statistically different, but present increasing average missense enrichment scores: $\overline{\text{MES}}_{C2}$ = \textminus 0.07, $\overline{\text{MES}}_{C3}$ = \textminus 0.02, and $\overline{\text{MES}}_{C1}$ = +0.06. Once again, this pattern agrees with the ones observed with site size, solvent accessibility, and evolutionary divergence. Sites that are more buried tend to be bigger in size, more conserved across homologues, as well as depleted in missense variation in human.
+
+\subsection{Clusters predict differential functional enrichment}
+
+A key goal of this work is to identify which sites from a fragment screening experiment are most likely to be functional and so worth investigating further. Figure \ref{fig:bs_clusts_enrichment} shows the relative enrichment in functional sites across the four defined clusters. C1 is the most enriched in functional sites, with 17/46 sites being classed as of known function, (OR = 4.46, $p \approx$ 0). C2 was next with 21/127 (OR = 1.15, $p$ = 0.75). C3 with 6/91 is depleted relative to the other clusters, (OR = 0.33, $p$ = 0.01), and finally C4 with 0/29, (OR = 0.16,$p$ = 0.04). RSA-based defined clusters are differentially enriched in functional sites. Based on their enrichment, a binding site found in C1 is $\approx$4, $\approx$14, and $\approx$28-fold more likely to be functional than a site in C2, C3, and C4, respectively.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.60\textwidth]{figures/ch_FRAGSYS/FIG6_bs_clust_func_enrichment.pdf}
+    \caption[Binding site cluster enrichment in known functional sites]{\textbf{Binding site cluster enrichment in known functional sites.} This enrichment score is an odds ratio (OR). Error bars indicate 95\% CI of the OR. Y-axis is in $\log_{10}$ scale. A pseudo-count of 1 was added to each cell of the contingency table, to be able to calculate the score.}
+    \label{fig:bs_clusts_enrichment}
+\end{figure}
+
+Functional definitions in UniProt tend to lag behind the literature. A literature search found support for 12 sites in C1 that are without UniProt annotations with two examples discussed below. We found no literature support for the remaining seventeen sites in C1 suggesting they may be novel, functionally important sites.  Supplementary Table 2 shows the full list of C1 sites that are predicted to be functionally important with 2/17 examples discussed below.
+
+\subsection{Example C1 site functional predictions supported by literature but not annotated in UniProt}
+
+\subsubsection{NS3 protein from Zika virus -- Q32ZE1}
+
+The Zika virus (ZIKV) genome polyprotein (Q32ZE1) is 3,419 amino acids long and codes for three structural proteins: capsid (C), envelope (E), and membrane (M) as well as seven non-structural proteins: (NS1, NS2A, NS2B, NS3, NS4A, NS4B, and NS5). NS3 is a critical serine proteinase for viral polyprotein processing and genomic regulation. It includes a protease domain at the N-terminus, and a helicase domain on the C-terminus. The helicase is responsible for RNA unwinding during replication, and thus makes an interesting drug target against ZIKV \cite{LUO_2015_FLAVIVIRUS}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.85\textwidth]{figures/ch_FRAGSYS/FIG7_c1_example_1.pdf}
+    \caption[Binding site 7 of Zika virus NS3]{\textbf{Binding site 7 of Zika virus NS3.} Non-structural protein NS3 of Zika virus (Q32ZE1) binding to N-(2-methoxy-5-methylphenyl)glycinamide, NY7 in BS7 (PDB: 5RHG) (Godoy AS, Mesquita NCMR, Oliva G). Domains I, II, and III are coloured in pink, blue, and green respectively. Binding site 7 which is in Cluster 1 is highlighted, the other 9 binding sites which fall in C2 (3), C3 (3) and C4 (3) are hidden. Ligand binding residues in red, and NY7 in yellow. Protein-ligand interactions are represented by black lines.}
+    \label{fig:c1_example_1}
+\end{figure}
+
+There are 10 sites in NS3 identified from 17 structures with 17 unique ligands and all are functionally unannotated in UniProt. The analysis here shows binding site 7 (BS7) to lie in Cluster 1 and so is most likely to be functional.
+
+The site is located between domains I-III, involving residues from $\eta$2, $\alpha$3 on domain I, and $\alpha$10, $\alpha$11 on domain III as defined in \cite{TIAN_2016_ZIKV} (Figure \ref{fig:c1_example_1}). Mottin \textit{et al.} \cite{MOTTIN_2017_ZIKA_HELICASE} predicted four RNA binding sites on NS3. One of them, the RNA exit crevice is located between domains I–III, and involves $\alpha$3, $\alpha$10 residues. Raubenolt \textit{et al.} \cite{RAUBENOLT_2021_ZIKA_ALLOSTERIC} probed four different allosteric sites on this protein. One of them, D3, was manually curated and included $\alpha$11, $\alpha$12, and overlapped with BS7. Later, Durgam and Guruprasad \cite{DURGAM_2022_ZIKA_ATP} stated that four of the ten residues forming this site: Ala264, Thr265, Lys537 and Asp540 bind to RNA when this is in complex with NS3. These results strongly suggest that this region plays an important role in RNA binding to NS3 and so is a site to target to modulate function. Moreover, the site is on average missense-depleted: MES =  \textminus0.28. A264 ($N_{Shenkin}$ = 18, MES = \textminus0.79), T267 ($N_{Shenkin}$ = 53, MES = \textminus0.55), and S293 ($N_{Shenkin}$ = 72, MES =  \textminus0.48) are the three key positions out of the 10 forming this binding site, as they are all constrained within the human orthologs of this protein. A264 is conserved across homologues, whereas T267 and S293 are divergent while missense depleted so could be important for binding specificity.
+
+\subsubsection{NSP13 protein from SARS-CoV-2 -- P0DTD1}
+
+The Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) replicase polyprotein 1ab (P0DTD1) is 7,096 amino acids long and codes for 16 non-structural proteins \cite{NAQVI_2020_SARSCOV2}. NSP13 is a helicase that unwinds dsRNA in the 5’-3’ direction to provide a single-stranded template for viral RNA amplification \cite{YUE_2022_SARSCOV2}. NSP13 also has NTPase activity, which provides the energy for the RNA unwinding \cite{SHU_2020_SARSCOV2}. NSP13 plays a fundamental role in the replication and transcription of the SARS-CoV-2 genome and is thought to be a good drug target against SARS-CoV-2 virus infection \cite{ZENG_2021_SARSCOV2}. NSP13 has five domains. Two ``RecA like'' subdomains 1A and 2A, in charge of nucleotide binding and hydrolysis, as well as three other domains: an N-terminal zinc-binding domain, the helical ``stalk'' domain, and a beta-barrel 1B domain \cite{ROMEO_2022_SARSCOV2}. It is the most conserved protein across coronaviruses, with sequence identity $>$99\% \cite{RICCI_2022_SARSCOV2}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG7_c1_example_2.pdf}
+    \caption[Binding site 6+16 of SARS-CoV-2 NSP13]{\textbf{Binding site 6+16 of SARS-CoV-2 NSP13.} Non-structural protein NSP13 of SARS-CoV-2 (P0DTD1) binding to 3 ligands in BS6+16 (Ribbon PDB: 5RMH) \cite{NEWMAN_2021_SARSCOV2}. 1A, 1B, 2A, stalk and zinc domains are coloured in yellow, pink, green, brown, and grey respectively. Ligand binding residues in red, and ligands in yellow. Interactions are not shown here for simplicity.}
+    \label{fig:c1_example_2}
+\end{figure}
+
+Twenty-four sites are defined on the surface of NSP13. Our method identifies two binding sites: BS6, and BS16 as C1 (Figure \ref{fig:c1_example_2}). Visual inspection shows the two sites to be adjacent with a total of 16 residues. Three fragments bind to the site, which is located in the nucleotide and RNA binding interface of NSP13 between the 1B and 2A domains. This is the region where the 5’ end of the RNA binds \cite{YAN_2020_SARSCOV2}. This pocket is determined to be highly druggable, and drugs binding to it might be effective against other coronaviruses, due to the pocket’s high amino acid conservation \cite{NEWMAN_2021_SARSCOV2}. This agrees with our results, as this site has an average $N_{Shenkin}$ = 32, and MES = \textminus0.18. Of the 16 positions in this site, four show high conservation across homologues and missense depletion in human: P514 ($N_{Shenkin}$ = 30, MES = \textminus0.56), D534 ($N_{Shenkin}$ = 9, MES = \textminus0.56), T552 ($N_{Shenkin}$ = 48, MES = \textminus1.87), and H554 ($N_{Shenkin}$ = 36, MES = \textminus0.85). T552 shows highest conservation across species and lowest missense enrichment (\textminus1.87) and so is most likely to have a key function in this protein family.
+
+\subsection{Examples of potentially novel C1 cluster functional predictions}
+
+\subsubsection{Human tenascin (TN) -- P24821}
+
+Human tenascin, is a hexameric extracellular matrix glycoprotein implicated in a variety of functions including cell migration, cell attachment, matrix assembly and proinflammatory cytokine synthesis \cite{BHATTACHARYYA_2022_TNC}. TN is known to interact with viruses and play a role in viral infections, e.g., HIV-1, and has been reported as a biomarker for disease severity \cite{ZULIANI_2023_TNC}. It also plays a key role in wound healing \cite{WANG_2022_TNC}, and is involved in diverse cardiovascular diseases \cite{KHOMTCHOUK_2022_TNC}, as well as in breast cancer \cite{LEPUCKI_2022_TNC}. For these reasons, there is considerable effort put into understanding better the function of TN and targeting it for therapeutic effect.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG7_c1_example_3.pdf}
+    \caption[Binding site 0 of human tenascin]{\textbf{Binding site 0 of human tenascin.} Human tenascin, TN, (P24821) binding to 8 ligands in BS0. (Ribbon PDB: 5R60) (Coker JA, Bezerra GA, von Delft F, Arrowsmith CH, Bountra C, Edwards AM, Yue WW, Marsden BD). A, B, and P subdomains as defined by Yee, Pratt \cite{YEE_1997_FIBRINOGEN} are coloured in blue, grey, and green respectively.}
+    \label{fig:c1_example_3}
+\end{figure}
+
+The data includes 11 structures with 11 unique ligands binding to TN, grouped in four binding sites, none annotated as functional in UniProt. One of the four binding sites is in C1, and so predicted to be of functional importance. The site is found on the Fibrinogen C-terminal domain of the protein, which functions as a molecular recognition unit that interacts with either proteins or carbohydrates (Figure \ref{fig:c1_example_3}). This site shows high conservation across species ($N_{Shenkin}$ = 15), as well as missense-depleted in human (MES = \textminus0.33). Accordingly, we suggest that this site in TNC is likely to be of key importance to function. Within the 15 positions forming the site, V2012 ($N_{Shenkin}$ = 5, MES = \textminus1.0), G2046 ($N_{Shenkin}$ = 0, MES = \textminus0.67), F2047 ($N_{Shenkin}$ = 0, MES = \textminus0.67), W2055 ($N_{Shenkin}$ = 0, MES = \textminus0.54), and G2057 ($N_{Shenkin}$ = 0, MES = \textminus0.83), are the most critical interacting residues, and extremely conserved across homologues.
+
+\subsubsection{5-aminolevulinate synthase (ALAS-E) -- P22557}
+
+\textit{ALAS2} is a gene located on the X chromosome that codes for the human mitochondrial erythroid-specific 5-aminolevulinate synthase. This dimeric enzyme carries out the first and rate-limiting step of the haem synthesis pathway: the pyridoxal 5’-phosphate (PLP)-dependent condensation of succinyl-CoA and glycine to form aminolaevulinic acid \cite{AKHTAR_1976_PORPHYRIN}. Across eukaryotes, these enzymes have developed extensions surrounding the catalytic core on both the N and C-termini \cite{MUNAKATA_1993_AMINOLEVULINATE}. The N-terminal extensions include the mitochondrial targeting sequence \cite{SRIVASTAVA_1988_AMINOLEVULINATE}, whereas the C-terminal extension (C-ext) plays an autoinhibitory role by regulating substrate binding and product release \cite{BAILEY_2020_AMINOLEVULINATE}. Mutations affecting C-ext can result in gain-of-function, such as X-linked protoporphyria \cite{WHATLEY_2008_AMINOLEVULINATE}, as well as loss-of-function disorders, e.g., X-linked sideroblastic anaemia \cite{DUCAMP_2011_SIDEROBLASTIC}. Accordingly, ALAS-E is a potential therapeutic target for the treatment of such diseases.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/FIG7_c1_example_4.pdf}
+    \caption[Binding site 1 of human ALAS-E]{\textbf{Binding site 1 of human ALAS-E.} Human erythroid-specific mitochondrial 5-aminolevulinate synthase, ALAS-E, (P22557) binding to 7 ligands in BS1. (Ribbon PDB: 5QR0) (Bezerra GA, Foster W, Bailey H, Shrestha L, Krojer T, Talon R, Brandao-Neto J, Douangamath A, Nicola BB, von Delft F, Arrowsmith CH, Edwards A, Bountra C, Brennan PE, Yue WW). Subunits A, B, C-terminal extensions A, B, as well as PLP cofactors are coloured in grey, beige, green, orange, and purple, respectively. Ligand binding residues in red, and ligands in yellow.}
+    \label{fig:c1_example_4}
+\end{figure}
+
+We considered 25 structures with 33 unique ligands binding to ALAS-E, grouped in ten binding sites, only one of which is annotated as functional in UniProt. We classify three sites as C1. Two are known to be on the interface between subunits, form key interactions to maintain the assembly and are close to the PLP binding site \cite{BAILEY_2020_AMINOLEVULINATE}. However, one (BS1) is not mentioned in the literature. This site is located on a deep pocket at the N-terminal region of the protein structure (Figure \ref{fig:c1_example_4}). Amino acids in this site are strongly conserved as well as depleted in missense variation: $N_{Shenkin}$ = 29, MES = \textminus0.13. Together, this suggests the site has a functional role in the protein, perhaps as an allosteric regulator, or through interaction with a partner such as succinate-CoA ligase, SCS-$\alpha$ \cite{FURUYAMA_2000_SIDEROBLASTIC}. Out of the 16 residues forming the site, K381 ($N_{Shenkin}$ = 38, MES = \textminus0.94) is the most missense-depleted position in the site and should be considered for lead optimisation of a fragment binding to this site.
+
+\section{Discussion}
+
+In this paper we have presented a method to identify binding sites from fragment screening data and group the sites into four robust clusters by an RSA profile metric. 29/46 sites in Cluster 1 have functional support from the literature (UniProt 17/46; Our search 12/46 - Supplementary Table 2) 17 further sites have similar profiles, but we could not find evidence in the literature of functional significance. We show two examples from this set that have compelling support from conservation and missense depletion scores for functional significance and we list all sites in Supplementary Table 2 as a resource for further experimentation on these proteins.
+
+As a case study, we applied the method to the SARS-CoV-2 main protease, MPro (P0DTD1). Twenty-five sites were defined from 511 structures, from which 8 were classed as C1, 12 as C2, 3 as C3 and only 2 as C4. Of the 8 C1 sites, one corresponds to the active site and three to allosteric sites 1, 2, and 3 [47] respectively. A further C1 site  is at the dimer interface and known to be a potential allosteric site [48] (See Supplementary Figure 4). The remaining three C1 sites may be important, but each binds only a single ligand and their function is currently unclear.
+
+Here, we have focused on a small set of proteins heavily studied by fragment screening methods. However, our method can be applied to classify any ligand binding site or predicted site. Accordingly, future work will seek to classify all known ligand binding sites in the PDB and provide tools to predict likely functional sites predicted sites by tools such as P2Rank [5], or GRaSP [49] from Alphafold2 [50, 51] or other models.
+
+It is natural to focus on sites that are most likely to be of functional significance and so possible targets to modulate function. However, binding sites identified here that are predicted to be least likely to have function may also be interesting as good locations for tagging proteins for degradation [52], phosphorylation [53], dephosphorylation [54], or other modulation [55, 56].

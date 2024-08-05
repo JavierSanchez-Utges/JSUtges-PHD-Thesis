@@ -1,0 +1,83 @@
+\documentclass[12pt,a4paper]{report}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{capt-of} % to allow for multi-page caption
+\usepackage{float} % for the location of figures
+\usepackage{amsmath} % for equations
+\usepackage{times} % to set font
+\usepackage{hyperref} % Add this line to include the hyperref package
+\usepackage[compress]{cite} % Add this line to include the cite package with compression
+\usepackage{xcolor} % For text colors
+
+\setcounter{tocdepth}{3}
+
+% Set up the margins
+\geometry{
+    a4paper,
+    left=40mm,
+    right=20mm,
+    top=35mm,
+    bottom=20mm
+}
+
+% Set up line spacing
+\doublespacing
+
+% Set up the header and footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\thepage}
+
+% Command to handle smaller fonts for charts, captions, and footnotes
+\captionsetup[figure]{
+    font={footnotesize,stretch=1.25}, % Change the font size of the caption
+    labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
+    textfont={color=darkgray}, % Make the text colored
+    labelsep=period % Use period after the label (e.g., "Figure 8.")
+}
+
+%\setlength{\belowcaptionskip}{0pt} % Adjust the space below the caption
+
+\title{JSU PhD Thesis\\
+{\Large University of Dundee}}
+\author{Javier Sánchez Utgés}
+\date{August 2024}
+
+\begin{document}
+
+\maketitle
+
+\include{abstract}
+
+\include{dedication}
+
+\include{acknowledgements}
+
+\tableofcontents
+
+\listoffigures
+
+\include{introduction}
+
+\include{ch_FRAGSYS}
+
+\include{ch_LIGYSIS}
+
+\include{ch_LIGYSIS_WEB}
+
+\include{ch_LBS_COMPARISON}
+
+\include{ch_LBS_IMPROVEMENT}
+
+\include{discussion}
+
+\include{conclusions}
+
+\bibliographystyle{unsrt}
+\bibliography{references_short}
+
+\end{document}
