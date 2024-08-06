@@ -2,11 +2,91 @@
 
 This chapter will include the results published in here \textit{"Comparative evaluation of methods for the prediction of protein-ligand binding sites"}.
 
-\section{Results}
+\section{Methods}
 
-\begin{figure}
+\subsection{Comparison of datasets}
+
+Training and test datasets were downloaded for all machine learning based methods reviewed in this work. Datasets were compared to our reference set, LIGYSIS, in terms of number of sites per protein, ligand-interacting chains, chain lengths, size of the sites (number of amino acids), ligand composition, size and diversity. Ligand diversity was quantified by Shannon’s Entropy \cite{SHANNON_1948_ENTROPY} (Equation \ref{eq:entropy_shannon}) where pi represents the proportion of each ligand $i$ of the $R$ ligands observed in the dataset. Ligand data was extracted from the Chemical Component Dictionary (CCD) \cite{WESTBROOK_2015_CCD}. An overlap (\%) was calculated for each dataset as the proportion of LIGYSIS binding sites that were covered by at least one ligand in a test dataset. A simplistic approach was adopted by calculating the intersection of ligand IDs between LIGYSIS and each dataset. Ligand IDs were defined as a string of PDB ID + ``\_'' + ligand ID, e.g., ``6GXT\_GTP'' corresponds to the guanosine-5’-triphosphate of the PDB entry with ID: 6GX7 \cite{CAMPANACCI_2019_TUBULIN}.
+
+\begin{equation}
+H' = - \sum_{i=1}^{R} p_i \ln(p_i)
+\label{eq:entropy_shannon}
+\end{equation}
+
+\subsection{Training datasets}
+
+VN-EGNN trains on a subset \cite{KANDEL_2021_PURESNET} of the sc-PDB (v2017) \cite{PAUL_2004_SCPDB, KELLENBERGER_2006_SCPDB, MESLAMANI_2011_SCPDB, DESAPHY_2015_SCPDB} (sc-PDB\textsubscript{SUB}). sc-PDB is a comprehensive database of pharmacological ligand-protein complexes. The database is comprised by proteins in complex with buried, biologically relevant synthetic or natural ligands deposited in the PDB. sc-PDB contains unique non-repeating protein-ligand pairs, which means that only one ligand is considered per PDB structure entry. Smith \textit{et al.} \cite{SMITH_2024_GrASP} enriched this dataset with 9,000 extra ligands resulting in a version of sc-PDB which we call sc-PDB\textsubscript{RICH}, which GrASP trained on. Unfortunately, this dataset is not publicly accessible and therefore not considered in our analysis. DeepPocket used the full sc-PDB set to train on, sc-PDB\textsubscript{FULL}. IF-SitePred uses a sequence identity-filtered version of the non-redundant subset of the binding mother of all databases (MOAD) \cite{HU_2005_BMOAD, BENSON_2008_BMOAD, AHMED_2015_BMOAD, SMITH_2019_BMOAD}, which considers only protein family leaders. The binding MOAD, here referred to as bMOAD\textsubscript{SUB}, is a large collection of crystal structures with clearly identified biologically relevant ligands with binding data extracted from the literature. Finally, P2Rank used the CHEN11 dataset to train, which aimed to cover all SCOP \cite{HUBBARD_1997_SCOP, HUBBARD_1998_SCOP, LOCONTE_2000_SCOP} families of ligand binding proteins in a non-redundant manner \cite{CHEN_2011_ASSESSMENT} and the JOINED dataset for validation. CHEN11 not only considers the ligands in each structure but is enriched with ligands binding to homologous structures. JOINED is a combined dataset formed by other smaller datasets: ASTEX \cite{HARTSHORN_2007_ASTEX}, UB48 \cite{HUANG_2006_BU48}, DT198 \cite{ZHANG_2011_METAPOCKET} and MP210 \cite{HUANG_2009_METAPOCKET}, which represent diverse collections of protein-ligand complexes, including bound/unbound states, drug-target complexes and other ligand site predictor benchmark sets.
+
+\subsection{Test datasets}
+
+The majority of ligand binding site predictors published since 2018 have been using two datasets that were first presented by Krivák \textit{et al.} \cite{KRIVAK_2018_P2RANK}: COACH420 and HOLO4K, or subsets of them. COACH420 is comprised by a set of 420 single-chain structures binding a mix of drug-like molecules and naturally occurring ligands which is disjunct with the CHEN11 and JOINED datasets. COACH420 is a modified version of the original COACH test set \cite{ROY_2012_COFACTOR, YANG_2013_COFACTOR}. HOLO4K is a larger set, $N \approx$ 4,000, based on the list by Schmidtke \textit{et al.} \cite{SCHMIDTKE_2010_FPOCKET}, which includes a mix of single- and multi-chain complexes, also disjunct with P2Rank training (CHEN11) and validation (JOINED) datasets. VN-EGNN, DeepPocket and GrASP use the Mlig and Mlig+ subsets of the COACH and HOLO4K datasets, which comprise strictly biologically relevant ligands as defined by the binding MOAD. IF-SitePred is tested on the HOLO4K-AlphaFold2 Paired (HAP) and HAP-small sets. HAP is a subset of the HOLO4K dataset which presents high quality models in the AlphaFold database \cite{VARADI_2022_ALPHAFOLDDB}. HAP-small is a smaller subset of HAP that only contains proteins with sequence identity lower than 25\% to proteins in the P2Rank training set. VN-EGNN uses the refined version of PDBbind (v2020), referred here as PDBbind\textsubscript{REF}, \cite{WANG_2004_PDBBIND, WANG_2005_PDBBIND, CHENG_2009_PDBBIND, LI_2014_PDBBIND, LIU_2015_PDBBIND, LIU_2017_PDBBIND} as a third test set. Like binding MOAD, the PDBbind database provides a comprehensive collection of experimentally measured binding affinity data for macromolecular complexes. Specifically, the refined set includes those protein-ligand complexes for which binding data was obtained with the literature and met certain experimental quality thresholds. Lastly, SC6K is a dataset presented by Aggarwal \textit{et al.} \cite{AGGARWAL_2022_DEEPPOCKET} containing 6,000 protein-ligand pairs from PDB entries submitted from 01/01/2018 – 28/02/2020. 
+
+\subsection{Protein chain alignment}
+
+For each protein chain, atomic coordinates were translated to be centred at the origin, $O = (0, 0, 0)$, and rotated using a rotation matrix, $R$. The two principal components of the coordinate space $pc_{1}$ and $pc_{2}$ were obtained using principal component analysis (PCA) \cite{HOTELLING_1933_PCA}. A third component, $pc_{\perp}$, was obtained with the cross-product of the other two, to ensure orthogonality. A rotation matrix $P$ is constructed from these vectors (Equation \ref{eq:pca_components}). By placing the main component $pc_{1}$ on the second row of $P$, we ensure the $Y$ axis will be the major axis, representing the height of the protein chain. The second largest axis will be the $X$ axis, representing the width of the protein, and lastly the depth will be represented by the smaller magnitude of the $Z$ axis. The final rotation matrix $R$ is obtained by multiplying $P$ by the negative identity matrix $NI$ (Equation \ref{eq:NI_R_matrices}). This was done to maintain the left-handedness of the protein chains whilst ensuring a consistent alignment on the major axes.
+
+\begin{equation}
+pc_{\perp} = pc_{1} \times pc_{2} \quad \rightarrow \quad P = \begin{bmatrix}
+pc_{2} \\
+pc_{1} \\
+pc_{\perp}
+\end{bmatrix}
+\label{eq:pca_components}
+\end{equation}
+
+\begin{equation}
+NI = -1 \cdot I_3 = -1 \cdot \begin{bmatrix}
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+0 & 0 & 1 
+\end{bmatrix} = \begin{bmatrix}
+-1 & 0 & 0 \\
+0 & -1 & 0 \\
+0 & 0 & -1 
+\end{bmatrix} \quad \rightarrow \quad R = P \cdot NI
+\label{eq:NI_R_matrices}
+\end{equation}
+
+\subsection{Protein chain characterisation}
+
+For a protein chain with $N$ amino acid residues, the centre of mass, $CM$, was calculated by averaging the coordinates, $r_{i}$, of all atoms (Equation \ref{eq:centre_of_mass}), and from it, the radius of gyration, $R_{g}$, was derived (Equation \ref{eq:radius_of_gyration}) \cite{FIXMAN_1962_ROG}. As the protein chains are already aligned on the axis and centred on $O = (0, 0, 0)$ the dimensions of the protein chain can be obtained as the magnitude of the PCA components or \textit{eigenvectors}, i.e., the \textit{eigenvalues}. The dimensions represent width, height, and depth for the $X$, $Y$ and $Z$ axes, respectively.
+
+\begin{equation}
+CM = \frac{1}{n} \sum_{i=1}^{n} r_i \rightarrow CM = O = (0,0,0)
+\label{eq:centre_of_mass}
+\end{equation}
+
+\begin{equation}
+R_g = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (r_i - CM)^2} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (r_i - O)^2} \rightarrow R_g = \sqrt{\frac{1}{n} \sum_{i=1}^{n} r_i^2}
+\label{eq:radius_of_gyration}
+\end{equation}
+
+Protein chain volumes were calculated using ProteinVolume \cite{CHEN_2015_PROTEINVOLUME}. A sphere enclosing the protein and centred on the protein centre of mass was obtained. The radius of this sphere is the maximum Euclidean distance between the protein atoms and the CM (Equation \ref{eq:radius_protein}). The volume of the sphere is calculated using Equation \ref{eq:volume_sphere}. Proteins were classified into four different groups based on their shape and size. Protein chains with $\leq$ 100 amino acids were classified as ``tiny''. Regarding the shape, protein chains were classified into ``elongated'' if their protein to sphere volume ratio $\leq$ 0.08 ($VR$) (Equation \ref{eq:volume_ratio}), i.e., the protein volume contains no more than 8\% of the sphere volume. This threshold was derived empirically by the visual inspection of all 3,448 protein chains on the LIGYSIS set. Otherwise, proteins were considered globular (Figure 11). In this manner, protein chains were classified into \textit{globular} ($N$ = 2,104; 61\%), \textit{elongated} ($N$ = 670; 19\%), \textit{elongated tiny} ($N$= 341; 10\%) and \textit{globular tiny} ($N$ = 333; 10\%).
+
+\begin{equation}
+R = \max \| r_i - CM \|
+\label{eq:radius_protein}
+\end{equation}
+
+\begin{equation}
+Volume_{Sphere} = \frac{4}{3} \pi R^3
+\label{eq:volume_sphere}
+\end{equation}
+
+\begin{equation}
+VR = \frac{Volume_{Protein}}{Volume_{Sphere}}
+\label{eq:volume_ratio}
+\end{equation}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/PDF/FIG2_LIGYSIS_vs_PDBbind.pdf}
-    \caption{LIGYSIS vs PDBbind}
-    \label{fig:ligysis_vs_pdbbind}
+    \includegraphics[width=0.98\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG11_PROTEIN_SHAPE_APPROACH_OPT.pdf}
+    \caption[Protein chain shape and size classification approach]{\textbf{Protein chain shape and size classification approach.} \textbf{(A)} The volume of the sphere enclosing the protein chain as well as the protein chain volumes are calculated, and their ratio obtained ($VR$). Globular proteins present more spherical shapes and therefore occupy a higher portion of the sphere volume, resulting in higher volume ratios. Non-globular, elongated or fibrous proteins on the other hand do not and present lower volume ratios. After extensive visual examination, a threshold was established at $VR$ = 0.08, and so proteins classified in these two groups. Proteins were classified as ``tiny'' if their chain was $\leq$ 100 amino acids; \textbf{(B)} Eight examples of each protein chain group to illustrate the outcome of the approach.}
+    \label{fig:protein_class_approach}
 \end{figure}
+
+\subsection{Ligand binding site prediction}
+
+For each segment in the LIGYSIS dataset, the representative chain as defined in the PDBe-KB was selected. Structures were cleaned using the \textit{clean\_pdb.py} script \cite{JUBB_2019_PDBTOOLS}. Eleven different ligand binding site prediction tools were employed to predict on the 3,448 representative chains: VN-EGNN \cite{SESTAK_2024_VNEGNN}, IF-SitePred \cite{CARBERY_2024_IFSP}, GrASP \cite{SMITH_2024_GrASP}, PUResNet \cite{KANDEL_2021_PURESNET, KANDEL_2024_PURESNET}, DeepPocket \cite{AGGARWAL_2022_DEEPPOCKET}, P2Rank \cite{KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK}, P2Rank\textsubscript{CONS} \cite{JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}, fpocket \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2}, PocketFinder\textsuperscript{+} \cite{AN_2005_POCKETFINDER}, Ligsite\textsuperscript{+} \cite{HENDLICH_1997_LIGSITE}, and Surfnet\textsuperscript{+} \cite{LASKOWSKI_1995_SURFNET}. Conservation scores for P2Rank were obtained from PrankWeb https://prankweb.cz/. Re-implementations of Capra \textit{et al.} \cite{CAPRA_2009_CONCAVITY} were used for PocketFinder, Ligsite and Surfnet, indicated by the ``+'' superscript. VN-EGNN, IF-SitePred, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not provide a list of residues for each pocket, but a list of centroids and their scores for the first two, and a list of grid points for each predicted pocket for the last three. For VN-EGNN, residues within 6\AA{} of the virtual nodes were considered pocket residues. For 429 predicted pockets ($\approx$3\%) no residues were found within this threshold. For IF-SitePred, residues within 6\AA{} of the clustered cloud points that resulted on a predicted pocket centroid were considered as pocket residues. Pocket residues were obtained in a similar manner for PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+}, by taking those residues within 6\AA{} of the pocket grid points. When running DeepPocket, the $-r$ threshold was removed and so all fpocket candidates were passed to the CNN-based segmentation module for pocket shape estimation. fpocket predictions re-scored by DeepPocket will be referred as DeepPocket\textsubscript{RESC}, whereas pockets extracted by the segmentation module of DeepPocket will be referred as DeepPocket\textsubscript{SEG}.
+
+\section{Results}

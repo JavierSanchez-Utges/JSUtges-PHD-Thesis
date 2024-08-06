@@ -32,6 +32,14 @@
 \fancyhf{}
 \fancyhead[C]{\thepage}
 
+% Redefine the plain pagestyle for chapter pages
+\fancypagestyle{plain}{
+  \fancyhf{} % clear all header and footer fields
+  \fancyhead[C]{\thepage}
+  %\renewcommand{\headrulewidth}{0pt} % no line in header area
+  %\renewcommand{\footrulewidth}{0pt} % no line in footer area
+}
+
 % Command to handle smaller fonts for charts, captions, and footnotes
 \captionsetup[figure]{
     font={footnotesize,stretch=1.25}, % Change the font size of the caption
@@ -47,17 +55,46 @@
 
 \begin{document}
 
+% Roman numerals for the front matter
+\pagenumbering{roman}
+
 \maketitle
 
-\include{abstract}
+% Add entries to the ToC for the following sections without creating new sections
+\cleardoublepage
+\input{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
 
-\include{dedication}
 
-\include{acknowledgements}
+\cleardoublepage
 
+\input{Dedication}
+\addcontentsline{toc}{chapter}{Dedication}
+
+
+\cleardoublepage
+
+\input{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+
+
+% Add Table of Contents to the ToC
+\cleardoublepage
 \tableofcontents
+\addcontentsline{toc}{chapter}{\contentsname}
 
+
+% Add List of Figures to the ToC
+\cleardoublepage
 \listoffigures
+\addcontentsline{toc}{chapter}{\listfigurename}
+
+
+% Clear the page and start Arabic numerals for the main matter
+\cleardoublepage
+\pagenumbering{arabic}
+
+% Main matter chapters
 
 \include{introduction}
 
