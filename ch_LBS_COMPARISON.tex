@@ -1,6 +1,16 @@
 \chapter{Comparative evaluation of methods for the prediction of protein-ligand binding sites}
 
+\section*{Preface}
+
+XXX.
+
+\section*{Publications}
+
 This chapter will include the results published in here \textit{"Comparative evaluation of methods for the prediction of protein-ligand binding sites"}.
+
+\section*{Author contributions}
+
+G.J.B. and J.S.U., conceived, designed, and developed the research. J.S.U. analysed the data. J.S.U. developed the software. J.S.U. and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
 
 \section{Methods}
 
@@ -88,5 +98,134 @@ VR = \frac{Volume_{Protein}}{Volume_{Sphere}}
 \subsection{Ligand binding site prediction}
 
 For each segment in the LIGYSIS dataset, the representative chain as defined in the PDBe-KB was selected. Structures were cleaned using the \textit{clean\_pdb.py} script \cite{JUBB_2019_PDBTOOLS}. Eleven different ligand binding site prediction tools were employed to predict on the 3,448 representative chains: VN-EGNN \cite{SESTAK_2024_VNEGNN}, IF-SitePred \cite{CARBERY_2024_IFSP}, GrASP \cite{SMITH_2024_GrASP}, PUResNet \cite{KANDEL_2021_PURESNET, KANDEL_2024_PURESNET}, DeepPocket \cite{AGGARWAL_2022_DEEPPOCKET}, P2Rank \cite{KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK}, P2Rank\textsubscript{CONS} \cite{JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}, fpocket \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2}, PocketFinder\textsuperscript{+} \cite{AN_2005_POCKETFINDER}, Ligsite\textsuperscript{+} \cite{HENDLICH_1997_LIGSITE}, and Surfnet\textsuperscript{+} \cite{LASKOWSKI_1995_SURFNET}. Conservation scores for P2Rank were obtained from PrankWeb https://prankweb.cz/. Re-implementations of Capra \textit{et al.} \cite{CAPRA_2009_CONCAVITY} were used for PocketFinder, Ligsite and Surfnet, indicated by the ``+'' superscript. VN-EGNN, IF-SitePred, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not provide a list of residues for each pocket, but a list of centroids and their scores for the first two, and a list of grid points for each predicted pocket for the last three. For VN-EGNN, residues within 6\AA{} of the virtual nodes were considered pocket residues. For 429 predicted pockets ($\approx$3\%) no residues were found within this threshold. For IF-SitePred, residues within 6\AA{} of the clustered cloud points that resulted on a predicted pocket centroid were considered as pocket residues. Pocket residues were obtained in a similar manner for PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+}, by taking those residues within 6\AA{} of the pocket grid points. When running DeepPocket, the $-r$ threshold was removed and so all fpocket candidates were passed to the CNN-based segmentation module for pocket shape estimation. fpocket predictions re-scored by DeepPocket will be referred as DeepPocket\textsubscript{RESC}, whereas pockets extracted by the segmentation module of DeepPocket will be referred as DeepPocket\textsubscript{SEG}.
+
+Seven of the considered methods provide residue \textit{ligandability} scores. P2Rank and P2Rank\textsubscript{CONS} report calibrated probabilities of residues being ligand-binding. Similarly, GrASP predicts the likelihood for any given heavy atom to be part of a binding site. A residue-level score was obtained for GrASP predictions by taking the maximum score of the residue atoms. For IF-SitePred, a residue ligandability score $LS$ can be obtained by averaging the 40 independently predicted probabilities of a residue being ligand-binding (Equation \ref{eq:IFSP_score}). Though calculated in a different way, these three scores range 0-1 and represent the likelihood of a residue binding a ligand and can therefore be compared. PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+}, and Surfnet\textsuperscript{+} also provide residue scores which maximum value can be $>$ 1.
+
+\begin{equation}
+LS = \frac{1}{40} \sum_{i=1}^{40} p_i
+\label{eq:IFSP_score}
+\end{equation}
+
+The other three methods, i.e., VN-EGNN, PUResNet, DeepPocket, and fpocket do not report residue-level scores. However, binary labels represent whether a residue is part of a pocket (1) or not (0), in the same manner as all other methods.
+
+Throughout this work the terms ``site'' and ``pocket'' are be used indistinctly. Across all figures, tables and legends, methods are sorted in chronological order.
+
+\subsection{Binding site characterisation}
+
+Radius of gyration, $R_{g}$, was calculated for pockets as it was done for whole protein chains (Equation \ref{eq:radius_of_gyration}). Distance between pockets was calculated as the Euclidean distance between their centroids and overlap between pocket residues with the Jaccard Index ($JI$), or intersection over union (IOU) (Equation \ref{eq:jaccard_index}) \cite{JACCARD_1901_INDEX, JACCARD_1912_INDEX}. POVME 2.0 was employed for pocket volume calculation \cite{DURRANT_2011_POVME, DURRANT_2014_POVME2, WAGNER_2017_POVME3}. A single inclusion region was used for each pocket. This region is defined by the smallest rectangular prism containing all pocket atoms. The prism is centred on the pocket centroid and its dimensions are determined by the distance between the two farthest atomic coordinates on each axis. No exclusion regions were used. Points outside the convex hull were deleted. A contiguous-points region was defined as a 5\AA{}-radius sphere on the pocket centroid (Figure 12).
+
+\begin{equation}
+JI(A, B) = \frac{|A \cap B|}{|A \cup B|}
+\label{eq:jaccard_index}
+\end{equation}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.98\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG12_POCKET_VOLUME_APPROACH_OPT.pdf}
+    \caption[Pocket volume calculation algorithm]{\textbf{Pocket volume calculation algorithm.} \textbf{(A)} PUResNet predicted pocket for PDB: 4PX2 (Jordan, S.R., Chmait, S., 2015). Pocket residues are coloured in blue and have their side chains displayed; \textbf{(B)} An inclusion region is determined using the coordinates of the pocket residue atoms; \textbf{(C)} POVME 2.0 calculates the shape of the pocket defined by the residues and contained within the inclusion region; \textbf{(D)} The pocket shape is defined by a series of unit volume (1\AA{}\textsuperscript{3}) spheres. The volume of the pocket is calculated as the addition of the sphere volumes or the number of spheres within the pocket. Structure visualisation with PyMOL v2.5.2 \cite{SCHRODINGER_2015_PYMOL}.}
+    \label{fig:protein_volume_approach}
+\end{figure}
+
+\subsection{Prediction evaluation}
+
+After predicting on the 3,448 chains of the LIGYSIS dataset, only chains where all residues across all predicted sites presented UniProt residue mapping were kept. This resulted in a final set of 2,775 protein chains which was used for the performance assessment of the methods.
+
+The performance of ligand binding site prediction methods can be evaluated at two different levels: \textit{residue} level, and \textit{pocket} level. Prediction at the residue level involves the discrimination of those residues that are likely to interact with a ligand, whereas the aim of pocket-level prediction is to define distinct regions on a protein, i.e., pockets where a ligand is likely to bind. This region can either be defined by a (pocket) centroid, a group of cloud/grid points, a set of pocket residues, or a combination of these. Some methods are residue-centric, and first predict at the residue-level, use a threshold to select high-probability ligand-binding residues, and then cluster them into pockets. \textit{Residue}-centric methods include IF-SitePred, or GrASP. Other methods (\textit{pocket}-centric) directly predict the location or shape of the pocket, without the need of predicting at the residue level first. Some of these methods can use their pocket-level prediction to report residue ligandability scores, e.g., P2Rank\textsubscript{CONS}, P2Rank, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} or Surfnet\textsuperscript{+}, and others, such as VN-EGNN, PUResNet, DeepPocket, or fpocket do not report residue ligandability scores.
+
+\subsubsection{Residue-level predictions}
+
+GrASP, P2RANK\textsubscript{CONS}, P2Rank, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} all offer residue ligandability scores. Additionally, a ligandability score was derived for IF-SitePred using Equation \ref{eq:IFSP_score}. Given a ligandability threshold $t_{LS}$, a residue with a ligandability score $LS_{i}$ is classified as ``positive'' if $LS_{i} > t_{LS}$. Conversely, the residue is classed as ``negative'' if $LS_{i} \leq t_{LS}$. Further stratification results from comparing the predictions to the LIGYSIS reference dataset.
+
+\begin{itemize}
+\item True Positive (TP): residue classified as positive that binds a ligand according to the reference.
+\item False Positive (FP): residue classified as positive that does not bind a ligand in the reference.
+\item True Negative (TN): residue classified as negative that does not bind a ligand.
+\item False Negative (FN): residue classified as negative but is known to bind a ligand according to the data.
+\end{itemize}
+
+With these four classes, true positive rate (TPR) (Equation \ref{eq:TPR}, false positive rate (FPR) (Equation \ref{eq:FPR}), precision (Equation \ref{eq:precision}) and recall (Equation \ref{eq:recall}) can be calculated and receiver operating characteristic (ROC), precision-recall (PR) curves plotted. Area under the curve (AUC) for ROC and average precision (AP) for PR are reported. Baselines for these are 0.5 and the proportion of true positive labels, respectively.
+
+\begin{equation}
+TPR = \frac{TP}{TP + FN}
+\label{eq:TPR}
+\end{equation}
+
+\begin{equation}
+FPR = \frac{FP}{FP + TN}
+\label{eq:FPR}
+\end{equation}
+
+\begin{equation}
+Precision = \frac{TP}{TP + FP}
+\label{eq:precision}
+\end{equation}
+
+\begin{equation}
+\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}
+\label{eq:recall}
+\end{equation}
+
+Pocket binary labels (0: no pocket residue; 1: pocket residue) can determine TP, FP, TN and FN for each residue in a protein chain $P$. An F1 score is computed across all residues of $P$, which combines precision and recall into a unified metric, capturing the accuracy and completeness of predictions at the residue level (Equation \ref{eq:F1_score}). The Matthews Correlation Coefficient (MCC) \cite{MATTHEWS_1975_MCC} (Equation \ref{eq:MCC}) was also calculated. The median F1 score and MCC across the dataset proteins is reported for each method.
+
+\begin{equation}
+F1 = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\label{eq:F1_score}
+\end{equation}
+
+\begin{equation}
+MCC = \frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}
+\label{eq:MCC}
+\end{equation}
+
+\subsubsection{Pocket-level predictions}
+
+There are no \textit{negatives} predicted at the pocket level of ligand binding site prediction, only \textit{positives}. A positive is a predicted pocket, which will be true (TP) or false (FP) depending on whether it is observed in the reference data. False negatives are those pockets observed in the reference data that are not predicted. They are the pockets the method fails to predict, and therefore, are not scored. A true negative would be a ``non-pocket'' that is not predicted. This can't be quantified easily and even if it was, it would not be scored by the method, as it is not predicted. For this reason, in this context, neither TPR, nor FPR can be calculated. Consequently, ROC/AUC can't be utilised to assess ligand binding site prediction at the pocket level. False negatives are known, but not scored, and therefore PR/AUC is not an option either. What can be calculated is the recall given a certain criterion. In this case, because of the nature of the LIGYSIS dataset, where defined sites result from the clustering of multiple ligands, the distance between the predicted pocket centroid to the observed binding site (DCC) was chosen as a criterion.
+
+For each observed binding site in our reference dataset, the ``best'' prediction for each method is chosen. This is defined as the prediction with the minimum Euclidean distance to the observed pocket centroid or DCC. Once the observed-predicted pairs were obtained, only those with DCC $\leq$ 12 \AA{} were considered as correct predictions. A threshold of 12\AA{} was chosen as 4\AA{} is too strict a threshold when using DCC (See Supplementary Note 6 and Figures 10-14). A threshold of 4\AA{} works well for the distance to closest ligand atom (DCA) but does not for DCC. The top-$N$ and $N$+2 ranking predictions were considered to calculate success rate, or recall (Equation \ref{eq:success_rate}), and maximum recall was calculated by considering all predictions, regardless of their score or rank. $N$ represents the number of observed sites for a given protein.
+
+\begin{equation}
+\text{Success rate (recall)} = \frac{\text{observed sites with predicted site DCC} \leq 12 \text{Å}}{\text{observed sites}}
+\label{eq:success_rate}
+\end{equation}
+
+Additionally, instead of conventional ROC, ROC100 \cite{WEBBER_2003_ROC100, SCOTT_2007_ROC100} can be used to measure the predictive performance of the methods. To do this, for each method, all predictions across dataset proteins were ranked based on the pocket score and cumulative true positives were plotted against cumulative false positives until 100 false positives are reached. In a similar way, a precision curve can be calculated by taking the top-$N$, in this case $N$ = 1,000, predictions, which measures how precision changes as more predictions with lower scores are considered. This is indicative of how informative pocket scores are.
+
+To measure the similarity in shape and residue membership between the predicted and observed pockets, relative residue overlap ($RRO$) and relative volume overlap ($RVO$) were employed. For an observed-predicted pocket pair, RRO represents the proportion of observed ligand-binding residues ($R_{o}$) that are covered by the predicted pocket residues ($R_{p}$) (Equation \ref{eq:RRO}). The POVME output was utilised for the calculation of $RVO$ (Figure 13). POVME defines the volume of a pocket as a series of equidistantly spaced spheres of unit volume. As predictions by the different methods were on the same coordinate reference, these pocket volume spheres were already aligned, and the volume overlap was calculated simply as the proportion of spheres in the observed pocket ($V_{o}$) that overlap with the predicted pocket spheres ($V_{p}$) (Equation \ref{eq:RVO}).
+
+\begin{equation}
+RRO = \frac{|R_p \cap R_o|}{R_o}
+\label{eq:RRO}
+\end{equation}
+
+\begin{equation}
+RVO = \frac{|V_p \cap V_o|}{V_o}
+\label{eq:RVO}
+\end{equation}
+
+\begin{figure}[htbp!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG13_VOLUME_OVERLAP_APPROACH_OPT.pdf}
+    \caption[Relative Volume Overlap ($RVO$) calculation]{\textbf{Relative Volume Overlap ($RVO$) calculation.} \textbf{(A)} Example of two very accurate predictions by PUResNet and P2Rank on PDB: 4PX2 (Jordan, S.R., Chmait, S., 2015). Pocket volumes are calculated with POVME 2.0 and represented by coloured surfaces. These volumes result from the addition of unit volume spheres on a grid. To obtain the $RVO$, the intersection of these spheres between predicted and observed site is divided by the number of observed pocket spheres. Both predictions cover the entirety of the observed pocket volume; \textbf{(B)} GrASP and VN-EGNN predictions of a site on PDB: 2ZOX \cite{NOGUCHI_2008_STRUCTURE}. Th volumes of these predicted sites overlap less with the observed site: $RVO$ = 0.67 for GrASP and $RVO$ = 0.11 for VN-EGNN.}
+    \label{fig:protein_volume_approach}
+\end{figure}
+
+\subsection{Statistics and reproducibility}
+
+VN-EGNN was installed and run locally from https://github.com/ml-jku/vnegnn. Likewise, for IF-SitePred: https://github.com/annacarbery/binding-sites. GrASP was obtained from https://github.com/tiwarylab/GrASP and predictions generated using their Google Colab Notebook. PUResNet predictions were obtained through the PUResNet v2.0 web server: https://nsclbio.jbnu.ac.kr/tools/jmol. DeepPocket was installed and executed locally: https://github.com/devalab/DeepPocket. P2Rank v2.4.2 was used to run all predictions as well as PRANK re-scoring: https://github.com/rdk/p2rank. fpocket v4.0 was installed via Conda: https://anaconda.org/conda-forge/fpocket. For PocketFinder, Ligsite and Surfnet, the ConCavity v0.1 “+” re-implementations were employed: https://compbio.cs.princeton.edu/concavity/.
+
+Other recent methods including SiteRadar [49], NodeCoder [48], GLPocket [50], RefinePocket [137], EquiPocket [51], RecurPocket [46], PointSite [45], DeepSurf [44], Kalasanty [42], GRaSP [40], BiteNet [41] or DeepSite [38] were not included in this analysis due to technical reasons. Open-source methods with publicly accessible code, clear installation instructions, well defined dependencies, and accessible command line interfaces were prioritised in this work.
+
+ChimeraX v1.7.1 [138] was used for structural visualisation in all figures unless otherwise stated, in which case PyMOL v2.5.2 was employed [59].
+
+
+\subsection{Data availability}
+
+The main results tables and files necessary to replicate the analysis described in this paper can be found here: https://doi.org/10.5281/zenodo.13121414 .
+
+\subsection{Code availability}
+
+Software developed to carry out this analysis is found in this GitHub repository: https://github.com/bartongroup/LBS-comparison.
+
+
 
 \section{Results}
