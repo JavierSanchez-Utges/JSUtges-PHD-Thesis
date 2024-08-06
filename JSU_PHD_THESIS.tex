@@ -1,3 +1,5 @@
+% !TeX program = xelatex
+
 \documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
@@ -12,8 +14,13 @@
 \usepackage{hyperref} % Add this line to include the hyperref package
 \usepackage[compress]{cite} % Add this line to include the cite package with compression
 \usepackage{xcolor} % For text colors
+%\usepackage[hyphenbreaks]{breakurl} % to break URL links with hyphens
+\usepackage{xurl}
 
-\setcounter{tocdepth}{3}
+%\usepackage{fontspec}
+%\setmainfont{Aptos}
+
+\setcounter{tocdepth}{3} % this is to include subsubsections
 
 % Set up the margins
 \geometry{
@@ -48,6 +55,23 @@
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
 
+
+\definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
+\definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
+\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+
+
+% Hyperlinks setup
+\hypersetup{
+    colorlinks=true,
+    linktocpage=true,
+    urlcolor=royalblue,
+    citecolor=forestgreen,
+    breaklinks=true,
+    linkcolor=firebrick,
+    anchorcolor=magenta,
+}
+
 \title{JSU PhD Thesis\\
 {\Large University of Dundee}}
 \author{Javier Sánchez Utgés}
@@ -67,28 +91,22 @@
 
 
 \cleardoublepage
-
 \input{Dedication}
 \addcontentsline{toc}{chapter}{Dedication}
 
-
 \cleardoublepage
-
 \input{Acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
-
 
 % Add Table of Contents to the ToC
 \cleardoublepage
 \tableofcontents
 \addcontentsline{toc}{chapter}{\contentsname}
 
-
 % Add List of Figures to the ToC
 \cleardoublepage
 \listoffigures
 \addcontentsline{toc}{chapter}{\listfigurename}
-
 
 % Clear the page and start Arabic numerals for the main matter
 \cleardoublepage
