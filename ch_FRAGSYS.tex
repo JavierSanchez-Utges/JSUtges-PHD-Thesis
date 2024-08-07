@@ -22,7 +22,6 @@ In most previous studies the focus has been on clustering ligands by  root-mean-
 
 The work in this paper is likely to be of interest to groups focusing on fragment screening studies but wider applications to ligand site classification from experimentally determined or predicted structures are also discussed. 
 
-
 \section{Methods}
 
 \subsection{Structure dataset}
@@ -46,12 +45,14 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
     I_{\mathrm{rel}} = \frac{A \cap B}{A \cap B_{\mathrm{max}}}
 \label{eq:relative_intersection} % Label for the equation
 \end{equation}
+\myequations{Relative Intersection}
+%\addcontentsline{loe}{equation}{\protect\numberline{\theequation}Relative intersection}
 
 \begin{equation}
     A \cap B_{\mathrm{max}} = \min(\mathrm{len}(A), \mathrm{len}(B))
 \label{eq:max_intersection}
 \end{equation}
-
+\myequations{Maximum Intersection}
 
 $I_{rel}$ is thus a similarity metric that can be used to perform hierarchical clustering on the ligands. Single-linkage hierarchical clustering was performed with the OC software \cite{BARTON_1993_OC}. After exploring several threshold $I_{rel}$ values to cut the resulting tree, we settled on $I_{rel}$ = 0.66. Since this is a similarity metric, it means that a ligand shares at least two thirds of its binding residues with at least one other member of the same cluster. A total of 293 ligand binding sites across 37 protein domains were defined this way. For each protein, all structures were multiply aligned by STAMP \cite{RUSSELL_1992_STAMP}. Ligand binding sites were visualised in UCSF Chimera \cite{PETTERSEN_2004_CHIMERA}.
 
@@ -87,16 +88,19 @@ Given two binding sites, $A$ and $B$, with RSA profiles $r_{A}$ and $r_{B}$ and 
 U_A = R_A - \frac{n_A(n_A + 1)}{2}, \quad U_B = R_B - \frac{n_B(n_B + 1)}{2} \quad
 \label{eq:mann_whitney_U}
 \end{equation}
+\myequations{Mann-Whitney's U}
 
 \begin{equation}
 U_A + U_B = n_A n_B, \quad U = \min(U_A, U_B) \rightarrow U_{\max} = \frac{n_A n_B}{2} \quad
 \label{eq:maximum_U} 
 \end{equation}
+\myequations{Maximum U}
 
 \begin{equation}
 U_{\text{rel}} = \frac{U}{U_{\max}} \rightarrow U_D = 1 - U_{\text{rel}} \quad 
 \label{eq:relative_U}
 \end{equation}
+\myequations{Relative U}
 
 After calculating pairwise distances between the RSA profiles of the defined binding sites, K-means clustering \cite{LLOYD_1982_KMEANS} was performed. Several clustering algorithms were tried to realise this task, including some hierarchical, or connectivity-based, such as single and complete-linkage \cite{SORENSEN_1948_CL}, unweighted average linkage clustering (UPGMA) \cite{SOKAL_1958_UPGMA}, or Ward linkage \cite{WARD_1963_CLUSTERING}, as well as centroid-based, such as K-means. Overall, the clusters obtained by the different methods were similar. Ward linkage and K-means resulted in the most similar clusters, displaying an average similarity between clusters of 85\% (Figure \ref{fig:fragsys_bs_clust_ward}).
 
@@ -128,6 +132,7 @@ The complete dataset (N = 293) was split into a blind test set (1/11 = 27), and 
 \text{confidence score} = \left\lfloor 10 \times (p_1 - p_2) \right\rfloor
 \label{eq:confidence_score}
 \end{equation}
+\myequations{Confidence Score}
 
 The KNN is based on distances to all training data and so, as expected, consistently gives higher classification accuracy than the ANN model where sites are represented by their binned RSA profile, and are thus completely unaware of other sites, and their distances to them (Figure \ref{fig:MLP_CV_blind_test}A). Both methods are significantly better than random. The average cross-validation accuracy across all repeats is of 98\%, 90\%, 33\%, 31\%, and 24\% for KNN, ANN models, their randomly trained versions, and completely random label assignment, respectively. The baseline accuracy of the randomly trained models is higher than 25\% since the dataset is unbalanced, with classes, C1 and C2 overrepresented.
 
