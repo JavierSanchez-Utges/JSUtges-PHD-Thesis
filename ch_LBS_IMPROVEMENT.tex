@@ -1,12 +1,60 @@
 \chapter{Improvement on methods for the prediction of protein-ligand binding sites}
 
-This chapter will include the sections of our manuscript \textit{"Comparative evaluation of methods for the prediction of protein-ligand binding sites"} which deal with the issues and proposed improvement of the methods.
+\section*{Preface}
+
+XXX.
+
+\section*{Publications}
+
+This chapter will include the results published in here \textit{"Comparative evaluation of methods for the prediction of protein-ligand binding sites"}.
+
+\section*{Author contributions}
+
+G.J.B. and J.S.U., conceived, designed, and developed the research. J.S.U. analysed the data. J.S.U. developed the software. J.S.U. and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
+
+\section{Introduction}
+
+\subsection{Redundancy in ligand site prediction}
+
+We define pocket prediction redundancy as the prediction of pockets with centroids very close in space ($D \leq$ 5\AA{}) or with overlapping residues ($JI \geq$ 0.75). This indicates multiple predictions of the same potential ligand binding site. Most ligand site prediction tools predict not only the location of the pocket by means of a centroid or pocket residues, but also a pocket confidence, and an associated rank among all the predicted pockets. Ligand site predictors tend to be evaluated by considering the top-$N$, or top-$N$+2 ranking pockets, where $N$ is the number of observed sites for a given protein. The redundant prediction of pockets will result in a sub-optimal ranking and therefore affect negatively the performance of the predictors.
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=0.99\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG6_PREDICTION_REDUNDANCY_SPLIT_1_OPT.pdf}
+    \caption[The issue of redundancy in ligand binding site prediction]{\textbf{The issue of redundancy in ligand binding site prediction.} \textbf{(A)} A set of predictions where 6/10 predictions are redundant, resulting in a low recall (1/5) and inflated precision (7/7); \textbf{(B)} When redundancy is removed, only four predictions remain and recall increases to 3/5 (60\%) and precision decreases to 3/4 (75\%).}
+    \label{fig:prediction_redundancy}
+\end{figure}
+
+\FloatBarrier
+
+\autoref{fig:prediction_redundancy} shows an example protein with $N$ = 5 observed pockets. A method returns 10 predictions, but the top-7 are all within 3\AA{} of one of the observed pockets, and $>$12\AA{} from any of the other four observed pockets. If the top-$N$+2 (top-7) predictions were considered, this would only recall a single unique pocket, as six of the top-7 predictions are redundant. Recall would then be 1/5 (20\%). Precision, however, within this top-7 would be 7/7 (100\%), as the seven predictions are correctly recalling an observed pocket (which happens to be the same observed pocket). In this case, both the low recall and the high precision are artifacts resulting of the redundancy (\autoref{fig:prediction_redundancy}A). Redundancy in prediction can often result in an overestimate of the precision and an underestimate of the recall. \autoref{fig:prediction_redundancy}B illustrates what happens when redundant predictions are removed, keeping always higher-scoring predictions. When the six redundant predictions (blue hexagons) are removed, the other three predictions, which are of different pockets are considered as now fall within the top-$N$+2 predictions. This increases the recall to 60\%, as 3/5 observed pockets are now correctly predicted. However, the precision decreases, as only three out of the four predictions made overlap with an observed pocket. Pocket rank \#2 has a high score but is not observed. This is a \textit{false positive} in this context, however it might be a candidate pocket yet to be resolved and could prove interesting as a drug target. See Supplementary Figure 7 for some examples.
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG6_PREDICTION_REDUNDANCY_SPLIT_2_OPT.pdf}
+    \caption[Example of redundant predictions]{\textbf{Example of redundant predictions.} Predictions by VN-EGNN, IF-SitePred and PUResNet, on chain D of PDB: 4Z9M (Rabeh WM, Tempel W, Nedyalkova L, Landry R, Arrowsmith CH, Edwards AM, Bountra C, Bochkarev A, Park H, Structural Genomics Consortium (SGC), 2015), where ADP binds. For this ADP binding site, VN-EGNN reports 7 predictions, IF-SitePred 33, and PUResNet a single prediction. These three methods correctly predict this site, however, VN-EGNN and IF-SitePred report redundant pocket predictions, which centroids are very close, $\leq$ 5\AA{}, in space and residues overlap high ($\geq$ 0.75).}
+    \label{fig:prediction_redundancy_examples}
+\end{figure}
+
+\autoref{fig:prediction_redundancy_examples} showcases human creatine kinase S-type, mitochondrial (PDB: 4Z9M) as an example of this phenomenon, where VN-EGNN and IF-SitePred redundantly predict the same pocket 9 and 33 times, whereas PUResNet returns a single prediction. All three methods correctly predict the site, just the difference is in the number of returned predictions.
 
 \section{Methods}
 
 \subsection{Prediction evaluation}
 
-Prior to evaluation, non-redundant sets of predictions were generated for VN-EGNN, IF-SitePred and DeepPocket\textsubscript{SEG}, as these methods generate a considerable proportion of redundant predictions. A predicted pocket $i$ is considered redundant if there exists a pocket $j \neq i$ so that the distance between their centroids $D_{i,j} \leq$ 5\AA{} or their residue overlap $JI_{i,j} >$ 0.75, i.e., they share at least 3/4 of their residues. Refer to Supplementary Figure 9 for the closest predicted sites for each method.
+Figure 5D shows that prediction redundancy is an issue particularly for VN-EGNN, IF-SitePred, and to a lesser extent DeepPocket\textsubscript{SEG}. To assess the effect that redundancy has on the performance of these methods, non-redundant subsets of predictions were obtained and labelled with the subscript ``NR''. A predicted pocket $i$ is considered redundant if there exists a pocket $j \neq i$ so that the distance between their centroids $D_{i,j} \leq$ 5\AA{} or their residue overlap $JI_{i,j} >$ 0.75, i.e., they share at least 3/4 of their residues. Refer to Supplementary Figure 9 for the closest predicted sites for each method. Redundancy filtering was carried out for each method keeping always the higher scoring pocket. Redundancy (\%) was calculated as the proportion of redundant pockets relative to the original total number of pockets. VN-EGNN presents the highest percentage of redundant pockets with 9,066/13,582 (67\%) redundant pockets, followed by IF-SitePred with 22,232/44,948 (49\%), and DeepPocket\textsubscript{SEG} with 6,744/21,718 (31\%). For other methods, redundancy was minimal ($<$1\%).
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PDF/SUPP_FIG9_CLOSESET_PREDICTED_POCKETS_OPT.pdf}
+    \caption[Closest predicted pockets for each methods]{\textbf{Closest predicted pockets for each method.} For each method, the two closest predicted pockets across all protein chains are shown. This is the pair of pockets with the minimum Euclidean distance between their centroids. Protein surface is coloured in tan. The larger pocket (more residues)}
+    \label{fig:closest_pred_pockets}
+\end{figure}
+
+\begin{figure}[ht!]
+\ContinuedFloat
+\caption*{(continued)  and centroid is coloured in the method colour, and the other in grey. A distance threshold of D = 5\AA{} was selected to determine whether a pocket prediction was redundant. LIGYSIS, VN-EGNN, IF-SitePred and DeepPocket clearly differ from other methods presenting distances $<$ 1\AA{}.}
+\end{figure}
 
 PUResNet, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not score, nor explicitly rank their pockets, and so they were taken in the order given by their pocket ID. This means that when sorting across the dataset, the order of all pockets with the same rank is arbitrary. To obtain a score for these pockets, multiple strategies were employed. Firstly, a pocket score was obtained as the number of pocket amino acids, resulting in variants PUResNet\textsubscript{AA}, PocketFinder\textsuperscript{+}\textsubscript{AA}, Ligsite\textsuperscript{+}\textsubscript{AA} and Surfnet\textsuperscript{+}\textsubscript{AA}. Secondly, PRANK pocket scoring was employed, resulting in variants PUResNet\textsubscript{PRANK}, PocketFinder\textsuperscript{+}\textsubscript{PRANK}, Ligsite\textsuperscript{+}\textsubscript{PRANK} and Surfnet\textsuperscript{+}\textsubscript{PRANK}. fpocket predictions were also re-scored with PRANK, resulting in fpocket\textsubscript{PRANK}. Additionally, for IF-SitePred pocket scores were calculated as the sum of squares (SS) of the ligandability scores ($LS_{i}$), calculated with (Equation \ref{eq:IFSP_score}), of the $K$ residues on a site (Equation \ref{eq:IFSP_pocket_score}) resulting in IF-SitePred\textsubscript{RESC}. For PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+}, and Surfnet\textsuperscript{+} the same was done but instead of residue scores, grid point scores ($GS_{i}$) were used (Equation \ref{eq:leagcy_methos_pocket_score}). This resulted in further variants PocketFinder\textsuperscript{+}\textsubscript{SS}, Ligsite\textsuperscript{+}\textsubscript{SS}, and Surfnet\textsuperscript{+}\textsubscript{SS}. This is the same approach introduced by Krivák, \textit{et al.} \cite{KRIVAK_2015_P2RANK} and later adopted by Smith \textit{et al.} \cite{SMITH_2024_GrASP}.
 
@@ -19,3 +67,32 @@ SS_{\text{IF--SitePred}} = \sum_{i=1}^{K} LS_i^2
 SS_{\text{PocketFinder}^+} = SS_{\text{Ligsite}^+} = SS_{\text{Surfnet}^+} = \sum_{i=1}^{K} GS_i^2
 \label{eq:leagcy_methos_pocket_score}
 \end{equation}
+
+\FloatBarrier
+
+\section{Results}
+
+XXX.
+
+\section{Discussion}
+
+We have shown how redundancy in prediction, i.e., predicting multiple times the same observed site, can underestimate the recall, and overestimate the precision of the methods, therefore providing a misleading assessment of the methods’ performance. Redundancy removal and subsequent pocket re-ranking can yield a significant increase in recall. The importance of a robust pocket scoring scheme can have a strong impact in the performance, both in recall and precision of the methods and emphasis should be put into this area. Even if a single site is predicted per protein, a pocket score can be highly useful when ranking pockets in different proteins, e.g., when having a list of potential drug targets and deciding which protein might be best to target therapeutically.
+
+fpocket\textsubscript{PRANK} (60\%) and DeepPocket\textsubscript{RESC} (58\%) present the highest recall of the methods reviewed in this work. P2Rank\textsubscript{CONS} and P2Rank follow closely with 54\% and 52\% recall, then GrASP (50\%), DeepPocket\textsubscript{SEG-NR}, Ligsite\textsuperscript{+}\textsubscript{AA} and PocketFinder\textsuperscript{+}\textsubscript{AA} with 49\%, Surfnet\textsuperscript{+}\textsubscript{AA} (47\%), VN-EGNNNR (46\%), PUResNet\textsubscript{PRANK} (41\%) and IF-SitePred\textsubscript{RESC-NR} (39\%). fpocket is the method that predicts the most pockets per protein, reaching a maximum recall between 80-90\% (considering all pockets regardless of the rank). P2RankCONS comes second with a maximum recall of 50-60\%. The rest of the methods range 40-55\%. This indicates that whilst there are still some pockets un-predicted by fpocket (10-20\%), the maximum recall of this method is 20-30\% higher than any other method. However, considering top-$N$+2 pockets, fpocket only recalls 47\% of the observed pockets. fpocket\textsubscript{PRANK} and DeepPocket\textsubscript{RESC} gain $>$10\% in recall by simply re-scoring those predictions. This highlights the paramount importance of a robust scoring scheme, which captures well the nature of binding sites and places those with a higher probability of being real binding sites at the top of the ranking. Newer methods like VN-EGNN, IF-SitePred, GrASP and PUResNet are the most precise methods, however because of redundancy in predictions (VN-EGNN, IF-SitePred), or low number of predicted pockets per protein (VN-EGNN, GrASP and PUResNet) are limited in their recall. Their high precision indicates that their models learn and capture well the nature of ligand binding sites and so they represent a great venue to pursue in the field of ligand binding site prediction. Whilst removing redundancy post-prediction has a significant improvement in performance (VN-EGNN\textsubscript{NR} and IF-SitePred\textsubscript{NR}), approaching this issue before prediction would be more beneficial. For VN-EGNN, which predicts a maximum of 8 sites, ensuring these 8 (or more) predictions are non-redundant is more desirable than removing redundant predictions ending up with 1/8 predictions. The same applies to IF-SitePred, where non-overlapping starting predictions are more convenient than dealing with redundancy post-prediction.
+
+\section{Conclusions}
+
+The conclusions resulting from our analysis are as follows:
+
+\begin{itemize}
+
+\item Redundancy in ligand binding site prediction leads to an underestimate of recall and an overestimate of precision. The removal of such redundancy and subsequent re-ranking of the remaining pockets results in a drastic increase in recall.
+
+\item A robust pocket scoring scheme is crucial for the correct ranking and prioritisation of predicted sites in downstream analysis, e.g., docking, simulation. Additionally, it has a significant positive effect on both precision and recall.
+
+\item Re-scoring of fpocket predictions, as fpocket\textsubscript{PRANK} or DeepPocket\textsubscript{RESC} present the highest recall (60\%) among the methods reviewed in this analysis.
+
+\item IF-SitePred benefits significantly from pocket re-scoring, and suggests that protein embeddings, which are not directly dependent of structure, represent great promise in the field of ligand site prediction.
+
+\end{itemize}
+
