@@ -96,9 +96,14 @@
 \maketitle
 
 % Add entries to the ToC for the following sections without creating new sections
+
 \cleardoublepage
-\input{Abstract}
-\addcontentsline{toc}{chapter}{Abstract}
+\input{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+
+\cleardoublepage
+\input{Statement}
+\addcontentsline{toc}{chapter}{Statement}
 
 \cleardoublepage
 \input{Dedication}
@@ -108,11 +113,18 @@
 \input{Acknowledgements}
 \addcontentsline{toc}{chapter}{Acknowledgements}
 
+\cleardoublepage
+\input{Publications}
+\addcontentsline{toc}{chapter}{Publications}
+
+\cleardoublepage
+\input{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
 % Add Table of Contents to the ToC
 \cleardoublepage
 %\addcontentsline{toc}{chapter}{\contentsname}
 \tableofcontents
-
 
 % Add List of Figures to the ToC
 \cleardoublepage
