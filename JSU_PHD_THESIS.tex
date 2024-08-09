@@ -20,7 +20,9 @@
 \usepackage{pdflscape}
 \usepackage{booktabs}
 \usepackage{longtable} % For specifying cell format
-\usepackage{array}
+\usepackage{array} % For tables
+\usepackage{adjustbox} % For signatures
+\usepackage{acronym} % For acronyms
 
 \setcounter{tocdepth}{3} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections
@@ -82,18 +84,12 @@
 \setlength{\cftmyequationsindent}{17pt}      % Match the indentation
 %\setlength{\cftbeforemyequationsskip}{10pt} % Match the space before entries
 
-
-\title{JSU PhD Thesis\\
-{\Large University of Dundee}}
-\author{Javier Sánchez Utgés}
-\date{August 2024}
-
 \begin{document}
 
 % Roman numerals for the front matter
 \pagenumbering{roman}
 
-\maketitle
+\input{title_page}
 
 % Add entries to the ToC for the following sections without creating new sections
 
@@ -123,24 +119,28 @@
 
 % Add Table of Contents to the ToC
 \cleardoublepage
-%\addcontentsline{toc}{chapter}{\contentsname}
 \tableofcontents
 
 % Add List of Figures to the ToC
 \cleardoublepage
 \listoffigures
-%\addcontentsline{toc}{chapter}{\listfigurename}
 
 % Add List of Tables to the ToC
 \cleardoublepage
 \listoftables
-%\addcontentsline{toc}{chapter}{\listtablename}
 
 % Add List of Equations to the ToC
 \cleardoublepage
 \phantomsection
 \listofmyequations
 \addcontentsline{toc}{chapter}{\listequationsname}
+
+% Add List of Abbreviations to the ToC
+\cleardoublepage
+\hypersetup{linkcolor=black}
+\input{abbreviations}
+\hypersetup{linkcolor=firebrick}
+\addcontentsline{toc}{chapter}{List of Abbreviations}
 
 % Clear the page and start Arabic numerals for the main matter
 \cleardoublepage
