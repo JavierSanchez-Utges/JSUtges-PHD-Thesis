@@ -84,6 +84,10 @@
 \setlength{\cftmyequationsindent}{17pt}      % Match the indentation
 %\setlength{\cftbeforemyequationsskip}{10pt} % Match the space before entries
 
+%\newcommand{\autorefpanel}[2]{\autoref{#1}#2}
+\newcommand{\autorefpanel}[2]{\hyperref[#1]{\autoref*{#1}#2}}
+
+
 \begin{document}
 
 % Roman numerals for the front matter
