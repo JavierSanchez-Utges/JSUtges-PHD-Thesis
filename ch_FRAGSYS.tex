@@ -118,11 +118,11 @@ Finally, multidimensional scaling (MDS) \cite{MEAD_1992_MDS} with $N$ = 2 dimens
 
 Two different predictive models were developed with the aim of classifying binding sites into the defined RSA-based clusters obtained with K-means, as described above. The first  uses the K-nearest neighbour (KNN) algorithm as implemented in Scikit-learn \cite{PEDREGOSA_2011_SKLEARN}, with $K$ = 3. The input for this KNN model is the rows of the $U_{D}$ matrix, containing the distances between pairs of binding site RSA profiles.
 
-The second model is a multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP}, a type of artificial neural network (ANN) constructed with Keras \cite{CHOLLET_2015_KERAS} with a single hidden fully connected layer between the input layer of 11 neurons, and the output layer of 4 neurons, one for each cluster label. RSA profiles present different lengths depending on the size (number of amino acids) of the binding site. As this input is not suitable for the neural network, binding sites were encoded as an 11-element vector. The first element of the vector encodes the size of the binding site relative to the maximum site size of 40 residues. The other 10 elements represent the proportion of residues forming the binding site with an RSA \% within a 10-unit interval: [0, 10), [10, 20), …, and [90, 100]. In developing the method, we explored the hyperparameter space including number of hidden layers, neurons per layer, activation and loss functions, weight initialisers and optimisers (See Supplementary Note 1, Figure 3 and Table 1).
+The second model is a multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP}, a type of artificial neural network (ANN) constructed with Keras \cite{CHOLLET_2015_KERAS} with a single hidden fully connected layer between the input layer of 11 neurons, and the output layer of 4 neurons, one for each cluster label. RSA profiles present different lengths depending on the size (number of amino acids) of the binding site. As this input is not suitable for the neural network, binding sites were encoded as an 11-element vector. The first element of the vector encodes the size of the binding site relative to the maximum site size of 40 residues. The other 10 elements represent the proportion of residues forming the binding site with an RSA \% within a 10-unit interval: [0, 10), [10, 20), …, and [90, 100].
 
 \subsubsection{MLP ablation}
 
-A thorough hyperparameter optimisation was carried out by examining the effect that a series of hyperparameter changes have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Sixty-four single-hyperparameter changes were performed, one at a time. For each variation, 100 models were trained with different seeds and the average validation accuracies compared to our current MLP. Sixty-four pairwise $t$-tests were conducted to compare the accuracy means, and Benjamini-Hochberg correction \cite{BENJAMINI_1995_FDR} applied. FDR and increment in accuracy, $\Delta_{acc}$ (\autoref{eq:delta_accuracy}) are used to describe the results, where $acc_{current}$ is the average validation accuracy of our \textit{current} ML setup across the 100 seeds, and $acc_{variant}$ is the average accuracy across 100 seeds of each one of the 64 variant models. $\Delta_{acc} <$ 0 represents a decrease in performance respect our current ML architecture, whereas $\Delta_{acc} >$ 0 corresponds to a higher accuracy.
+A thorough hyperparameter optimisation was carried out by examining the effect that a series of hyperparameter changes have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Sixty-four single-hyperparameter changes were performed, one at a time. For each variation, 100 models were trained with different seeds and the average validation accuracies compared to our current MLP. Sixty-four pairwise $t$-tests were conducted to compare the accuracy means, and Benjamini-Hochberg correction \cite{BENJAMINI_1995_FDR} applied. FDR and increment in accuracy, $\Delta_{acc}$ (\autoref{eq:delta_accuracy}) are used to describe the results, where $acc_{current}$ is the average validation accuracy of our \textit{current} ML setup across the 100 seeds, and $acc_{variant}$ is the average accuracy across 100 seeds of each one of the 64 variant models. $\Delta_{acc} <$ 0 represents a decrease in performance respect our current ML architecture, whereas $\Delta_{acc} >$ 0 corresponds to a higher accuracy. The results of this ablation study are described below and graphically represented in \autoref{fig:mlp_ablation} and \autoref{tab:MLP_ablation}.
 
 \begin{equation}
 \Delta_{acc} = acc_{variant} - acc_{current}
@@ -130,9 +130,20 @@ A thorough hyperparameter optimisation was carried out by examining the effect t
 \end{equation}
 \myequations{Increment in MLP accuracy}
 
-\paragraph{Hidden layer structure}
+\paragraph{Number of layers}
 
-Removing the single hidden layer resulted in a significant decrease in accuracy, $\Delta_{acc}$ = \textminus11\% (FDR $<$ 0.05). The addition of more layers did not improve accuracy: 2-layer  $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05), 10-layer $\Delta_{acc}$ = \textminus8.9\% (FDR $<$ 0.05), or was not statistically different from our current setup baseline: 5-layer $\Delta_{acc}$ = \textminus0.15\% (FDR = 0.42). The addition of neurons N\textsubscript{neurons} = [11, 20, 25, 50, 100] in the single layer did not improve the current accuracy (FDR $>$ 0.05). The removal of neurons did not have an effect of performance for N\textsubscript{neurons} = [4, 5, 6, 7, 8, 9] (FDR $>$ 0.05), or a significant negative effect for 1 neuron, $\Delta_{acc}$ = \textminus15\% (FDR $<$ 0.05), 2 neurons $\Delta_{acc}$ = \textminus4\% (FDR $<$ 0.05), and 3 neurons, $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05). This result suggests that 5 neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model.
+Removing the single hidden layer resulted in a significant decrease in accuracy, $\Delta_{acc}$ = \textminus11\% (FDR $<$ 0.05). The addition of more layers did not improve accuracy: 2-layer  $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05), 10-layer $\Delta_{acc}$ = \textminus8.9\% (FDR $<$ 0.05), or was not statistically different from our current setup baseline: 5-layer $\Delta_{acc}$ = \textminus0.15\% (FDR = 0.42).
+
+\paragraph{Neurons per layer}
+
+The addition of neurons N\textsubscript{neurons} = [11, 20, 25, 50, 100] in the single layer did not improve the current accuracy (FDR $>$ 0.05). The removal of neurons did not have an effect of performance for N\textsubscript{neurons} = [4, 5, 6, 7, 8, 9] (FDR $>$ 0.05), or a significant negative effect for 1 neuron, $\Delta_{acc}$ = \textminus15\% (FDR $<$ 0.05), 2 neurons $\Delta_{acc}$ = \textminus4\% (FDR $<$ 0.05), and 3 neurons, $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05). This result suggests that 5 neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/SUPP_FIG3_MLP_ablation.png}
+    \caption[MLP ablation study]{\textbf{MLP ablation study.} Ablation study performed on the MLP. Sixty-four single hyperparameter changes are conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current machine learning setup, labelled as \textit{current}. Box and whiskers represent the distribution of validation accuracy across 100 random seeds. Dashed lines mark the separation between different hyperparameters: number of layers, neurons, activation, loss functions, weight initialisers, optimisers, learning, dropout rates, and regularisation techniques.}
+    \label{fig:mlp_ablation}
+\end{figure}
 
 \paragraph{Activation function}
 
@@ -162,16 +173,6 @@ Regarding dropout rates, a rate = 75\%, negatively affected prediction  $\Delta_
 
 Overall, implementing kernel, bias, or activity regularisation techniques did not improve prediction accuracy, but worsened it $\Delta_{acc} \ni$ [\textminus2.56, \textminus0.46] (FDR $<$ 0.05).
 
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/SUPP_FIG3_MLP_ablation.pdf}
-    \caption[MLP ablation study]{\textbf{MLP ablation study.} Ablation study performed on the MLP. Sixty-four single hyperparameter changes are conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current machine learning setup, labelled as \textit{current}. Box and whiskers represent the distribution of validation accuracy across 100 random seeds. Dashed lines mark the separation between different hyperparameters: number of layers, neurons, activation, loss functions, weight initialisers, optimisers, learning, dropout rates, and regularisation techniques.}
-    \label{fig:mlp_ablation}
-\end{figure}
-
-% Please add the following required packages to your document preamble:
-% \usepackage{longtable}
-% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
 \begin{longtable}{|c|c|c|c|}
 \hline
 \textbf{Model}              & \textbf{Accuracy} & \textbf{$\Delta_{acc}$} & \textbf{FDR} \\ \hline
@@ -180,75 +181,75 @@ Overall, implementing kernel, bias, or activity regularisation techniques did no
 \multicolumn{4}{c}%
 {{\bfseries Table \thetable\ (continued)}} \\
 \hline
-\textbf{Model}              & \textbf{Accuracy} & \textbf{$\Delta_{acc}$} & \textbf{FDR} \\ \hline
+\textbf{Model}              & \textbf{\% Accuracy} & \textbf{\% $\Delta_{acc}$} & \textbf{FDR} \\ \hline
 \endhead
 %
-\textit{current}            & 0.94              & -                       & -            \\ \hline
-\texttt{N\textsubscript{LAYERS} = 0}                   & 0.83              &  \textminus11.00                     & 0            \\ \hline
-\texttt{N\textsubscript{LAYERS} = 2}                    & 0.93              &  \textminus1.00                      & 0            \\ \hline
-\texttt{N\textsubscript{LAYERS} = 5}                    & 0.94              &  \textminus0.15                   & 0.42         \\ \hline
-\texttt{N\textsubscript{LAYERS} = 10}                   & 0.85              &  \textminus8.93                   & 0            \\ \hline
-\texttt{N\textsubscript{NEURONS} = 1}                  & 0.79              &  \textminus14.93                  & 0            \\ \hline
-\texttt{N\textsubscript{NEURONS} = 2}                  & 0.9               &  \textminus4.15                   & 0            \\ \hline
-\texttt{N\textsubscript{NEURONS} = 3}                  & 0.93              &  \textminus1.06                   & 0            \\ \hline
-\texttt{N\textsubscript{NEURONS} = 4}                  & 0.94              &  \textminus0.28                   & 0.24         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 5}                  & 0.94              &  \textminus0.13                   & 0.54         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 6}                  & 0.94              &  \textminus0.24                   & 0.26         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 7}                  & 0.94              &  \textminus0.39                   & 0.08         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 8}                  & 0.94              &  \textminus0.39                   & 0.08         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 9}                  & 0.94              &  \textminus0.15                   & 0.49         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 11}                 & 0.94              & +0.09                    & 0.65         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 20}                 & 0.94              & +0.07                    & 0.68         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 25}                 & 0.94              &  \textminus0.04                   & 0.83         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 50}                 & 0.94              &  \textminus0.02                   & 0.91         \\ \hline
-\texttt{N\textsubscript{NEURONS} = 100}                & 0.94              &  \textminus0.11                   & 0.49         \\ \hline
-\texttt{sigmoid}                     & 0.92              &  \textminus1.52                   & 0            \\ \hline
-\texttt{elu}                         & 0.94              & +0.15                    & 0.38         \\ \hline
-\texttt{selu}                        & 0.94              &  \textminus0.26                   & 0.15         \\ \hline
-\texttt{exponential}                         & 0.93              &  \textminus1.17                   & 0            \\ \hline
-\texttt{tanh}                        & 0.94              &  \textminus0.15                   & 0.41         \\ \hline
-\texttt{softplus}                    & 0.93              &  \textminus0.69                   & 0            \\ \hline
-\texttt{softmax}                     & 0.9               &  \textminus3.98                   & 0            \\ \hline
-\texttt{softsign}                    & 0.94              &  \textminus0.41                   & 0.02         \\ \hline
-\texttt{MSE}             & 0.44              &  \textminus49.81                  & 0            \\ \hline
-\texttt{Poisson}         & 0.44              &  \textminus50.31                  & 0            \\ \hline
-\texttt{KLDivergence}             & 0.44              &  \textminus50.00                     & 0            \\ \hline
-\texttt{HeNormal}       & 0.94              &  \textminus0.20                    & 0.37         \\ \hline
-\texttt{HeUniform}        & 0.94              &  \textminus0.26                   & 0.21         \\ \hline
-\texttt{RandomNormal}     & 0.94              & +0.41                    & 0.02         \\ \hline
-\texttt{RandomUniform}      & 0.94              & +0.44                    & 0.01         \\ \hline
-\texttt{TruncatedNormal}    & 0.95              & +0.59                    & 0            \\ \hline
-\texttt{Ones}           & 0.9               &  \textminus3.96                   & 0            \\ \hline
-\texttt{Zeros}          & 0.43              &  \textminus51.35                  & 0            \\ \hline
-\texttt{GlorotNormal} & 0.94              &  \textminus0.06                   & 0.79         \\ \hline
-\texttt{SGD}             & 0.47              &  \textminus47.26                  & 0            \\ \hline
-\texttt{RMSProp}          & 0.95              & +0.54                    & 0            \\ \hline
-\texttt{Adadelta}         & 0.29              &  \textminus64.50                   & 0            \\ \hline
-\texttt{Adagrad}         & 0.55              &  \textminus38.83                  & 0            \\ \hline
-\texttt{Adamax}           & 0.94              & +0.11                    & 0.6          \\ \hline
-\texttt{Nadam}            & 0.94              & +0.13                    & 0.48         \\ \hline
-\texttt{Ftrl}             & 0.35              &  \textminus59.24                  & 0            \\ \hline
-\texttt{Learning rate = 0.001}       & 0.89              &  \textminus4.98                   & 0            \\ \hline
-\texttt{Learning rate = 0.005}       & 0.94              &  \textminus0.44                   & 0.04         \\ \hline
-\texttt{Learning rate = 0.05}        & 0.94              &  \textminus0.33                   & 0.06         \\ \hline
-\texttt{Learning rate = 0.1}         & 0.94              & +0.31                    & 0.05         \\ \hline
-\texttt{Learning rate = 0.25}        & 0.93              & +0.83                   & 0.27         \\ \hline
-\texttt{Learning rate = 0.5}         & 0.88              &  \textminus5.70                    & 0            \\ \hline
-\texttt{Learning rate = 1.0}         & 0.7               &  \textminus24.37                  & 0            \\ \hline
-\texttt{Dropout = 0.1}                & 0.95              & +0.56                    & 0            \\ \hline
-\texttt{Dropout = 0.25}               & 0.95              & +0.61                    & 0            \\ \hline
-\texttt{Dropout = 0.33}               & 0.95              & +0.80                     & 0            \\ \hline
-\texttt{Dropout = 0.5}                & 0.94              & +0.11                    & 0.54         \\ \hline
-\texttt{Dropout = 0.75}               & 0.92              &  \textminus2.02                   & 0            \\ \hline
-\texttt{L1}                 & 0.93              &  \textminus1.48                   & 0            \\ \hline
-\texttt{L2}                 & 0.94              &  \textminus0.46                   & 0.04         \\ \hline
-\texttt{L1L2}               & 0.92              &  \textminus1.93                   & 0            \\ \hline
-\texttt{OrthogonalRegularizer rows}        & 0.94              &  \textminus0.46                   & 0.02         \\ \hline
-\texttt{OrthogonalRegularizer columns}        & 0.94              &  \textminus0.09                   & 0.62         \\ \hline
-\texttt{\textit{all} L1}            & 0.92              &  \textminus2.11                   & 0            \\ \hline
-\texttt{\textit{all} L2}            & 0.92              &  \textminus1.70                    & 0            \\ \hline
-\texttt{\textit{all} L1L2}          & 0.91              &  \textminus2.56                   & 0            \\ \hline
-\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes are conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Validation accuracy represents the validation accuracy average across 100 random seeds. $\Delta_{acc}$ represents the difference in performance between the variant MLP model and our current setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
+\textit{current}            & 93.9              & -                       & -            \\ \hline
+\texttt{N\textsubscript{LAYERS} = 0}                   & 82.9              &  \textminus11.0                     & 0            \\ \hline
+\texttt{N\textsubscript{LAYERS} = 2}                    & 92.9              &  \textminus1.0                      & 0            \\ \hline
+\texttt{N\textsubscript{LAYERS} = 5}                    & 93.8              &  \textminus0.1                   & 0.42         \\ \hline
+\texttt{N\textsubscript{LAYERS} = 10}                   & 85.0              &  \textminus8.9                   & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 1}                  & 79.0              &  \textminus14.9                  & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 2}                  & 89.8               &  \textminus4.2                   & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 3}                  & 92.9              &  \textminus1.1                   & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 4}                  & 93.7              &  \textminus0.3                   & 0.24         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 5}                  & 93.8              &  \textminus0.1                   & 0.54         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 6}                  & 93.7              &  \textminus0.2                   & 0.26         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 7}                  & 93.6              &  \textminus0.3                   & 0.08         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 8}                  & 93.6              &  \textminus0.3                   & 0.08         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 9}                  & 93.8              &  \textminus0.1                   & 0.49         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 11}                 & 94.0              & +0.1                    & 0.65         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 20}                 & 94.0              & +0.1                    & 0.68         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 25}                 & 94.0              &  \textminus0.0                   & 0.83         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 50}                 & 93.9              &  \textminus0.0                   & 0.91         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 100}                & 93.8              &  \textminus0.1                   & 0.49         \\ \hline
+\texttt{sigmoid}                     & 92.4              &  \textminus1.5                   & 0            \\ \hline
+\texttt{elu}                         & 94.1              & +0.2                    & 0.38         \\ \hline
+\texttt{selu}                        & 93.7              &  \textminus0.2                   & 0.15         \\ \hline
+\texttt{exponential}                         & 92.8              &  \textminus1.1                   & 0            \\ \hline
+\texttt{tanh}                        & 93.8              &  \textminus0.1                   & 0.41         \\ \hline
+\texttt{softplus}                    & 93.3              &  \textminus0.6                   & 0            \\ \hline
+\texttt{softmax}                     & 90.0               &  \textminus3.9                   & 0            \\ \hline
+\texttt{softsign}                    & 93.5              &  \textminus0.4                   & 0.02         \\ \hline
+\texttt{MSE}             & 44.1              &  \textminus49.8                  & 0            \\ \hline
+\texttt{Poisson}         & 43.6              &  \textminus50.3                  & 0            \\ \hline
+\texttt{KLDivergence}             & 43.9              &  \textminus50.0                     & 0            \\ \hline
+\texttt{HeNormal}       & 93.7              &  \textminus0.2                    & 0.37         \\ \hline
+\texttt{HeUniform}        & 93.7              &  \textminus0.2                   & 0.21         \\ \hline
+\texttt{RandomNormal}     & 94.4              & +0.5                    & 0.02         \\ \hline
+\texttt{RandomUniform}      & 94.4              & +0.5                    & 0.01         \\ \hline
+\texttt{TruncatedNormal}    & 94.5              & +0.6                    & 0            \\ \hline
+\texttt{Ones}           & 90.0               &  \textminus3.9                   & 0            \\ \hline
+\texttt{Zeros}          & 42.6              &  \textminus51.3                  & 0            \\ \hline
+\texttt{GlorotNormal} & 93.9              &  \textminus0.0                   & 0.79         \\ \hline
+\texttt{SGD}             & 46.7              &  \textminus47.2                  & 0            \\ \hline
+\texttt{RMSProp}          & 94.5              & +0.6                    & 0            \\ \hline
+\texttt{Adadelta}         & 29.4              &  \textminus64.5                   & 0            \\ \hline
+\texttt{Adagrad}         & 55.1              &  \textminus38.8                  & 0            \\ \hline
+\texttt{Adamax}           & 94.1              & +0.2                    & 0.6          \\ \hline
+\texttt{Nadam}            & 94.1              & +0.2                    & 0.48         \\ \hline
+\texttt{Ftrl}             & 34.7              &  \textminus59.2                  & 0            \\ \hline
+\texttt{Learning rate = 0.001}       & 89.0              &  \textminus4.9                   & 0            \\ \hline
+\texttt{Learning rate = 0.005}       & 93.5              &  \textminus0.4                   & 0.04         \\ \hline
+\texttt{Learning rate = 0.05}        & 93.6              &  \textminus0.3                   & 0.06         \\ \hline
+\texttt{Learning rate = 0.1}         & 94.3              & +0.4                    & 0.05         \\ \hline
+\texttt{Learning rate = 0.25}        & 93.1              & \textminus0.8                   & 0.27         \\ \hline
+\texttt{Learning rate = 0.5}         & 88.2              &  \textminus5.7                    & 0            \\ \hline
+\texttt{Learning rate = 1.0}         & 69.6               &  \textminus24.3                  & 0            \\ \hline
+\texttt{Dropout rate = 0.1}                & 94.5              & +0.6                    & 0            \\ \hline
+\texttt{Dropout rate = 0.25}               & 94.6              & +0.7                    & 0            \\ \hline
+\texttt{Dropout rate = 0.33}               & 94.7              & +0.8                     & 0            \\ \hline
+\texttt{Dropout rate = 0.5}                & 94.1              & +0.2                    & 0.54         \\ \hline
+\texttt{Dropout rate = 0.75}               & 91.9              &  \textminus2.0                   & 0            \\ \hline
+\texttt{L1}                 & 92.5              &  \textminus1.4                   & 0            \\ \hline
+\texttt{L2}                 & 93.5              &  \textminus0.4                   & 0.04         \\ \hline
+\texttt{L1L2}               & 92.0              &  \textminus1.9                   & 0            \\ \hline
+\texttt{Orthogonal rows}        & 93.5              &  \textminus0.4                   & 0.02         \\ \hline
+\texttt{Orthogonal columns}        & 93.9              &  \textminus0.0                   & 0.62         \\ \hline
+\texttt{\textit{all} L1}            & 91.8              &  \textminus2.1                   & 0            \\ \hline
+\texttt{\textit{all} L2}            & 92.2              &  \textminus1.7                    & 0            \\ \hline
+\texttt{\textit{all} L1L2}          & 91.4              &  \textminus2.5                   & 0            \\ \hline
+\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes were conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. \% Accuracy represents the validation accuracy average across 100 random seeds. \% $\Delta_{acc}$ represents the difference in accuracy between the variant MLP model and our \textit{current} setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
 \label{tab:MLP_ablation}\\
 \end{longtable}
 
