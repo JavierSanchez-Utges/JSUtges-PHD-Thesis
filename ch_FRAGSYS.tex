@@ -464,3 +464,33 @@ Here, we have focused on a small set of proteins heavily studied by fragment scr
 \end{figure}
 
 It is natural to focus on sites that are most likely to be of functional significance and so possible targets to modulate function. However, binding sites identified here that are predicted to be least likely to have function may also be interesting as good locations for tagging proteins for degradation \cite{BEKES_2022_PROTACS}, phosphorylation \cite{SIRIWARDENA_2020_PHOSPHO}, dephosphorylation \cite{SIMPSON_2023_ADPROM}, or other modulation \cite{HEITEL_2023_PTMS, PENG_2023_PTMS}.
+
+\begin{landscape}
+%\begin{table}[]
+%\centering
+%\resizebox{\textheight}{!}
+%{%
+\begin{longtable}{|M{22mm}|M{15mm}|M{20mm}|M{13mm}|M{13mm}|M{10mm}|M{10mm}|M{48mm}|M{48mm}|}
+\hline
+\textbf{UniProt ID} & \textbf{\% RSA}  & $N_{Shenkin}$ & \textbf{MES}   & $p$    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}                                                   \\ \hline
+\endfirsthead
+%
+\endhead
+%
+Q32ZE1     & 17.4 & 38.4     & \textminus0.21 & 0.02 & 10          & 1          & 1762, 1763, 1765, 1766, 1769, 1791, 1991, 2034, 2035, 2038                                              & RNA binding \cite{DURGAM_2022_ZIKA_ATP}, RNA exit site \cite{MOTTIN_2017_ZIKA_HELICASE}, D3 site \cite{RAUBENOLT_2021_ZIKA_ALLOSTERIC}         \\ \hline
+Q9Y2J2     & 14.6 & 38.2     & +0.01  & 0.84 & 15          & 1          & 117, 118, 119, 203, 206, 207, 210, 231, 232, 235, 236, 253, 282, 283, 286                               & GPC binding \cite{HAN_2000_CYTOSKELETON}                                                 \\ \hline
+Q9Y2J2     & 13.4 & 43.3     & +0.02  & 0.7  & 21          & 4          & 154, 161, 162, 163, 164, 185, 186, 189, 208, 212, 217, 295, 297, 298, 299, 300, 301, 315, 375, 376, 379 & Calmodulin binding \cite{HAN_2000_CYTOSKELETON}                                          \\ \hline
+Q8WS26     & 16.2 & 28.9     & \textminus0.22 & 0.26 & 19          & 2          & 105, 106, 107, 108, 109, 112, 151, 154, 155, 158, 159, 162, 170, 171, 173, 174, 175, 176, 179           & IPP, DMAPP binding \cite{MUNZKER_2020_FARNESYL, GABELLI_2006_FARNESYL}                                      \\ \hline
+Q8WS26     & 22.1 & 31       & +0.18  & 0.58 & 8           & 2          & 308, 312, 315, 316, 320, 324, 384, 423                                                                  & IPP binding \cite{GABELLI_2006_FARNESYL}                                                 \\ \hline
+P18031     & 20.8 & 33.9     & +0.05  & 0.48 & 14          & 1          & 1, 2, 3, 4, 6, 10, 19, 242, 243, 244, 245, 246, 247, 271                                                & Conformational change \cite{KEEDY_2018_PTP1B}, Cluster II \cite{CUI_2017_ALLOSTERIC}                   \\ \hline
+P47811     & 17.1 & 55       & +0.08  & 0    & 19          & 10         & 191, 192, 197, 198, 232, 236, 242, 246, 249, 250, 251, 252, 255, 259, 291, 292, 293, 294, 296           & MAP insert motif, Trp197 pocket \cite{FRANCIS_2013_P38A, NICHOLS_2020_P38A} \\ \hline
+Q6B0I6     & 15.8 & 41.8     & +0.12  & 0.43 & 12          & 5          & 193, 224, 225, 227, 228, 239, 240, 241, 242, 243, 277, 279                                              & Cryptic binding site \cite{PEARCE_2017_PANDDA}                                        \\ \hline
+P0DTD1     & 12.9 & 34.3     & \textminus0.13 & 0.45 & 12          & 2          & 5501, 5503, 5809, 5810, 5811, 5838, 5839, 5840, 5841, 5856, 5858, 5878                                  & RNA binding \cite{NEWMAN_2021_SARSCOV2} \\ \hline
+P0DTD1     & 22.3 & 51.5     & \textminus0.04 & 0.87 & 9           & 1          & 5806, 5809, 5810, 5811, 5839, 5874, 5876, 5878, 5879                                                    & RNA binding \cite{NEWMAN_2021_SARSCOV2} \\ \hline
+P22557     & 16   & 47.8     & \textminus0.09 & 0.61 & 16          & 10         & 148, 152, 155, 267, 268, 271, 272, 409, 413, 506, 570, 572, 573, 574, 575, 576                          & Dimerisation interface \cite{BAILEY_2020_AMINOLEVULINATE} \\ \hline
+P22557     & 12.7 & 53.1     & +0.08  & 0.61 & 7           & 2          & 271, 293, 294, 295, 296, 297, 575                                                                       & Conformational change, PLP binding, succinyl-CoA inhibition \cite{BAILEY_2020_AMINOLEVULINATE} \\ \hline
+\caption[Literature supported C1 sites]{\textbf{Literature supported C1 sites.} These are 12 C1 sites with no functional annotations in UniProt, therefore labelled as \textit{unknown function}, for which literature has been found that support their functional relevance. UniProt ID indicates the protein UniProt accession. \% RSA is the median site RSA. $N_{Shenkin}$ is the average normalised Shenkin score for the site. MES is the average missense enrichment score for the site. $p$ is the $p$-value associated to this site MES. \# aas is the number of residues forming the site. \# ligs is the number of ligands binding to the site. UniProt residue numbers is a list of the UniProt residue numbers of the residues forming the site. Literature support contains a brief description of the literature-reported site function and references.}
+\label{tab:literature_c1_sites}\\
+\end{longtable}
+\end{landscape}
+
