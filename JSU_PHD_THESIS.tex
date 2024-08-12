@@ -15,7 +15,7 @@
 \usepackage{xurl}
 \usepackage{tocbibind} % for table of contents
 \usepackage{tocloft}  % for table of contents
-\usepackage{booktabs}  % For professional looking tables
+\usepackage{booktabs}  % For professional looking tables 
 \usepackage{placeins} % More control on float placing
 \usepackage{pdflscape}
 \usepackage{booktabs}
@@ -24,7 +24,7 @@
 \usepackage{adjustbox} % For signatures
 \usepackage{acronym} % For acronyms
 
-\setcounter{tocdepth}{3} % this is to include subsubsections
+\setcounter{tocdepth}{4} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections
 
 % Set up the margins
@@ -60,6 +60,14 @@
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
 
+% Command to handle smaller fonts for charts, captions, and footnotes
+\captionsetup[table]{
+    font={footnotesize,stretch=1.25}, % Change the font size of the caption
+    labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
+    textfont={color=darkgray}, % Make the text colored
+    labelsep=period % Use period after the label (e.g., "Figure 8.")
+}
+
 \definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
 \definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
@@ -82,9 +90,7 @@
 \addcontentsline{equ}{myequations}{\protect\numberline{\theequation}#1}\par}
 \setlength{\cftmyequationsnumwidth}{2.3em}  % Adjust the width to accommodate three digits
 \setlength{\cftmyequationsindent}{17pt}      % Match the indentation
-%\setlength{\cftbeforemyequationsskip}{10pt} % Match the space before entries
 
-%\newcommand{\autorefpanel}[2]{\autoref{#1}#2}
 \newcommand{\autorefpanel}[2]{\hyperref[#1]{\autoref*{#1}#2}}
 
 
@@ -167,8 +173,6 @@
 \include{conclusions}
 
 \cleardoublepage
-%\phantomsection
-%\addcontentsline{toc}{chapter}{Bibliography} 
 \bibliographystyle{unsrt}
 \bibliography{references_short}
 

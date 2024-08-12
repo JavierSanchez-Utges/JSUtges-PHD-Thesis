@@ -120,6 +120,48 @@ Two different predictive models were developed with the aim of classifying bindi
 
 The second model is a multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP}, a type of artificial neural network (ANN) constructed with Keras \cite{CHOLLET_2015_KERAS} with a single hidden fully connected layer between the input layer of 11 neurons, and the output layer of 4 neurons, one for each cluster label. RSA profiles present different lengths depending on the size (number of amino acids) of the binding site. As this input is not suitable for the neural network, binding sites were encoded as an 11-element vector. The first element of the vector encodes the size of the binding site relative to the maximum site size of 40 residues. The other 10 elements represent the proportion of residues forming the binding site with an RSA \% within a 10-unit interval: [0, 10), [10, 20), …, and [90, 100]. In developing the method, we explored the hyperparameter space including number of hidden layers, neurons per layer, activation and loss functions, weight initialisers and optimisers (See Supplementary Note 1, Figure 3 and Table 1).
 
+\subsubsection{MLP ablation}
+
+A thorough hyperparameter optimisation was carried out by examining the effect that a series of hyperparameter changes have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Sixty-four single-hyperparameter changes were performed, one at a time. For each variation, 100 models were trained with different seeds and the average validation accuracies compared to our current MLP. Sixty-four pairwise $t$-tests were conducted to compare the accuracy means, and Benjamini-Hochberg correction \cite{BENJAMINI_1995_FDR} applied. FDR and increment in accuracy, $\Delta_{acc}$ (\autoref{eq:delta_accuracy}) are used to describe the results, where $acc_{current}$ is the average validation accuracy of our \textit{current} ML setup across the 100 seeds, and $acc_{variant}$ is the average accuracy across 100 seeds of each one of the 64 variant models. $\Delta_{acc} <$ 0 represents a decrease in performance respect our current ML architecture, whereas $\Delta_{acc} >$ 0 corresponds to a higher accuracy.
+
+\begin{equation}
+\Delta_{acc} = acc_{variant} - acc_{current}
+\label{eq:delta_accuracy}
+\end{equation}
+\myequations{Increment in MLP accuracy}
+
+\paragraph{Hidden layer structure}
+
+Removing the single hidden layer resulted in a significant decrease in accuracy, $\Delta_{acc}$ = \textminus11\% (FDR $<$ 0.05). The addition of more layers did not improve accuracy: 2-layer  $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05), 10-layer $\Delta_{acc}$ = \textminus8.9\% (FDR $<$ 0.05), or was not statistically different from our current setup baseline: 5-layer $\Delta_{acc}$ = \textminus0.15\% (FDR = 0.42). The addition of neurons N\textsubscript{neurons} = [11, 20, 25, 50, 100] in the single layer did not improve the current accuracy (FDR $>$ 0.05). The removal of neurons did not have an effect of performance for N\textsubscript{neurons} = [4, 5, 6, 7, 8, 9] (FDR $>$ 0.05), or a significant negative effect for 1 neuron, $\Delta_{acc}$ = \textminus15\% (FDR $<$ 0.05), 2 neurons $\Delta_{acc}$ = \textminus4\% (FDR $<$ 0.05), and 3 neurons, $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05). This result suggests that 5 neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model.
+
+\paragraph{Activation function}
+
+The usage of different activation functions either negatively affected the accuracy of the MLP ($\Delta_{acc} <$ 0) or had no effect (FDR $>$ 0.05).
+
+\paragraph{Loss function}
+
+Different loss functions resulted in terrible loss of accuracy $\Delta_{acc} \approx$ \textminus50\% (FDR $<$ 0.05). This is expected as they are not appropriate for a multi-label classifier, unlike sparse categorical cross entropy.
+
+\paragraph{Weight initialiser}
+
+Most weight initialisers were tested and either negatively affected the accuracy of the MLP ($\Delta_{acc} <$ 0) or had no effect (FDR $>$ 0.05). However, \texttt{RandomNormal}, \texttt{RandomUniform}, and \texttt{TruncatedNormal} did improve the accuracy but by less than 1\%, $\Delta_{acc} <$ +1\% (FDR $<$ 0.05).
+
+\paragraph{Optimiser}
+
+Regarding optimisers, they either severely negatively affected accuracy $\Delta_{acc} \approx$ \textminus30\% (FDR $<$ 0.05), had no significant effect (FDR $>$ 0.05), or very slightly improved accuracy, such as \texttt{RMSProp} $\Delta_{acc} <$ +1\% (FDR $<$ 0.05).
+
+\paragraph{Learning rate}
+
+Extreme learning rates of 0.001 (too small), and 1.0 (too big) negatively affected prediction $\Delta_{acc} <$ \textminus5\% (FDR $<$ 0.05). Intermediate rates had either no significant effect (FDR $>$ 0.05) or a small effect $\|\Delta_{acc}\| <$ 1\%.
+
+\paragraph{Dropout rate}
+
+Regarding dropout rates, a rate = 75\%, negatively affected prediction  $\Delta_{acc} <$ \textminus2\%,(FDR $<$ 0.05). Lower dropout rates: 0.1, 0.25, and 0.33 did improve the accuracy, but the effect size is very small, $\Delta_{acc} <$ +1\% (FDR $<$ 0.05). This result agrees with the effect of the removal of neurons per layer and shows that fewer neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model, as dropping them out has no effect.
+
+\paragraph{Regularisation}
+
+Overall, implementing kernel, bias, or activity regularisation techniques did not improve prediction accuracy, but worsened it $\Delta_{acc} \ni$ [\textminus2.56, \textminus0.46] (FDR $<$ 0.05).
+
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/SUPP_FIG3_MLP_ablation.pdf}
@@ -127,7 +169,92 @@ The second model is a multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP}, a typ
     \label{fig:mlp_ablation}
 \end{figure}
 
-The complete dataset ($N$ = 293) was split into a blind test set (1/11 = 27), and a training set (10/11 = 266). Ten repeats of a stratified 10-fold cross-validation were performed to assess the robustness of the ANN and compare it with the KNN model, as well as a baseline of the same models trained on randomly shuffled data and completely random label assignment (p = 0.25). The reliability of the ANN predictions was assessed by means of a confidence score calculated as in \cite{CUFF_2000_PROFILES}, which represents how certain the MLP is of each individual prediction (\autoref{eq:confidence_score}). The score is based on the difference between the top- and second-class probabilities assigned by the network to each of the classes, $p_{1}$, and $p_{2}$, respectively. For example, if the output of the network were $P$ = [0.95, 0.02, 0.03, 0.0]. The probabilities would be sorted, so $p_{1}$ = 0.95, $p_{2}$ = 0.03, and a confidence score of 9 would be obtained.
+% Please add the following required packages to your document preamble:
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{longtable}{|c|c|c|c|}
+\hline
+\textbf{Model}              & \textbf{Accuracy} & \textbf{$\Delta_{acc}$} & \textbf{FDR} \\ \hline
+\endfirsthead
+%
+\multicolumn{4}{c}%
+{{\bfseries Table \thetable\ (continued)}} \\
+\hline
+\textbf{Model}              & \textbf{Accuracy} & \textbf{$\Delta_{acc}$} & \textbf{FDR} \\ \hline
+\endhead
+%
+\textit{current}            & 0.94              & -                       & -            \\ \hline
+\texttt{N\textsubscript{LAYERS} = 0}                   & 0.83              &  \textminus11.00                     & 0            \\ \hline
+\texttt{N\textsubscript{LAYERS} = 2}                    & 0.93              &  \textminus1.00                      & 0            \\ \hline
+\texttt{N\textsubscript{LAYERS} = 5}                    & 0.94              &  \textminus0.15                   & 0.42         \\ \hline
+\texttt{N\textsubscript{LAYERS} = 10}                   & 0.85              &  \textminus8.93                   & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 1}                  & 0.79              &  \textminus14.93                  & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 2}                  & 0.9               &  \textminus4.15                   & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 3}                  & 0.93              &  \textminus1.06                   & 0            \\ \hline
+\texttt{N\textsubscript{NEURONS} = 4}                  & 0.94              &  \textminus0.28                   & 0.24         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 5}                  & 0.94              &  \textminus0.13                   & 0.54         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 6}                  & 0.94              &  \textminus0.24                   & 0.26         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 7}                  & 0.94              &  \textminus0.39                   & 0.08         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 8}                  & 0.94              &  \textminus0.39                   & 0.08         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 9}                  & 0.94              &  \textminus0.15                   & 0.49         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 11}                 & 0.94              & +0.09                    & 0.65         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 20}                 & 0.94              & +0.07                    & 0.68         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 25}                 & 0.94              &  \textminus0.04                   & 0.83         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 50}                 & 0.94              &  \textminus0.02                   & 0.91         \\ \hline
+\texttt{N\textsubscript{NEURONS} = 100}                & 0.94              &  \textminus0.11                   & 0.49         \\ \hline
+\texttt{sigmoid}                     & 0.92              &  \textminus1.52                   & 0            \\ \hline
+\texttt{elu}                         & 0.94              & +0.15                    & 0.38         \\ \hline
+\texttt{selu}                        & 0.94              &  \textminus0.26                   & 0.15         \\ \hline
+\texttt{exponential}                         & 0.93              &  \textminus1.17                   & 0            \\ \hline
+\texttt{tanh}                        & 0.94              &  \textminus0.15                   & 0.41         \\ \hline
+\texttt{softplus}                    & 0.93              &  \textminus0.69                   & 0            \\ \hline
+\texttt{softmax}                     & 0.9               &  \textminus3.98                   & 0            \\ \hline
+\texttt{softsign}                    & 0.94              &  \textminus0.41                   & 0.02         \\ \hline
+\texttt{MSE}             & 0.44              &  \textminus49.81                  & 0            \\ \hline
+\texttt{Poisson}         & 0.44              &  \textminus50.31                  & 0            \\ \hline
+\texttt{KLDivergence}             & 0.44              &  \textminus50.00                     & 0            \\ \hline
+\texttt{HeNormal}       & 0.94              &  \textminus0.20                    & 0.37         \\ \hline
+\texttt{HeUniform}        & 0.94              &  \textminus0.26                   & 0.21         \\ \hline
+\texttt{RandomNormal}     & 0.94              & +0.41                    & 0.02         \\ \hline
+\texttt{RandomUniform}      & 0.94              & +0.44                    & 0.01         \\ \hline
+\texttt{TruncatedNormal}    & 0.95              & +0.59                    & 0            \\ \hline
+\texttt{Ones}           & 0.9               &  \textminus3.96                   & 0            \\ \hline
+\texttt{Zeros}          & 0.43              &  \textminus51.35                  & 0            \\ \hline
+\texttt{GlorotNormal} & 0.94              &  \textminus0.06                   & 0.79         \\ \hline
+\texttt{SGD}             & 0.47              &  \textminus47.26                  & 0            \\ \hline
+\texttt{RMSProp}          & 0.95              & +0.54                    & 0            \\ \hline
+\texttt{Adadelta}         & 0.29              &  \textminus64.50                   & 0            \\ \hline
+\texttt{Adagrad}         & 0.55              &  \textminus38.83                  & 0            \\ \hline
+\texttt{Adamax}           & 0.94              & +0.11                    & 0.6          \\ \hline
+\texttt{Nadam}            & 0.94              & +0.13                    & 0.48         \\ \hline
+\texttt{Ftrl}             & 0.35              &  \textminus59.24                  & 0            \\ \hline
+\texttt{Learning rate = 0.001}       & 0.89              &  \textminus4.98                   & 0            \\ \hline
+\texttt{Learning rate = 0.005}       & 0.94              &  \textminus0.44                   & 0.04         \\ \hline
+\texttt{Learning rate = 0.05}        & 0.94              &  \textminus0.33                   & 0.06         \\ \hline
+\texttt{Learning rate = 0.1}         & 0.94              & +0.31                    & 0.05         \\ \hline
+\texttt{Learning rate = 0.25}        & 0.93              & +0.83                   & 0.27         \\ \hline
+\texttt{Learning rate = 0.5}         & 0.88              &  \textminus5.70                    & 0            \\ \hline
+\texttt{Learning rate = 1.0}         & 0.7               &  \textminus24.37                  & 0            \\ \hline
+\texttt{Dropout = 0.1}                & 0.95              & +0.56                    & 0            \\ \hline
+\texttt{Dropout = 0.25}               & 0.95              & +0.61                    & 0            \\ \hline
+\texttt{Dropout = 0.33}               & 0.95              & +0.80                     & 0            \\ \hline
+\texttt{Dropout = 0.5}                & 0.94              & +0.11                    & 0.54         \\ \hline
+\texttt{Dropout = 0.75}               & 0.92              &  \textminus2.02                   & 0            \\ \hline
+\texttt{L1}                 & 0.93              &  \textminus1.48                   & 0            \\ \hline
+\texttt{L2}                 & 0.94              &  \textminus0.46                   & 0.04         \\ \hline
+\texttt{L1L2}               & 0.92              &  \textminus1.93                   & 0            \\ \hline
+\texttt{OrthogonalRegularizer rows}        & 0.94              &  \textminus0.46                   & 0.02         \\ \hline
+\texttt{OrthogonalRegularizer columns}        & 0.94              &  \textminus0.09                   & 0.62         \\ \hline
+\texttt{\textit{all} L1}            & 0.92              &  \textminus2.11                   & 0            \\ \hline
+\texttt{\textit{all} L2}            & 0.92              &  \textminus1.70                    & 0            \\ \hline
+\texttt{\textit{all} L1L2}          & 0.91              &  \textminus2.56                   & 0            \\ \hline
+\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes are conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Validation accuracy represents the validation accuracy average across 100 random seeds. $\Delta_{acc}$ represents the difference in performance between the variant MLP model and our current setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
+\label{tab:MLP_ablation}\\
+\end{longtable}
+
+\subsubsection{Performance evaluation}
+
+The complete dataset ($N$ = 293) was split into a blind test set (1/11 = 27), and a training set (10/11 = 266). Ten repeats of a stratified 10-fold cross-validation were performed to assess the robustness of the ANN and compare it with the KNN model, as well as a baseline of the same models trained on randomly shuffled data and completely random label assignment ($p$ = 0.25). The reliability of the ANN predictions was assessed by means of a confidence score calculated as in \cite{CUFF_2000_PROFILES}, which represents how certain the MLP is of each individual prediction (\autoref{eq:confidence_score}). The score is based on the difference between the top- and second-class probabilities assigned by the network to each of the classes, $p_{1}$, and $p_{2}$, respectively. For example, if the output of the network were $P$ = [0.95, 0.02, 0.03, 0.0]. The probabilities would be sorted, so $p_{1}$ = 0.95, $p_{2}$ = 0.03, and a confidence score of 9 would be obtained.
 
 \begin{equation}
 \text{confidence score} = \left\lfloor 10 \times (p_1 - p_2) \right\rfloor
@@ -324,8 +451,15 @@ We considered 25 structures with 33 unique ligands binding to ALAS-E, grouped in
 
 In this paper we have presented a method to identify binding sites from fragment screening data and group the sites into four robust clusters by an RSA profile metric. 29/46 sites in Cluster 1 have functional support from the literature (UniProt 17/46; Our search 12/46 - Supplementary Table 2) 17 further sites have similar profiles, but we could not find evidence in the literature of functional significance. We show two examples from this set that have compelling support from conservation and missense depletion scores for functional significance and we list all sites in Supplementary Table 2 as a resource for further experimentation on these proteins.
 
-As a case study, we applied the method to the SARS-CoV-2 main protease, MPro (P0DTD1). Twenty-five sites were defined from 511 structures, from which 8 were classed as C1, 12 as C2, 3 as C3 and only 2 as C4. Of the 8 C1 sites, one corresponds to the active site and three to allosteric sites 1, 2, and 3 \cite{DASGUPTA_2022_ALLOSTERIC} respectively. A further C1 site  is at the dimer interface and known to be a potential allosteric site \cite{DOUANGAMATH_2020_SARSCOV2} (See Supplementary Figure 4). The remaining three C1 sites may be important, but each binds only a single ligand and their function is currently unclear.
+As a case study, we applied the method to the SARS-CoV-2 main protease, MPro (P0DTD1). Twenty-five sites were defined from 511 structures, from which 8 were classed as C1, 12 as C2, 3 as C3 and only 2 as C4. Of the 8 C1 sites, one corresponds to the active site and three to allosteric sites 1, 2, and 3 \cite{DASGUPTA_2022_ALLOSTERIC} respectively. A further C1 site  is at the dimer interface and known to be a potential allosteric site \cite{DOUANGAMATH_2020_SARSCOV2} (\autoref{MPro_showcase}). The remaining three C1 sites may be important, but each binds only a single ligand and their function is currently unclear.
 
 Here, we have focused on a small set of proteins heavily studied by fragment screening methods. However, our method can be applied to classify any ligand binding site or predicted site. Accordingly, future work will seek to classify all known ligand binding sites in the PDB and provide tools to predict likely functional sites predicted sites by tools such as P2Rank \cite{KRIVAK_2018_P2RANK}, or GRaSP \cite{SANTANA_2020_GRaSP, SANTANA_2022_GRaSP} from Alphafold2 \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB} or other models.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/SUPP_FIG4_MPro_C1_sites.png}
+    \caption[SARS-CoV-2 MPro fragment screening]{\textbf{SARS-CoV-2 MPro fragment screening.} \textbf{(A)} Twenty-five defined ligand binding sites on the SARS-CoV-2 main protease, MPro (P0DTD1) from 971 ligands from 511 structures; \textbf{(B)} Five of the 9 C1 sites included the known MPro active site, and four known potential allosteric sites \cite{DOUANGAMATH_2020_SARSCOV2, DASGUPTA_2022_ALLOSTERIC}.}
+    \label{fig:MPro_showcase}
+\end{figure}
 
 It is natural to focus on sites that are most likely to be of functional significance and so possible targets to modulate function. However, binding sites identified here that are predicted to be least likely to have function may also be interesting as good locations for tagging proteins for degradation \cite{BEKES_2022_PROTACS}, phosphorylation \cite{SIRIWARDENA_2020_PHOSPHO}, dephosphorylation \cite{SIMPSON_2023_ADPROM}, or other modulation \cite{HEITEL_2023_PTMS, PENG_2023_PTMS}.
