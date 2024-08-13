@@ -388,7 +388,7 @@ To further characterise the defined clusters, the distributions of the normalise
 
 A key goal of this work is to identify which sites from a fragment screening experiment are most likely to be functional and so worth investigating further. \autoref{fig:bs_clusts_enrichment} shows the relative enrichment in functional sites across the four defined clusters. C1 is the most enriched in functional sites, with 17/46 sites being classed as of known function, (OR = 4.46, $p \approx$ 0). C2 was next with 21/127 (OR = 1.15, $p$ = 0.75). C3 with 6/91 is depleted relative to the other clusters, (OR = 0.33, $p$ = 0.01), and finally C4 with 0/29, (OR = 0.16,$p$ = 0.04). RSA-based defined clusters are differentially enriched in functional sites. Based on their enrichment, a binding site found in C1 is $\approx$4, $\approx$14, and $\approx$28-fold more likely to be functional than a site in C2, C3, and C4, respectively.
 
-Functional definitions in UniProt tend to lag behind the literature. A literature search found support for 12 sites in C1 that are without UniProt annotations with two examples discussed below. We found no literature support for the remaining seventeen sites in C1 suggesting they may be novel, functionally important sites.  Supplementary Table 2 shows the full list of C1 sites that are predicted to be functionally important with 2/17 examples discussed below.
+Functional definitions in UniProt tend to lag behind the literature. A literature search found support for 12 sites in C1 that are without UniProt annotations with two examples discussed below. We found no literature support for the remaining seventeen sites in C1 suggesting they may be novel, functionally important sites.  \autoref{tab:novel_c1_sites} shows the full list of C1 sites that are predicted to be functionally important with 2/17 examples discussed below.
 
 \subsection{Example C1 site functional predictions supported by literature but not annotated in UniProt}
 
@@ -450,9 +450,9 @@ We considered 25 structures with 33 unique ligands binding to ALAS-E, grouped in
 
 \section{Discussion}
 
-In this paper we have presented a method to identify binding sites from fragment screening data and group the sites into four robust clusters by an RSA profile metric. 29/46 sites in Cluster 1 have functional support from the literature (UniProt 17/46; Our search 12/46 - Supplementary Table 2) 17 further sites have similar profiles, but we could not find evidence in the literature of functional significance. We show two examples from this set that have compelling support from conservation and missense depletion scores for functional significance and we list all sites in Supplementary Table 2 as a resource for further experimentation on these proteins.
+In this paper we have presented a method to identify binding sites from fragment screening data and group the sites into four robust clusters by an RSA profile metric. 29/46 sites in Cluster 1 have functional support from the literature (UniProt 17/46 -- \autoref{tab:literature_c1_sites}; Our search 12/46 -- \autoref{tab:novel_c1_sites}) 17 further sites have similar profiles, but we could not find evidence in the literature of functional significance. We show two examples from this set that have compelling support from conservation and missense depletion scores for functional significance and we list all sites in \autoref{tab:novel_c1_sites} as a resource for further experimentation on these proteins.
 
-As a case study, we applied the method to the SARS-CoV-2 main protease, MPro (P0DTD1). Twenty-five sites were defined from 511 structures, from which 8 were classed as C1, 12 as C2, 3 as C3 and only 2 as C4. Of the 8 C1 sites, one corresponds to the active site and three to allosteric sites 1, 2, and 3 \cite{DASGUPTA_2022_ALLOSTERIC} respectively. A further C1 site  is at the dimer interface and known to be a potential allosteric site \cite{DOUANGAMATH_2020_SARSCOV2} (\autoref{MPro_showcase}). The remaining three C1 sites may be important, but each binds only a single ligand and their function is currently unclear.
+As a case study, we applied the method to the SARS-CoV-2 main protease, MPro (P0DTD1). Twenty-five sites were defined from 511 structures, from which 8 were classed as C1, 12 as C2, 3 as C3 and only 2 as C4. Of the 8 C1 sites, one corresponds to the active site and three to allosteric sites 1, 2, and 3 \cite{DASGUPTA_2022_ALLOSTERIC} respectively. A further C1 site  is at the dimer interface and known to be a potential allosteric site \cite{DOUANGAMATH_2020_SARSCOV2} (\autoref{fig:MPro_showcase}). The remaining three C1 sites may be important, but each binds only a single ligand and their function is currently unclear.
 
 Here, we have focused on a small set of proteins heavily studied by fragment screening methods. However, our method can be applied to classify any ligand binding site or predicted site. Accordingly, future work will seek to classify all known ligand binding sites in the PDB and provide tools to predict likely functional sites predicted sites by tools such as P2Rank \cite{KRIVAK_2018_P2RANK}, or GRaSP \cite{SANTANA_2020_GRaSP, SANTANA_2022_GRaSP} from Alphafold2 \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB} or other models.
 
@@ -466,14 +466,14 @@ Here, we have focused on a small set of proteins heavily studied by fragment scr
 It is natural to focus on sites that are most likely to be of functional significance and so possible targets to modulate function. However, binding sites identified here that are predicted to be least likely to have function may also be interesting as good locations for tagging proteins for degradation \cite{BEKES_2022_PROTACS}, phosphorylation \cite{SIRIWARDENA_2020_PHOSPHO}, dephosphorylation \cite{SIMPSON_2023_ADPROM}, or other modulation \cite{HEITEL_2023_PTMS, PENG_2023_PTMS}.
 
 \begin{landscape}
-%\begin{table}[]
-%\centering
-%\resizebox{\textheight}{!}
-%{%
 \begin{longtable}{|M{22mm}|M{15mm}|M{20mm}|M{13mm}|M{13mm}|M{10mm}|M{10mm}|M{48mm}|M{48mm}|}
 \hline
 \textbf{UniProt ID} & \textbf{\% RSA}  & $N_{Shenkin}$ & \textbf{MES}   & $p$    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}                                                   \\ \hline
 \endfirsthead
+\multicolumn{9}{c}%
+{{\bfseries Table \thetable} (continued)} \\
+\hline
+\textbf{UniProt ID} & \textbf{\% RSA}  & $N_{Shenkin}$ & \textbf{MES}   & $p$    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}
 %
 \endhead
 %
@@ -494,3 +494,37 @@ P22557     & 12.7 & 53.1     & +0.08  & 0.61 & 7           & 2          & 271, 2
 \end{longtable}
 \end{landscape}
 
+\begin{landscape}
+\begin{longtable}{|M{22mm}|M{15mm}|M{20mm}|M{13mm}|M{13mm}|M{10mm}|M{10mm}|M{96mm}|}
+\hline
+\textbf{UniProt ID} & \textbf{\% RSA}  & $N_{Shenkin}$ & \textbf{MES}   & $p$    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                                                                    \\ \hline
+\endfirsthead
+\multicolumn{8}{c}%
+{{\bfseries Table \thetable} (continued)} \\
+\hline
+\textbf{UniProt ID} & \textbf{\% RSA}  & $N_{Shenkin}$ & \textbf{MES}   & $p$    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                      
+%
+\endhead
+%
+Q5T0W9     & 22.4 & 36.2     & \textminus0.24 & 0.08 & 12          & 10         & 149, 150, 151, 177, 233, 234, 235, 236, 270, 273, 274, 277                                         \\ \hline
+Q5T0W9     & 9.7  & 38.6     & \textminus0.05 & 0.79 & 12          & 2          & 125, 126, 127, 129, 229, 255, 256, 257, 272, 275, 276, 279                                         \\ \hline
+Q8WVM7     & 19.8 & 57.7     & \textminus0.23 & 0.62 & 5           & 1          & 285, 288, 322, 325, 326                                                                            \\ \hline
+Q15047     & 18.1 & 12.4     & +0.08  & 0.78 & 18          & 2          & 295, 296, 297, 298, 300, 301, 302, 324, 328, 329, 330, 332, 333, 357, 389, 392, 393, 394           \\ \hline
+Q8WS26     & 19.5 & 57.3     & \textminus0.11 & 0.57 & 21          & 26         & 84, 87, 88, 89, 90, 214, 217, 218, 221, 222, 225, 268, 269, 273, 277, 281, 285, 290, 295, 299, 303 \\ \hline
+Q9UGL1     & 28.7 & 31.3     & \textminus0.09 & 0.66 & 10          & 1          & 53, 57, 506, 582, 583, 606, 607, 609, 610, 613                                                     \\ \hline
+Q9UGL1     & 16.6 & 34       & \textminus0.01 & 1    & 12          & 3          & 658, 659, 662, 663, 666, 667, 670, 701, 736, 737, 738, 741                                         \\ \hline
+P15379     & 18.3 & 19.4     & +0.09  & 0.63 & 11          & 1          & 23, 24, 40, 41, 50, 146, 148, 162, 163, 164, 165                                                   \\ \hline
+Q9UJM8     & 24.3 & 42.8     & \textminus0.11 & 0.86 & 6           & 1          & 5, 11, 323, 327, 328, 331                                                                          \\ \hline
+Q6B0I6     & 21.9 & 36.6     & \textminus0.15 & 0.68 & 4           & 1          & 50, 209, 265, 285                                                                                  \\ \hline
+Q6B0I6     & 12.2 & 26       & \textminus0.06 & 0.84 & 7           & 1          & 44, 199, 275, 276, 297, 300, 303                                                                   \\ \hline
+Q9UKK9     & 9.8  & 29.6     & \textminus0.05 & 0.73 & 15          & 1          & 65, 66, 67, 69, 75, 77, 124, 125, 145, 146, 147, 175, 200, 205, 206                                \\ \hline
+Q92835     & 16.5 & 33.7     & \textminus0.05 & 0.78 & 19          & 46         & 615, 616, 617, 618, 620, 621, 622, 624, 625, 630, 631, 632, 633, 634, 635, 636, 637, 638, 674      \\ \hline
+Q92835     & 12.2 & 39.4     & +0.02  & 0.92 & 12          & 1          & 560, 561, 562, 570, 571, 572, 573, 574, 578, 817, 839, 840                                         \\ \hline
+Q96HY7     & 11.6 & 38.5     & +0.07  & 0.75 & 14          & 1          & 57, 58, 60, 61, 64, 105, 106, 107, 121, 122, 125, 126, 147, 151                                    \\ \hline
+P22557     & 17.5 & 40.6     & +0.04  & 0.72 & 16          & 7          & 143, 145, 146, 149, 348, 349, 350, 351, 352, 353, 380, 381, 383, 402, 403, 406                     \\ \hline
+P24821     & 14.2 & 24.4     & \textminus0.29 & 0    & 15          & 8          & 2010, 2011, 2012, 2025, 2045, 2046, 2047, 2048, 2049, 2050, 2054, 2055, 2056, 2057, 2060           \\ \hline
+
+\caption[Novel C1 sites]{\textbf{Novel C1 sites.} These are 17 C1 sites with no functional annotations in UniProt, therefore labelled as \textit{unknown function}, without any literature support. These sites represent therefore novel predicted functional sites. UniProt ID indicates the protein UniProt accession. \% RSA is the median site RSA. $N_{Shenkin}$ is the average normalised Shenkin score for the site. MES is the average missense enrichment score for the site. $p$ is the $p$-value associated to this site MES. \# aas is the number of residues forming the site. \# ligs is the number of ligands binding to the site. UniProt residue numbers is a list of the UniProt residue numbers of the residues forming the site.}
+\label{tab:novel_c1_sites}\\
+\end{longtable}
+\end{landscape}
