@@ -23,6 +23,9 @@
 \usepackage{array} % For tables
 \usepackage{adjustbox} % For signatures
 \usepackage{acronym} % For acronyms
+\usepackage{amssymb}% http://ctan.org/pkg/amssymb for check and cross marks
+\usepackage{pifont}% http://ctan.org/pkg/pifont for check and cross marks
+%\usepackage{afterpage}
 
 \setcounter{tocdepth}{4} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections
@@ -71,6 +74,9 @@
 \definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
 \definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+
+\newcommand{\cmark}{\textcolor{forestgreen}{\ding{51}}}%
+\newcommand{\xmark}{\textcolor{firebrick}{\ding{55}}}%
 
 % Hyperlinks setup
 \hypersetup{
