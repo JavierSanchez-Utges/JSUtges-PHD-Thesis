@@ -35,7 +35,7 @@ Ligand binding site definition or prediction approaches are usually based on the
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG8_bs_def.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG8_bs_def.png}
     \caption[Ligand binding site definition algorithm]{\textbf{Ligand binding site definition algorithm.} The method defines ligand binding sites from a set of three-dimensional structures portraying the complex of a protein of interest bound to ligands. \textbf{(A)} Protein-ligand complex (P18031); \textbf{(B)} Ligand binding fingerprint, comprised by protein residue numbers interacting with ligand; \textbf{(C)} Formula of the similarity metric: relative intersection, $I_{rel}$; \textbf{(D)} Hierarchical clustering tree resulting from the similarity matrix, cut at threshold to determine distinct clusters of ligands; \textbf{(E)} Three-dimensional structure of all ligands binding to protein, coloured according to the cluster they group into. Only ligands found in clusters 1-7 are in coloured based on their cluster membership. The rest are coloured in grey. The tree on d represents only a part of the tree, showing 7/18 binding sites defined on P18031. This is represented by a dash line pointing downwards on the tree.}
     \label{fig:fragsys_bs_def}
 \end{figure}
@@ -71,7 +71,7 @@ Secondary structures were defined with DSSP \cite{KABSCH_1983_DSSP} via ProIntVa
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG9_bs_clust.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG9_bs_clust.png}
     \caption[Binding site clustering algorithm]{\textbf{Binding site clustering algorithm.} The method here clusters ligand binding sites defined across different proteins based on their solvent accessibility profiles. \textbf{(A)} Example of a defined ligand binding site; \textbf{(B)} Relative solvent accessibility profile of a binding site, represented by the RSA of the site residues; \textbf{(C)} Formula of our distance metric: distance U, $U_{D}$; \textbf{(D)} Multidimensional scaling (MDS) representation of binding sites coloured according to the four clusters determined by the K-means algorithm. Dashed lines represent the cluster limits.}
     \label{fig:fragsys_bs_clust}
 \end{figure}
@@ -100,7 +100,7 @@ After calculating pairwise distances between the RSA profiles of the defined bin
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/ch_FRAGSYS/PDF/SUPP_FIG1_ward_clust.pdf}
+    \includegraphics[width=0.7\textwidth]{figures/ch_FRAGSYS/PNG/SUPP_FIG1_ward_clust.png}
     \caption[Binding sites Ward clustering]{\textbf{Binding sites Ward clustering.} Cluster map of the U distance, $U_{D}$, matrix of the 293 defined binding sites clustered by the Ward hierarchical clustering method implemented in SciPy. The tree is cut at $D_{Ward}$ = 1.8, giving four clear clusters. These clusters are labelled so they correspond to the ones obtained with K-means. Clusters in the heat map are represented by dark squares around the diagonal. $U_{D}$ is a distance; therefore, clusters include sites that are similar to each other, and present lower distances (dark colour).}
     \label{fig:fragsys_bs_clust_ward}
 \end{figure}
@@ -109,7 +109,7 @@ Finally, multidimensional scaling (MDS) \cite{MEAD_1992_MDS} with $N$ = 2 dimens
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/SUPP_FIG2_KNN_robustness.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/SUPP_FIG2_KNN_robustness.png}
     \caption[K-means clustering robustness]{\textbf{K-means clustering robustness.} Cluster analysis to assess the quality of the K-means clustering. For each $K \in$ [2, 14], clustering is bootstrapped 1,000 times with different initial random states. Error bars indicate 1 SD. \textbf{(A)} Calinski-Harabasz Index (CHI); \textbf{(B)} Davies-Bouldin Index (DBI); \textbf{(C)} Inertia; \textbf{(D)} Silhouette. All methods agree the optimal clustering of this dataset lies in $K \in$ [4, 6].}
     \label{fig:kmeans_robustness}
 \end{figure}
@@ -267,7 +267,7 @@ The KNN is based on distances to all training data and so, as expected, consiste
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG10_ml_results.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG10_ml_results.png}
     \caption[MLP cross-validation and blind test results]{\textbf{MLP cross-validation and blind test results.} \textbf{(A)} Average accuracy of the 10-repeat 10-fold ($N$ = 100) cross-validation of the KNN, and ANN predictive models compared to a baseline of the same models trained on randomly shuffled data, as well as complete random prediction ($p$ = 0.25). The box represents the central 50\% of the data, i.e., Q1 – median (Q2) – Q3, also known as interquartile range (IQR). Whiskers extend to 1.5 $\times$ IQR, and beyond them are the outliers; \textbf{(B)} Cross-validation accuracy and proportion of binding sites against cumulative confidence score from the trained ANN. Sites presenting a confidence score greater or equal to 5, the average accuracy is 97\%, and the percentage of sites with this score is 75\%. Predictions are for the 2,660 cross-validation data points, 10 different repeats of 10 distinct splits of 26-27 binding sites each. Accuracy error bars indicate 95\% CI of the proportion \cite{WILSON_197_PROP_CI}; \textbf{(C)} MDS representation of the 293 binding sites. Training data are coloured according to the average confidence of their prediction in the cross-validation. Test data are coloured according to whether they were correctly predicted or not. Dashed lines indicate the limits of K-means clusters.}
     \label{fig:MLP_CV_blind_test}
 \end{figure}
@@ -302,7 +302,7 @@ The focus here is on human proteins to allow the additional information from hum
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG1_bs_examples.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG1_bs_examples.png}
     \caption[Ligand clusters defined by the binding site definition algorithm]{\textbf{Ligand clusters defined by the binding site definition algorithm.} For simplicity, only one protein chain ribbon is shown in white for each example. Ligands are coloured according to the site they bind to. Identifiers are from UniProt. \textbf{(A)} There were 110 structures depicting human tyrosine-protein phosphatase non-receptor type 1 (\textit{PTPN1}), P18031, binding 143 ligand molecules, 104 of which were unique. 18 binding sites were defined; \textbf{(B)} The 68 ligands, 30 unique, found across 50 structures of the chestnut blight fungus endothiapepsin (\textit{EAPA}), P11838, were classified in 12 distinct binding sites; \textbf{(C)} For mouse mitogen-activated protein kinase 14 (\textit{Mapk14}), P47811, 52 structures portrayed the interaction with 53 ligand molecules, 50 unique, which clustered in 10 ligand binding sites.}
     \label{fig:bs_def_examples}
 \end{figure}
@@ -311,7 +311,7 @@ The focus here is on human proteins to allow the additional information from hum
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.7\textwidth]{figures/ch_FRAGSYS/PDF/FIG2_bs_feats_2x2_OPT.pdf}
+    \includegraphics[width=0.6\textwidth]{figures/ch_FRAGSYS/PNG/FIG2_bs_feats_2x2.png}
     \caption[Variation in binding site features]{\textbf{Variation in binding site features.} Distribution of size \textbf{(A)}, median RSA \textbf{(B)} , $N_{Shenkin}$ \textbf{(C)} and MES \textbf{(D)} across the 293 binding sites defined from our data set. Black dashed lines indicate the median of each distribution.}
     \label{fig:bss_features}
 \end{figure}
@@ -320,7 +320,7 @@ Despite the diversity among sites, some general trends can be observed. \autoref
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG3_bs_feats_corr.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG3_bs_feats_corr.png}
     \caption[Relation between different binding site properties]{\textbf{Relation between different binding site properties.} A regression line is fitted to all data points previous to binning, ($N$ = 293 binding sites), Pearson’s correlation coefficient $r$ \cite{RODGERS_1988_CORRELATION}, associated $p$-value and 95\% CI of $r$ \cite{BOWLEY_1928_R_CI}. Data points are grouped into bins according to different binding site size intervals, represented by box and swarm plots. \textbf{(A)} Median site RSA \% \textit{vs} binding site size, in amino acids; \textbf{(B)} Average $N_{Shenkin}$ \textit{vs} binding site size; \textbf{(C)} Average site MES \textit{vs} site size. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR.}
     \label{fig:bss_feats_corr}
 \end{figure}
@@ -334,14 +334,14 @@ Despite the diversity among sites, some general trends can be observed. \autoref
 
 \begin{figure}[hb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG4_bs_clust_results_SPLIT_1_OPT.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG4_bs_clust_results_SPLIT_1.png}
     \captionof{figure}[Profiles of RSA-based binding site clusters]{\textbf{Profiles of RSA-based binding site clusters.} \textbf{(A)} RSA profiles of the 293 binding sites that were grouped in four, C1-C4, clusters by K-means based on the difference between their RSA profiles ($U_{D}$). Each binding site is represented by a vector, plotted as a bar here. The elements of the vector represent the residues that form the binding site and are sorted according to their RSA, so buried residues are at the beginning of the vector (bottom), and more accessible residues towards the end (top). Each element of the vector, or section of the bar, is coloured according to RSA, using the matplotlib  \textit{cividis} colour palette. Within each cluster, binding sites are sorted based on the number of amino acids. Over each cluster, a line is drawn at RSA = 25\%.}
 \label{fig:bss_clust_profiles}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG4_bs_clust_results_SPLIT_2_OPT.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG4_bs_clust_results_SPLIT_2.png}
     \captionof{figure}[Examples of RSA-based binding site clusters]{\textbf{Examples of RSA-based binding site clusters.} \textbf{(B)} Six examples of binding sites are shown in structure for each cluster. Examples were selected to represent the range of binding site sizes within each cluster. IDs are UniProt accession codes. Binding site residues are coloured according to their RSA, using the \textit{cividis} colour scheme. The rest of the protein is coloured in white. Ligands binding to the site in question are coloured in red.}
 \label{fig:bss_clusts_examples}
 \end{figure}
@@ -352,7 +352,7 @@ Despite the diversity among sites, some general trends can be observed. \autoref
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG5_bs_clust_feats_SPLIT_1_OPT.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG5_bs_clust_feats_SPLIT_1.png}
     \caption[Binding site cluster features (I)]{\textbf{Binding site cluster features (I).} \textbf{(A)} Box plot of the proportion of residues with RSA \textless 25\% per binding site across the four clusters defined by K-means clustering;\textbf{(B)} Box plot of the binding site size, in amino acids, across clusters. Pairwise Mann-Whitney-Wilcoxon tests were performed to assess the differences between the clusters. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR. $p$-value annotation legend: ns: $p >$ 0.05, *: 0.01 $< p \leq$ 0.05, **: $10^{-2} < p \leq 10^{-3}$, ***: $10^{-4} < p \leq 10^{-3}$, ****: $p \leq 10^{-4}$; \textbf{(C)} MDS representation of the 293 binding sites on 2 dimensions. Data points represent binding sites and are coloured based on the cluster they group in.}
     \label{fig:bs_clusts_feats_1}
 \end{figure}
@@ -370,7 +370,7 @@ These results support $U_{D}$ as a metric that effectively quantifies the differ
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG5_bs_clust_feats_SPLIT_2_OPT.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG5_bs_clust_feats_SPLIT_2.png}
     \caption[Binding site cluster features (II)]{\textbf{Binding site cluster features (II).} \textbf{(A)} Histogram of RSA \% of the residues found within the ligand binding sites in each cluster; \textbf{(B)} Histogram of $N_{Shenkin}$ within cluster residues; \textbf{(C)} MES histogram plots for the 4 clusters defined.}
     \label{fig:bs_clusts_feats_2}
 \end{figure}
@@ -379,7 +379,7 @@ To further characterise the defined clusters, the distributions of the normalise
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.60\textwidth]{figures/ch_FRAGSYS/PDF/FIG6_bs_clust_func_enrichment.pdf}
+    \includegraphics[width=0.50\textwidth]{figures/ch_FRAGSYS/PNG/FIG6_bs_clust_func_enrichment.png}
     \caption[Binding site cluster enrichment in known functional sites]{\textbf{Binding site cluster enrichment in known functional sites.} This enrichment score is an odds ratio (OR). Error bars indicate 95\% CI of the OR. Y-axis is in $\log_{10}$ scale. A pseudo-count of 1 was added to each cell of the contingency table, to be able to calculate the score.}
     \label{fig:bs_clusts_enrichment}
 \end{figure}
@@ -398,7 +398,7 @@ The Zika virus (ZIKV) genome polyprotein (Q32ZE1) is 3,419 amino acids long and 
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.85\textwidth]{figures/ch_FRAGSYS/PDF/FIG7_c1_example_1.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG7_c1_example_1.png}
     \caption[Binding site 7 of Zika virus NS3]{\textbf{Binding site 7 of Zika virus NS3.} Non-structural protein NS3 of Zika virus (Q32ZE1) binding to N-(2-methoxy-5-methylphenyl)glycinamide, NY7 in BS7 (PDB: 5RHG) (Godoy AS, Mesquita NCMR, Oliva G). Domains I, II, and III are coloured in pink, blue, and green respectively. Binding site 7 which is in Cluster 1 is highlighted, the other 9 binding sites which fall in C2 (3), C3 (3) and C4 (3) are hidden. Ligand binding residues in red, and NY7 in yellow. Protein-ligand interactions are represented by black lines.}
     \label{fig:c1_example_1}
 \end{figure}
@@ -413,7 +413,7 @@ The Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) replicase polyp
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG7_c1_example_2.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG7_c1_example_2.png}
     \caption[Binding site 6+16 of SARS-CoV-2 NSP13]{\textbf{Binding site 6+16 of SARS-CoV-2 NSP13.} Non-structural protein NSP13 of SARS-CoV-2 (P0DTD1) binding to 3 ligands in BS6+16 (Ribbon PDB: 5RMH) \cite{NEWMAN_2021_SARSCOV2}. 1A, 1B, 2A, stalk and zinc domains are coloured in yellow, pink, green, brown, and grey respectively. Ligand binding residues in red, and ligands in yellow. Interactions are not shown here for simplicity.}
     \label{fig:c1_example_2}
 \end{figure}
@@ -428,7 +428,7 @@ Human tenascin, is a hexameric extracellular matrix glycoprotein implicated in a
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG7_c1_example_3.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG7_c1_example_3.png}
     \caption[Binding site 0 of human tenascin]{\textbf{Binding site 0 of human tenascin.} Human tenascin, TN, (P24821) binding to 8 ligands in BS0. (Ribbon PDB: 5R60) (Coker JA, Bezerra GA, von Delft F, Arrowsmith CH, Bountra C, Edwards AM, Yue WW, Marsden BD). A, B, and P subdomains as defined by Yee, Pratt \cite{YEE_1997_FIBRINOGEN} are coloured in blue, grey, and green respectively.}
     \label{fig:c1_example_3}
 \end{figure}
@@ -441,7 +441,7 @@ The data includes 11 structures with 11 unique ligands binding to TN, grouped in
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PDF/FIG7_c1_example_4.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG7_c1_example_4.png}
     \caption[Binding site 1 of human ALAS-E]{\textbf{Binding site 1 of human ALAS-E.} Human erythroid-specific mitochondrial 5-aminolevulinate synthase, ALAS-E, (P22557) binding to 7 ligands in BS1. (Ribbon PDB: 5QR0) (Bezerra GA, Foster W, Bailey H, Shrestha L, Krojer T, Talon R, Brandao-Neto J, Douangamath A, Nicola BB, von Delft F, Arrowsmith CH, Edwards A, Bountra C, Brennan PE, Yue WW). Subunits A, B, C-terminal extensions A, B, as well as PLP cofactors are coloured in grey, beige, green, orange, and purple, respectively. Ligand binding residues in red, and ligands in yellow.}
     \label{fig:c1_example_4}
 \end{figure}

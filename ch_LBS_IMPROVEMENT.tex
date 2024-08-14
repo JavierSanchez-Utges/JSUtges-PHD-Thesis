@@ -20,7 +20,7 @@ We define pocket prediction redundancy as the prediction of pockets with centroi
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.99\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG6_PREDICTION_REDUNDANCY_SPLIT_1_OPT.pdf}
+    \includegraphics[width=0.99\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG6_PREDICTION_REDUNDANCY_SPLIT_1.png}
     \caption[The issue of redundancy in ligand binding site prediction]{\textbf{The issue of redundancy in ligand binding site prediction.} \textbf{(A)} A set of predictions where 6/10 predictions are redundant, resulting in a low recall (1/5) and inflated precision (7/7); \textbf{(B)} When redundancy is removed, only four predictions remain and recall increases to 3/5 (60\%) and precision decreases to 3/4 (75\%).}
     \label{fig:prediction_redundancy}
 \end{figure}
@@ -31,7 +31,7 @@ We define pocket prediction redundancy as the prediction of pockets with centroi
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PDF/FIG6_PREDICTION_REDUNDANCY_SPLIT_2_OPT.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG6_PREDICTION_REDUNDANCY_SPLIT_2.png}
     \caption[Example of redundant predictions]{\textbf{Example of redundant predictions.} Predictions by VN-EGNN, IF-SitePred and PUResNet, on chain D of PDB: 4Z9M (Rabeh WM, Tempel W, Nedyalkova L, Landry R, Arrowsmith CH, Edwards AM, Bountra C, Bochkarev A, Park H, Structural Genomics Consortium (SGC), 2015), where ADP binds. For this ADP binding site, VN-EGNN reports 7 predictions, IF-SitePred 33, and PUResNet a single prediction. These three methods correctly predict this site, however, VN-EGNN and IF-SitePred report redundant pocket predictions, which centroids are very close, $\leq$ 5\AA{}, in space and residues overlap high ($\geq$ 0.75).}
     \label{fig:prediction_redundancy_examples}
 \end{figure}
@@ -46,7 +46,7 @@ Figure 5D shows that prediction redundancy is an issue particularly for VN-EGNN,
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PDF/SUPP_FIG9_CLOSESET_PREDICTED_POCKETS_OPT.pdf}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG9_CLOSESET_PREDICTED_POCKETS.png}
     \caption[Closest predicted pockets for each methods]{\textbf{Closest predicted pockets for each method.} For each method, the two closest predicted pockets across all protein chains are shown. This is the pair of pockets with the minimum Euclidean distance between their centroids. Protein surface is coloured in tan. The larger pocket (more residues)}
     \label{fig:closest_pred_pockets}
 \end{figure}
