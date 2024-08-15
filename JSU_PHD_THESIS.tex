@@ -74,6 +74,8 @@
 \definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
 \definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
 \definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+\definecolor{purple}{rgb}{0.6, 0.18, 0.82} %(0.604, 0.176, 0.812)
+\definecolor{orange}{rgb}{0.89, 0.5, 0.02} %(0.89, 0.498, 0.02)
 
 \newcommand{\cmark}{\textcolor{forestgreen}{\ding{51}}}%
 \newcommand{\xmark}{\textcolor{firebrick}{\ding{55}}}%
@@ -83,10 +85,10 @@
     colorlinks=true,
     linktocpage=true,
     urlcolor=royalblue,
-    citecolor=forestgreen,
+    citecolor=orange,
     breaklinks=true,
-    linkcolor=firebrick,
-    anchorcolor=magenta,
+    linkcolor=purple,
+    %anchorcolor=magenta,
 }
 
 % Setting list of equations
@@ -135,6 +137,7 @@
 \input{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 
+%\hypersetup{linkcolor=black}
 % Add Table of Contents to the ToC
 \cleardoublepage
 \tableofcontents
@@ -155,9 +158,8 @@
 
 % Add List of Abbreviations to the ToC
 \cleardoublepage
-\hypersetup{linkcolor=black}
 \input{abbreviations}
-\hypersetup{linkcolor=firebrick}
+%\hypersetup{linkcolor=purple}
 \addcontentsline{toc}{chapter}{List of Abbreviations}
 
 % Clear the page and start Arabic numerals for the main matter
