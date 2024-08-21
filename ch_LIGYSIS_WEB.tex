@@ -1,3 +1,168 @@
-\chapter{LIGYSIS: a dataset and resource for the analysis of ligand binding sites}
+\chapter{LIGYSIS: a dataset and resource for the analysis of protein-ligand binding sites}
 
 This chapter will be about the LIGYSIS-web resource.
+
+\section*{Preface}
+
+On this chapter the approach employed on the previous chapter to build a fragment screening ligand binding site dataset is refined, extended and applied to the whole PDB. LIGYSIS comprises biologically relevant protein-ligand interactions from $\approx$30,000 proteins with experimentally determined structures across species. A web resource is presented, LIGYSIS web, to allow exploration of this vast dataset and analysis of user structure sets.
+
+\section*{Publications}
+
+Utgés J.S., MacGowan S. M., Barton G. J. LIGYSIS-web: a web resource for the analysis of protein-ligand binding sites. (Manuscript in preparation)
+
+\section*{Author contributions}
+
+G.J.B., S.A.M. and J.S.U. conceived, designed, and developed the research. J.S.U. analysed the data. J.S.U. and S.A.M. developed the software. J.S.U. and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
+
+\section{Introduction}
+
+XXX.
+
+\section{Methods}
+
+\subsection{LIGYSIS dataset}
+
+There are \textbf{XXX} reviewed proteins in UniProt \cite{UNIPROT_2019_UNIPROT}. For each protein with at least one experimentally resolved three-dimensional (3D) structure, a superposition matrix was obtained from the PDBe FTP site \cite{PDBE_2022_PDBEKB} at \url{http://ftp.ebi.ac.uk/pub/databases/pdbe-kb/superposition}. This represents \textbf{XXX} (\textbf{XXX \%}) of the human proteins (\textbf{XXX} structures), whereas \textbf{XXX} (\textbf{XXX \%}) present no experimentally determined structures. 
+
+\subsection{Binding site definition}
+
+Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. Figure 10 illustrates the ligand site definition approach used to obtain our reference dataset: LIGYSIS. For a pair of ligands, $L_{A}$, $L_{B}$, fingerprints $A$, $B$ are defined as sets containing the residue numbers of the amino acids interacting with each ligand. Relative intersection, $I_{rel}$, is a similarity metric that quantifies how similar the fingerprints are [5]. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 1 when $A$ and $B$ share all the binding residues and 0 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints are clustered using average linkage with SciPy [95] and ligand sites obtained by cutting the tree at $D$ = 0.5. This resulted in \textbf{XXX} ligand binding sites.
+
+\begin{equation}
+D = 1 - I_{rel}
+\label{eq:Irel_distance}
+\end{equation}
+\myequations{Ligand fingerprint distance}
+
+\subsection{Multiple sequence alignments}
+
+The representative entry of the first structure cluster for each segment was obtained from the PDBe superposition data, and its amino acid sequence retrieved using the PDBe GRAPH API domains endpoint: \url{https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/domains}. The approach described on the previous chapter was employed here and this sequence was used as query to perform a homologue sequence search in SwissProt \cite{BOUTET_2016_UNIPROT} using jackHMMER \cite{EDDY_1995_HMMER} to generate a multiple sequence alignment (MSA). The normalised version of the Shenkin divergence score \cite{SHENKIN_1991_SCORE}, $N_{Shenkin}$ \cite{UTGES_2021_ANKS}, was employed to quantify amino acid conservation within the MSA. For \textbf{XXX} protein segments, no homologues were found. Consequently, no conservation data was obtained for these segments. 
+
+\subsection{Human variants enrichment}
+
+Human missense genetic variants mapping to human sequences in the MSA were retrieved from gnomAD \cite{KARCZEWSKI_2020_GNOMAD} using VarAlign \cite{MACGOWAN_2017_VARIANTS, MACGOWAN_2024_VARIANTS}, as described on the previous chapter. Missense enrichment scores, i.e., odds ratio (OR), (MES) were calculated for alignment columns and 95\% confidence intervals and $p$-values used to evaluate their significance \cite{SZUMILAS_2010_ODDSRATIOS}. MES could not be calculated for \textbf{XXX} protein segments, as no human homologues were found in their alignments, nor for \textbf{XXX} segments, which presented human homologues, yet no missense variants in gnomAD. Scores were calculated for a total of \textbf{XXX} segments.
+
+\subsection{Binding site clustering}
+
+XXX.
+
+\subsection{Binding site cluster prediction}
+
+A multilayer perceptron (MLP) was implemented with Keras \cite{CHOLLET_2015_KERAS} to predict RSA-based cluster labels on new ligand binding sites. This model is built exactly as described on the previous chapter. However, there is a considerable difference in the size of training and test sets. The human component of the LIGYSIS dataset, LIGYSIS\textsubscript{HUMAN} was employed to train, validate, and test this new model. LIGYSIS\textsubscript{HUMAN} comprises $\approx$13,000 sites coming from $\approx$3,5000 proteins. The new set is $>$40 times larger than the previous one of 293 sites across 35 proteins.
+
+\subsection{Functional score calculation}
+
+XXX.
+
+\subsection{Site function classification}
+
+UniProt features were retrieved using the UniProt proteins API \cite{NIGHTINGALE_2017_API} on the features endpoint: \url{https://www.ebi.ac.uk/proteins/api/features/}. \textbf{XXX} of the \textbf{XXX} (92.5\%) proteins presented UniProt features. Only features of the category ``DOMAINS\_AND\_SITES'' and the types ``BINDING'', ``SITE'', and ``ACT\_SITE'' were used for functional assignment of a protein, which resulted in \textbf{XXX} (\textbf{XXX\%}) proteins with such annotations. Binding sites presenting at least a functionally annotated residue were classified as known function (KF) ($N$ = \textbf{XXX}), and those with no annotations as unknown function (UF) ($N$ = \textbf{XXX}). 
+
+\subsection{The LIGYSIS web resource}
+
+XXX.
+
+\subsubsection{Flask application backend}
+
+XXX.
+
+\lstset{style=mystyle}
+
+\begin{lstlisting}[language=MyPython, caption=Python Code from Screenshot]
+@app.route('/get-contacts', methods = ['POST'])
+def get_contacts():
+    data = request.json
+    active_model = data['modelData']
+    prot_id = data['proteinId']
+    seg_id = data['segmentId']
+    arpeggio_cons = pd.read_pickle(f'{DATA_FOLDER}/{prot_id}/{seg_id}/arpeggio/{active_model}_bio_proc.pkl')
+    arpeggio_cons_filt = arpeggio_cons[
+        (arpeggio_cons['contact'].apply(lambda x: x != ['proximal'])) &
+        (arpeggio_cons['interacting_entities'] == 'INTER') &
+        (arpeggio_cons['type'] == 'atom-atom')
+    ]
+    json_cons = arpeggio_cons_filt[arpeggio_cols].to_json(orient = 'records')
+    bs_membership = pd.read_pickle(f'{DATA_FOLDER}/example/other/{prot_id}_{seg_id}_ALL_inf_bss_membership.pkl')
+    bs_membership_rev = {v: k for k, vs in bs_membership.items() for v in vs}
+    struc_ligs = {k: v for k, v in bs_membership_rev.items() if k.startswith(active_model)}
+    struc_ligs_data = transform_dict(struc_ligs)
+    struc_prot_data = list(arpeggio_cons_filt[['label_comp_id_end', 'auth_asym_id_end', 'auth_seq_id_end']].drop_duplicates().itertuples(index = False, name = None))
+    response_data = {
+        'contacts': json_cons,
+        'ligands': struc_ligs_data,
+        'protein': struc_prot_data,
+    }
+    return jsonify(response_data)
+\end{lstlisting}
+
+\subsubsection{HTML templates}
+
+\def\beginlstdelim#1#2#3%
+{%
+    \def\endlstdelim{#2\egroup}%
+    \ttfamily#1\bgroup\color{#3}\aftergroup\endlstdelim%
+}
+\lstset
+{%
+    moredelim = **[is][\beginlstdelim{\$}{\$}{orange}]{\$}{\$},
+    moredelim = **[is][\beginlstdelim{\{}{\}}{forestgreen}]{\{}{\}},
+    moredelim = **[is][\beginlstdelim{[}{]}{red}]{[}{]},
+    moredelim = **[is][\beginlstdelim{'}{'}{red}]{'}{'},
+    literate = {'}{{\textcolor{teal}{'}}}1,
+}
+
+\begin{lstlisting}
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+$E = mc^2$
+{E = mc^2}
+[E = mc^2]
+'E = mc^2'
+\end{document}
+\end{lstlisting}
+
+
+\subsubsection{JavaScript frontend}
+
+XXX.
+
+\begin{lstlisting}
+// Hello.java
+import javax.swing.JApplet;
+import java.awt.Graphics;
+
+public class Hello extends JApplet {
+    public void paintComponent(Graphics g) {
+        g.drawString("Hello, world!", 65, 95);
+    }    
+}
+\end{lstlisting}
+
+\subsubsection{CSS stylings}
+
+XXX.
+
+\subsubsection{Job submission}
+
+XXX.
+
+\subsubsection{Deployment}
+
+XXX.
+
+\subsection{Data availability}
+
+XXX.
+
+\subsection{Code availability}
+
+XXX.
+
+\section{Results}
+
+XXX.
+
+\section{Discussion}
+
+XXX.

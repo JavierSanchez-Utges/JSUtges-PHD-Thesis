@@ -25,7 +25,79 @@
 \usepackage{acronym} % For acronyms
 \usepackage{amssymb}% http://ctan.org/pkg/amssymb for check and cross marks
 \usepackage{pifont}% http://ctan.org/pkg/pifont for check and cross marks
+\usepackage{lipsum}  % For example text
+\usepackage{listings} % For code snippet embedding
+\usepackage{upquote}  % Ensures straight quotes in verbatim environments
 %\usepackage{afterpage}
+\usepackage{fontspec}
+%\setmonofont{Menlo} % Set Menlo as the monospaced font
+
+\newfontfamily\menlofont{Menlo}
+
+
+\definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
+\definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
+\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
+\definecolor{purple}{rgb}{0.6, 0.18, 0.82} %(0.604, 0.176, 0.812)
+\definecolor{orange}{rgb}{0.89, 0.5, 0.02} %(0.89, 0.498, 0.02)
+\definecolor{listing-identifier}{HTML}{435489}
+
+\def\beginlstdelim#1#2#3#4%
+{
+    \def\endlstdelim{\textcolor{#4}{#2}\egroup}  % Define the end delimiter with color
+    \bgroup\hspace*{-1.2em}\textcolor{#4}{#1}\color{#3}\aftergroup\endlstdelim  % Use negative hspace to remove leading space
+}
+
+
+
+\definecolor{kwColor}{RGB}{186, 136, 175} % Pink for keywords
+\definecolor{funcColor}{RGB}{108, 148, 189} % Blue for function names
+\definecolor{stringColor}{RGB}{54, 187, 56} % Green for strings
+\definecolor{orangecolor}{RGB}{245, 113, 87} % Orange-like color
+\definecolor{browncolor}{RGB}{165, 105, 79} % Brown-like color
+
+
+\lstdefinelanguage{MyPython}{
+    keywords=[1]{def, lambda, for, in, if, False, None, return, transform\_dict},
+    otherkeywords={!=, ==, <=, >=, =, !, <, >, +=},
+    keywords=[2]{!=, ==, <=, >=, =, !, <, >, +=},         % Operators treated as keywords
+    keywords=[3]{route, json, apply, items, itertuples, read\_pickle, to\_json, startswith, drop\_duplicates, jsonify, list},
+    keywords=[4]{get\_contacts},
+    keywordstyle=[1]\color{kwColor},                      % Style for standard Python keywords
+    keywordstyle=[2]\color{orangecolor},                         % Style for operators
+    keywordstyle=[3]\color{funcColor},
+    keywordstyle=[4]\color{teal},
+    sensitive=true,
+    showstringspaces=false,
+    stringstyle=\color{red},
+    moredelim = **[is][\beginlstdelim{'}{'}{stringColor}{teal}]{'}{'},
+    literate={[}{{\textcolor{forestgreen}{[}}}1    % Colorize '[' in orange
+             {]}{{\textcolor{forestgreen}{]}}}1   % Colorize ']' in orange
+             {.}{{\textcolor{orange}{.}}}1    % Colorize '[' in orange
+    		 {,}{{\textcolor{browncolor}{,}}}1   % Colorize ']' in orange
+    		 {:}{{\textcolor{browncolor}{:}}}1
+    		 {@}{{\textcolor{teal}{@}}}1
+    		 {\&}{{\textcolor{orange}{\&}}}1
+}
+\lstdefinestyle{mystyle}{
+    language=MyPython,
+    basicstyle=\menlofont\footnotesize,
+    commentstyle=\color{codegreen},       % Style for comments
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=none,
+    framesep=5pt,
+    xleftmargin=10pt,
+    linewidth=\textwidth,
+}
 
 \setcounter{tocdepth}{4} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections
@@ -70,12 +142,6 @@
     textfont={color=darkgray}, % Make the text colored
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
-
-\definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
-\definecolor{forestgreen}{rgb}{0.13, 0.55, 0.13}
-\definecolor{firebrick}{rgb}{0.7, 0.13, 0.13}
-\definecolor{purple}{rgb}{0.6, 0.18, 0.82} %(0.604, 0.176, 0.812)
-\definecolor{orange}{rgb}{0.89, 0.5, 0.02} %(0.89, 0.498, 0.02)
 
 \newcommand{\cmark}{\textcolor{forestgreen}{\ding{51}}}%
 \newcommand{\xmark}{\textcolor{firebrick}{\ding{55}}}%
