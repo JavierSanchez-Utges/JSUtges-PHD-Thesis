@@ -32,7 +32,11 @@
 \usepackage{fontspec}
 %\setmonofont{Menlo} % Set Menlo as the monospaced font
 
-\newfontfamily\menlofont{Menlo}
+\setmainfont{Times New Roman} % Set Times New Roman as the main font
+%\setmainfont{Verdana}        % Uncomment to use Verdana instead
+%\setmainfont{Arial}          % Uncomment to use Arial instead
+%\setmainfont{Georgia}        % Uncomment to use Calibri instead
+\newfontfamily\menlo{Menlo}
 
 
 \definecolor{royalblue}{rgb}{0.25, 0.41, 0.88}
@@ -71,8 +75,8 @@
     showstringspaces=false,
     stringstyle=\color{red},
     moredelim = **[is][\beginlstdelim{'}{'}{stringColor}{teal}]{'}{'},
-    literate={[}{{\textcolor{forestgreen}{[}}}1    % Colorize '[' in orange
-             {]}{{\textcolor{forestgreen}{]}}}1   % Colorize ']' in orange
+    literate=%{[}{{\textcolor{forestgreen}{[}}}1    % Colorize '[' in orange
+             %{]}{{\textcolor{forestgreen}{]}}}1   % Colorize ']' in orange
              {.}{{\textcolor{orange}{.}}}1    % Colorize '[' in orange
     		 {,}{{\textcolor{browncolor}{,}}}1   % Colorize ']' in orange
     		 {:}{{\textcolor{browncolor}{:}}}1
@@ -81,21 +85,28 @@
 }
 \lstdefinestyle{mystyle}{
     language=MyPython,
-    basicstyle=\menlofont\footnotesize,
+    basicstyle=\menlo\scriptsize,
     commentstyle=\color{codegreen},       % Style for comments
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
+    aboveskip=\abovecaptionskip,
+	belowskip=\belowcaptionskip,
     keepspaces=true,
     numbers=left,
-    numbersep=5pt,
+    numbersep=10pt,
+    numberstyle=\menlo\tiny,
     showspaces=false,
     showstringspaces=false,
     showtabs=false,
     tabsize=2,
-    frame=none,
-    framesep=5pt,
-    xleftmargin=10pt,
+    frame=single,
+    framerule=1pt,
+    frameround=tttt,
+    framesep=10pt,
+    xleftmargin=25pt,
+    framexleftmargin=14pt,
+    framexrightmargin=-11pt,
     linewidth=\textwidth,
 }
 
@@ -137,6 +148,14 @@
 
 % Command to handle smaller fonts for charts, captions, and footnotes
 \captionsetup[table]{
+    font={footnotesize,stretch=1.25}, % Change the font size of the caption
+    labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
+    textfont={color=darkgray}, % Make the text colored
+    labelsep=period % Use period after the label (e.g., "Figure 8.")
+}
+
+% Command to handle smaller fonts for charts, captions, and footnotes
+\captionsetup[lstlisting]{
     font={footnotesize,stretch=1.25}, % Change the font size of the caption
     labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
     textfont={color=darkgray}, % Make the text colored
@@ -215,6 +234,13 @@
 % Add List of Tables to the ToC
 \cleardoublepage
 \listoftables
+
+% Add List of Code Blocks to the ToC
+\cleardoublepage
+\renewcommand\lstlistingname{Code Block} % Change to "Code Block"
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s} % Correct spacing
+\lstlistoflistings
+\addcontentsline{toc}{chapter}{\lstlistlistingname}
 
 % Add List of Equations to the ToC
 \cleardoublepage

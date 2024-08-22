@@ -64,29 +64,18 @@ XXX.
 
 \subsubsection{Flask application backend}
 
-XXX.
+\autoref{get_contacts_route} shows how bla, bla, bla.
 
 \lstset{style=mystyle}
 
-\begin{lstlisting}[language=MyPython, caption=Python Code from Screenshot]
+\begin{lstlisting}[language=MyPython, caption={[/get-contacts route]\textbf{/get-contacts route.} This Python code block shows an example of a Flask Web Application route that bla, bla, bla.}, label={get_contacts_route}]
 @app.route('/get-contacts', methods = ['POST'])
 def get_contacts():
     data = request.json
     active_model = data['modelData']
     prot_id = data['proteinId']
     seg_id = data['segmentId']
-    arpeggio_cons = pd.read_pickle(f'{DATA_FOLDER}/{prot_id}/{seg_id}/arpeggio/{active_model}_bio_proc.pkl')
-    arpeggio_cons_filt = arpeggio_cons[
-        (arpeggio_cons['contact'].apply(lambda x: x != ['proximal'])) &
-        (arpeggio_cons['interacting_entities'] == 'INTER') &
-        (arpeggio_cons['type'] == 'atom-atom')
-    ]
-    json_cons = arpeggio_cons_filt[arpeggio_cols].to_json(orient = 'records')
-    bs_membership = pd.read_pickle(f'{DATA_FOLDER}/example/other/{prot_id}_{seg_id}_ALL_inf_bss_membership.pkl')
-    bs_membership_rev = {v: k for k, vs in bs_membership.items() for v in vs}
-    struc_ligs = {k: v for k, v in bs_membership_rev.items() if k.startswith(active_model)}
-    struc_ligs_data = transform_dict(struc_ligs)
-    struc_prot_data = list(arpeggio_cons_filt[['label_comp_id_end', 'auth_asym_id_end', 'auth_seq_id_end']].drop_duplicates().itertuples(index = False, name = None))
+		(...)	
     response_data = {
         'contacts': json_cons,
         'ligands': struc_ligs_data,
@@ -97,47 +86,11 @@ def get_contacts():
 
 \subsubsection{HTML templates}
 
-\def\beginlstdelim#1#2#3%
-{%
-    \def\endlstdelim{#2\egroup}%
-    \ttfamily#1\bgroup\color{#3}\aftergroup\endlstdelim%
-}
-\lstset
-{%
-    moredelim = **[is][\beginlstdelim{\$}{\$}{orange}]{\$}{\$},
-    moredelim = **[is][\beginlstdelim{\{}{\}}{forestgreen}]{\{}{\}},
-    moredelim = **[is][\beginlstdelim{[}{]}{red}]{[}{]},
-    moredelim = **[is][\beginlstdelim{'}{'}{red}]{'}{'},
-    literate = {'}{{\textcolor{teal}{'}}}1,
-}
-
-\begin{lstlisting}
-\documentclass{article}
-\usepackage{amsmath}
-\begin{document}
-$E = mc^2$
-{E = mc^2}
-[E = mc^2]
-'E = mc^2'
-\end{document}
-\end{lstlisting}
-
+XXX.
 
 \subsubsection{JavaScript frontend}
 
 XXX.
-
-\begin{lstlisting}
-// Hello.java
-import javax.swing.JApplet;
-import java.awt.Graphics;
-
-public class Hello extends JApplet {
-    public void paintComponent(Graphics g) {
-        g.drawString("Hello, world!", 65, 95);
-    }    
-}
-\end{lstlisting}
 
 \subsubsection{CSS stylings}
 
