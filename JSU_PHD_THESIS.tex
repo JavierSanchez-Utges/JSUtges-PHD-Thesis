@@ -188,6 +188,7 @@
 
 \newcolumntype{M}[1]{>{\centering\arraybackslash}m{#1}}
 
+\renewcommand{\contentsname}{List of Contents}
 
 \begin{document}
 
@@ -225,6 +226,7 @@
 %\hypersetup{linkcolor=black}
 % Add Table of Contents to the ToC
 \cleardoublepage
+\addtocontents{toc}{\protect\contentsname} % This forces the change in the ToC
 \tableofcontents
 
 % Add List of Figures to the ToC
