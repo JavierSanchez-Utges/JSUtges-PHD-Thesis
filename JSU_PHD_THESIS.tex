@@ -10,7 +10,7 @@
 \usepackage{amsmath} % for equations
 \usepackage{times} % to set font
 \usepackage{hyperref} % Add this line to include the hyperref package
-\usepackage[compress]{cite} % Add this line to include the cite package with compression
+%\usepackage[compress]{cite} % Add this line to include the cite package with compression
 \usepackage{xcolor} % For text colors
 \usepackage{xurl}
 \usepackage{tocbibind} % for table of contents
@@ -30,6 +30,62 @@
 \usepackage{upquote}  % Ensures straight quotes in verbatim environments
 %\usepackage{afterpage}
 \usepackage{fontspec}
+
+\usepackage[backend=biber, style=numeric, sorting=none, giveninits=true, maxnames=3]{biblatex}
+\addbibresource{references_short.bib} % Link to your .bib file
+
+\AtEveryBibitem{
+  \ifentrytype{article}{
+    \clearfield{url}
+  }{}
+}
+
+\AtEveryBibitem{
+  \clearfield{doi}
+  \clearfield{issn}
+  %\clearfield{pages}
+}
+
+\renewbibmacro*{note+pages}{%
+  \printfield{note}}
+
+\newcommand*{\mkandothers}{\mkbibemph}
+\renewbibmacro*{name:andothers}{%
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }
+    {\ifnumgreater{\value{liststop}}{1}
+       {\finalandcomma}
+       {}%
+     \andothersdelim\bibstring[\mkandothers]{andothers}}
+    {}}
+  
+% Customize the bibliography format
+\DeclareNameAlias{author}{last-first} % Last name first
+\renewcommand{\bibinitdelim}{} % No space between initials
+\renewcommand{\bibinitperiod}{} % No dots after initials
+\DeclareFieldFormat[article]{title}{#1} % Title without quotes
+\renewbibmacro{in:}{} % Remove "In:" before journal names
+\DeclareFieldFormat[article]{volume}{\textbf{#1},} % Bold volume number
+\DeclareFieldFormat[article]{pages}{\addcomma\space#1} % Pages after volume and number
+\DeclareFieldFormat[article]{number}{} % Issue without parentheses
+\DeclareFieldFormat{year}{\addspace(#1)} % Add space before and wrap year in parentheses
+
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit{\addspace}% Space after journal name
+  \printfield{volume}%
+  \setunit{\addcomma\space}% Separator after volume
+  \printfield{pages}% Print pages next
+  \setunit{\addspace}% Space after pages
+  \printfield{year}% Add year in parentheses
+}
+
+
+
+
 %\setmonofont{Menlo} % Set Menlo as the monospaced font
 
 \setmainfont{Times New Roman} % Set Times New Roman as the main font
@@ -51,8 +107,6 @@
     \def\endlstdelim{\textcolor{#4}{#2}\egroup}  % Define the end delimiter with color
     \bgroup\hspace*{-1.2em}\textcolor{#4}{#1}\color{#3}\aftergroup\endlstdelim  % Use negative hspace to remove leading space
 }
-
-
 
 \definecolor{kwColor}{RGB}{186, 136, 175} % Pink for keywords
 \definecolor{funcColor}{RGB}{108, 148, 189} % Blue for function names
@@ -277,7 +331,6 @@
 \include{conclusions}
 
 \cleardoublepage
-\bibliographystyle{unsrt}
-\bibliography{references_short}
+\printbibliography
 
 \end{document}
