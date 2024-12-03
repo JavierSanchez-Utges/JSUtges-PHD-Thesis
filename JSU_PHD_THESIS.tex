@@ -83,6 +83,18 @@
   \printfield{year}% Add year in parentheses
 }
 
+\DeclareFieldFormat[misc]{title}{#1} % Remove italics from the title for misc
+\DeclareFieldFormat[misc]{year}{\addspace(#1)} % Add parentheses around the year
+\DeclareFieldFormat[misc]{url}{\url{#1}} % Keep URL as hyperlink without "URL:"
+
+% Apply changes only to misc entries
+\AtEveryBibitem{
+  \ifentrytype{misc}{%
+    \renewcommand{\newunitpunct}{\addspace} % Remove punctuation between fields for misc
+    %\renewcommand{\finentrypunct}{}        % Remove final period for misc
+  }{}
+}
+
 %\setmonofont{Menlo} % Set Menlo as the monospaced font
 \setmainfont{Times New Roman} % Set Times New Roman as the main font
 %\setmainfont{Verdana}        % Uncomment to use Verdana instead
@@ -190,8 +202,8 @@
 % Command to handle smaller fonts for charts, captions, and footnotes
 \captionsetup[figure]{
     font={footnotesize,stretch=1.25}, % Change the font size of the caption
-    labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
-    textfont={color=darkgray}, % Make the text colored
+    labelfont={bf,color=black}, % Make the label (e.g., "Figure 8") bold
+    textfont={color=black}, % Make the text colored
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
 
