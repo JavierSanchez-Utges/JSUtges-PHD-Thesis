@@ -191,7 +191,7 @@ Overall, implementing kernel, bias, or activity regularisation techniques did no
 \endfirsthead
 %
 \multicolumn{4}{c}%
-{{\bfseries Table \thetable\ (continued)}} \\
+{{\bfseries Table \thetable} (continued)} \\
 \hline
 \textbf{Model}              & \textbf{Accuracy (\%)} & \textbf{$\Delta_{acc}$ (\%)} & \textbf{FDR} \\ \hline
 \endhead{}
@@ -263,6 +263,11 @@ Overall, implementing kernel, bias, or activity regularisation techniques did no
 \texttt{\textit{all} L1L2}          & 91.4              &  \textminus2.5                   & 0            \\ \hline
 \end{longtable}
 
+% Prevent LaTeX from incrementing the table counter
+\addtocounter{table}{-1}
+\addcontentsline{lot}{table}{\protect\numberline{2.1}MLP ablation study}
+
+
 % Separate caption for the table
 \begin{center}
 \captionsetup{type=table} % Specify the type of the caption
@@ -329,23 +334,23 @@ The focus here is on human proteins to allow the additional information from hum
 
 \autoref{fig:bss_features} shows the 293 defined binding sites are diverse in size (number of amino acids), solvent accessibility, evolutionary divergence, and missense depletion. Binding site size ranges from 2-40 residues with a median of 9, while median site RSA ranges from 4-80\%, with a median of 30\%. For evolutionary divergence, the average site $N_{Shenkin}$ spread from 0-80, peaking at 40. Lastly, MES spans \textminus0.75 to 1.0, peaking at neutrality (MES $\approx$ 0).
 
-
-
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/ch_FRAGSYS/PNG/FIG2_bs_feats_2x2.png}
+    \includegraphics[width=0.65\textwidth]{figures/ch_FRAGSYS/PNG/FIG2_bs_feats_2x2.png}
     \caption[Variation in binding site features]{\textbf{Variation in binding site features.} Distribution of size \textbf{(A)}, median RSA \textbf{(B)}, average $N_{Shenkin}$ \textbf{(C)} and MES \textbf{(D)} across the 293 binding sites defined from our data set. Black dashed lines indicate the median of each distribution.}
     \label{fig:bss_features}
 \end{figure}
 
 Despite the diversity among sites, some general trends can be observed. \autorefpanel{fig:bss_feats_corr}A shows that larger binding sites tend to be less accessible to solvent ($r$ = \textminus0.4, p $\approx$ 0). \autorefpanel{fig:bss_feats_corr}{B} illustrates that larger sites are less divergent across homologues ($r$ = \textminus0.21, $p$ = $10^{-4}$) while \autorefpanel{fig:bss_feats_corr}{C} presents how larger sites show lower enrichment in neutral missense variants within the human population, i.e., are on average more depleted in missense variants than sites of a smaller size ($r$ = \textminus0.15, $p$ = 0.008). Correlations between MES and $N_{Shenkin}$, and RSA and $N_{Shenkin}$ were not significant, i.e., 95\% CI $r \ni$ 0.
 
-\begin{figure}[ht!]
+\begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG3_bs_feats_corr.png}
     \caption[Relation between different binding site properties]{\textbf{Relation between different binding site properties.} A regression line is fitted to all data points previous to binning ($N$ = 293 binding sites). Pearson’s correlation coefficient $r$ \cite{RODGERS_1988_CORRELATION} and associated $p$-value and 95\% CI of $r$ \cite{BOWLEY_1928_R_CI} are also shown. Data points are grouped into bins according to different binding site size intervals, represented by box and swarm plots. \textbf{(A)} Median site RSA \% \textit{vs} binding site size, in amino acids; \textbf{(B)} Average $N_{Shenkin}$ \textit{vs} binding site size; \textbf{(C)} Average site MES \textit{vs} site size. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR.}
     \label{fig:bss_feats_corr}
 \end{figure}
+
+\vspace{-17pt} % Adjust this value as needed
 
 \subsection{RSA-based binding site clustering}
 
@@ -361,7 +366,7 @@ Despite the diversity among sites, some general trends can be observed. \autoref
 \begin{figure}[ht!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG4_bs_clust_results_SPLIT_2.png}
-    \captionof{figure}[Examples of RSA-based binding site clusters]{\textbf{Examples of RSA-based binding site clusters.} Six examples of binding sites are shown in structure for each cluster. Examples were selected to represent the range of binding site sizes within each cluster. Binding site residues are coloured according to their RSA, using the \textit{cividis} colour scheme. The rest of the protein is coloured in white. Ligands binding to the site in question are coloured in red.  IDs are UniProt accession codes and PDB IDs are provided for protein representative structures. C1 -- \href{https://www.uniprot.org/uniprotkb/Q9UKK9/entry}{Q9UKK9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qjl}{5QJL} \cite{PDB_5QJL}, \href{https://www.uniprot.org/uniprotkb/Q9UGL1/entry}{Q9UGL1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5fz0}{5FZ0} \cite{PDB_5FZ0}, \href{https://www.uniprot.org/uniprotkb/Q9UJM8/entry}{Q9UJM8} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qib}{5QIB} \cite{PDB_5QIB}, \href{https://www.uniprot.org/uniprotkb/Q8WS26/entry}{Q8WS26} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qpm}{5QPM} \cite{PDB_5QPM}, \href{https://www.uniprot.org/uniprotkb/Q7LBC6/entry}{Q7LBC6} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ran}{5RAN} \cite{PDB_5RAN}, \href{https://www.uniprot.org/uniprotkb/Q5T0W9/entry}{Q5T0W9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qhn}{5QHN} \cite{PDB_5QHN}; C2 -- \href{https://www.uniprot.org/uniprotkb/P11838/entry}{P11838} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5r1y}{5R1Y} \cite{WOLLENHAUPT_2020_F2X}, \href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5s4b}{5S4B} \cite{SCHULLER_2021_NSP3},}
+    \captionof{figure}[Examples of RSA-based binding site clusters]{\textbf{Examples of RSA-based binding site clusters.} Six examples of binding sites are shown in structure for each cluster. Examples were selected to represent the range of binding site sizes within each cluster. Binding site residues are coloured according to their RSA, using the \textit{cividis} colour scheme. The rest of the protein is coloured in white. Ligands binding to the site in question are coloured in red.  IDs are UniProt accession codes and PDB IDs are provided for protein representative structures. C1 -- \href{https://www.uniprot.org/uniprotkb/Q9UKK9/entry}{Q9UKK9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qjl}{5QJL} \cite{PDB_5QJL}, \href{https://www.uniprot.org/uniprotkb/Q9UGL1/entry}{Q9UGL1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5fz0}{5FZ0} \cite{PDB_5FZ0}, \href{https://www.uniprot.org/uniprotkb/Q9UJM8/entry}{Q9UJM8} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qib}{5QIB} \cite{PDB_5QIB}, \href{https://www.uniprot.org/uniprotkb/Q8WS26/entry}{Q8WS26} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qpm}{5QPM} \cite{PDB_5QPM}, \href{https://www.uniprot.org/uniprotkb/Q7LBC6/entry}{Q7LBC6} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ran}{5RAN} \cite{PDB_5RAN}, \href{https://www.uniprot.org/uniprotkb/Q5T0W9/entry}{Q5T0W9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qhn}{5QHN} \cite{PDB_5QHN}; C2 -- \href{https://www.uniprot.org/uniprotkb/P11838/entry}{P11838} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5r1y}{5R1Y} \cite{WOLLENHAUPT_2020_F2X}, \href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5s4b}{5S4B} \cite{SCHULLER_2021_NSP3}, \href{https://www.uniprot.org/uniprotkb/Q8IU60/entry}{Q8IU60} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qp9}{5QP9} \cite{PDB_5QP9}, \href{https://www.uniprot.org/uniprotkb/P18031/entry}{P18031} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU} \cite{KEEDY_2018_PTP1B}, \href{https://www.uniprot.org/uniprotkb/P0C024/entry}{P0C024} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qgi}{5QGI} \cite{PDB_5QGI}, \href{https://www.uniprot.org/uniprotkb/Q9UKK9/entry}{Q9UKK9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qjl}{5QJL}; C3 -- \href{https://www.uniprot.org/uniprotkb/P47811/entry}{P47811} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ra5}{5RA5} \cite{NICHOLS_2020_MINING}, \href{https://www.uniprot.org/uniprotkb/O15178/entry}{O15178} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qsa}{5QSA} \cite{PDB_5QSA}, \href{https://www.uniprot.org/uniprotkb/Q6B0I6/entry}{Q6B0I6} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5phl}{5PHL} \cite{PEARCE_2017_PANDDA}, \href{https://www.uniprot.org/uniprotkb/P47811/entry}{P47811} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ra5}{5RA5}, \href{https://www.uniprot.org/uniprotkb/Q92835/entry}{Q92835} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ry0}{5RY0} \cite{BRADSHAW_2024_SHIP1}, \href{https://www.uniprot.org/uniprotkb/P18031/entry}{P18031} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU}; C4 --}
 \label{fig:bss_clusts_examples}
 \end{figure}
 
@@ -384,6 +389,8 @@ To further characterise the defined clusters, the distributions of the normalise
     \caption[Binding site cluster features (II)]{\textbf{Binding site cluster features (II).} \textbf{(A)} Histogram of RSA (\%) of the residues found within the ligand binding sites in each cluster; \textbf{(B)} Histogram of $N_{Shenkin}$ within cluster residues; \textbf{(C)} MES histogram plots for the 4 clusters defined.}
     \label{fig:bs_clusts_feats_2}
 \end{figure}
+
+%\vspace{-8pt} % Adjust this value as needed
 
 \subsection{Clusters predict differential functional enrichment}
 
@@ -415,11 +422,11 @@ The site is located between domains I-III, involving residues from $\eta$2, $\al
     \label{fig:c1_example_1}
 \end{figure}
 
+\vspace{-20pt} % Adjust this value as needed
+
 \subsubsection{SARS-CoV-2 NSP13}
 
 The Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2) replicase polyprotein 1ab (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}) is 7096 amino acids long and codes for 16 non-structural proteins \cite{NAQVI_2020_SARSCOV2}. NSP13 is a helicase that unwinds dsRNA in the 5’-3’ direction to provide a single-stranded template for viral RNA amplification \cite{YUE_2022_SARSCOV2}. NSP13 also has NTPase activity, which provides the energy for the RNA unwinding \cite{SHU_2020_SARSCOV2}. NSP13 plays a fundamental role in the replication and transcription of the SARS-CoV-2 genome and is thought to be a good drug target against SARS-CoV-2 virus infection \cite{ZENG_2021_SARSCOV2}. NSP13 has five domains. Two ``RecA like'' subdomains 1A and 2A, in charge of nucleotide binding and hydrolysis, as well as three other domains: an N-terminal zinc-binding domain, the helical ``stalk'' domain, and a beta-barrel 1B domain \cite{ROMEO_2022_SARSCOV2}. It is the most conserved protein across coronaviruses, with sequence identity $>$ 99\% \cite{RICCI_2022_SARSCOV2}.
-
-Twenty-four sites are defined on the surface of NSP13. Two binding sites were identified as C1: BS6, and BS16 (\autoref{fig:c1_example_2}). Visual inspection shows the two sites to be adjacent with a total of 16 residues. Three fragments bind to the site, which is located in the nucleotide and RNA binding interface of NSP13 between the 1B and 2A domains. This is the region where the 5’ end of the RNA binds \cite{YAN_2020_SARSCOV2}. This pocket is determined to be highly druggable, and drugs binding to it might be effective against other coronaviruses, due to the pocket’s high amino acid conservation \cite{NEWMAN_2021_SARSCOV2}. This agrees with our results, as this site has an average $N_{Shenkin}$ = 32, and MES = \textminus0.18. Of the 16 positions in this site, four show high conservation across homologues and missense depletion in human: P514 ($N_{Shenkin}$ = 30, MES = \textminus0.56), D534 ($N_{Shenkin}$ = 9, MES = \textminus0.56), T552 ($N_{Shenkin}$ = 48, MES = \textminus1.87), and H554 ($N_{Shenkin}$ = 36, MES = \textminus0.85). T552 shows highest conservation across species and lowest missense enrichment (\textminus1.87) and so is most likely to have a key function in this protein family.
 
 \begin{figure}[htb!]
     \centering
@@ -427,6 +434,8 @@ Twenty-four sites are defined on the surface of NSP13. Two binding sites were id
     \caption[Binding Site 6+16 of SARS-CoV-2 NSP13]{\textbf{Binding Site 6+16 of SARS-CoV-2 NSP13.} Non-structural protein NSP13 of SARS-CoV-2 (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}) binding to 3 ligands in BS6+16 (Cartoon PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5RMH}{5RMH}) \cite{NEWMAN_2021_SARSCOV2}. 1A, 1B, 2A, stalk and zinc domains are coloured in yellow, pink, green, brown, and grey respectively. Ligand binding residues in red, and ligands in yellow. Interactions are not shown here for simplicity.}
     \label{fig:c1_example_2}
 \end{figure}
+
+Twenty-four sites are defined on the surface of NSP13. Two binding sites were identified as C1: BS6, and BS16 (\autoref{fig:c1_example_2}). Visual inspection shows the two sites to be adjacent with a total of 16 residues. Three fragments bind to the site, which is located in the nucleotide and RNA binding interface of NSP13 between the 1B and 2A domains. This is the region where the 5’ end of the RNA binds \cite{YAN_2020_SARSCOV2}. This pocket is determined to be highly druggable, and drugs binding to it might be effective against other coronaviruses, due to the pocket’s high amino acid conservation \cite{NEWMAN_2021_SARSCOV2}. This agrees with our results, as this site has an average $N_{Shenkin}$ = 32, and MES = \textminus0.18. Of the 16 positions in this site, four show high conservation across homologues and missense depletion in human: P514 ($N_{Shenkin}$ = 30, MES = \textminus0.56), D534 ($N_{Shenkin}$ = 9, MES = \textminus0.56), T552 ($N_{Shenkin}$ = 48, MES = \textminus1.87), and H554 ($N_{Shenkin}$ = 36, MES = \textminus0.85). T552 shows highest conservation across species and lowest missense enrichment (\textminus1.87) and so is most likely to have a key function in this protein family.
 
 \subsection{Examples of potentially novel C1 cluster functional predictions}
 
@@ -456,20 +465,23 @@ Thirty-three unique ligands across 25 ALAS-E structures were grouped in ten bind
     \label{fig:c1_example_4}
 \end{figure}
 
+\vspace{-13pt} % Adjust this value as needed
+%\vspace{-7pt} % Adjust this value as needed
+
 \section{Discussion}
 
 On this chapter, a method has been presented to identify binding sites from fragment screening data and group the sites into four robust clusters by an RSA profile metric. 29/46 sites in Cluster 1 have functional support from the literature (UniProt 17/46 -- \autoref{tab:literature_c1_sites}; literature search 12/46 -- \autoref{tab:novel_c1_sites}). Seventeen further sites have similar profiles, but no evidence of their functional significance was found in the literature. Two examples from this set are shown that have compelling support from conservation and missense depletion scores of functional significance. Furthermore, all sites are listed in \autoref{tab:novel_c1_sites} as a resource for further experimentation on these proteins.
 
 As a case study, this method was applied to the SARS-CoV-2 main protease, MPro (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}). Twenty-five sites were defined from 511 structures, from which 8 were classed as C1, 12 as C2, 3 as C3 and only 2 as C4. Of the 8 C1 sites, one corresponds to the active site and three to allosteric sites 1, 2, and 3 \cite{DASGUPTA_2022_ALLOSTERIC} respectively. A further C1 site is at the dimer interface and known to be a potential allosteric site \cite{DOUANGAMATH_2020_SARSCOV2} (\autoref{fig:MPro_showcase}). The remaining three C1 sites may be important, but each binds only a single ligand and their function is currently unclear.
 
-This chapter focuses on a small set of proteins heavily studied by fragment screening methods. However, the method described here can be applied to classify any ligand binding site or predicted site. Accordingly, future work will seek to classify all known ligand binding sites in the PDBe and provide tools to predict the likely functional class of sites predicted by tools such as P2Rank \cite{KRIVAK_2018_P2RANK}, or GRaSP \cite{SANTANA_2020_GRaSP, SANTANA_2022_GRaSP} from AlphaFold2 \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB} or other 3D structure models.
-
-\begin{figure}[ht!]
+\begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/SUPP_FIG4_MPro_C1_sites.png}
     \caption[SARS-CoV-2 MPro fragment screening]{\textbf{SARS-CoV-2 MPro fragment screening.} \textbf{(A)} Twenty-five defined ligand binding sites on the SARS-CoV-2 main protease, MPro (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}) from 971 ligands from 511 structures; \textbf{(B)} Five of the 9 C1 sites included the known MPro active site, and four known potential allosteric sites \cite{DOUANGAMATH_2020_SARSCOV2, DASGUPTA_2022_ALLOSTERIC}. Surface PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5R7Y}{5R7Y} \cite{DOUANGAMATH_2020_SARSCOV2}.}
     \label{fig:MPro_showcase}
 \end{figure}
+
+This chapter focuses on a small set of proteins heavily studied by fragment screening methods. However, the method described here can be applied to classify any ligand binding site or predicted site. Accordingly, future work will seek to classify all known ligand binding sites in the PDBe and provide tools to predict the likely functional class of sites predicted by tools such as P2Rank \cite{KRIVAK_2018_P2RANK}, or GRaSP \cite{SANTANA_2020_GRaSP, SANTANA_2022_GRaSP} from AlphaFold2 \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB} or other 3D structure models.
 
 It is natural to focus on sites that are most likely to be of functional significance and so possible targets to modulate function. However, binding sites identified here that are predicted to be least likely to have function may also be interesting as good locations for tagging proteins for degradation \cite{BEKES_2022_PROTACS}, phosphorylation \cite{SIRIWARDENA_2020_PHOSPHO}, dephosphorylation \cite{SIMPSON_2023_ADPROM}, or other modulation \cite{HEITEL_2023_PTMS, PENG_2023_PTMS}.
 
