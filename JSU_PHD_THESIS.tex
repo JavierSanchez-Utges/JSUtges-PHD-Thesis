@@ -120,6 +120,8 @@
 \definecolor{stringColor}{RGB}{54, 187, 56} % Green for strings
 \definecolor{orangecolor}{RGB}{245, 113, 87} % Orange-like color
 \definecolor{browncolor}{RGB}{165, 105, 79} % Brown-like color
+\definecolor{CBOrange}{RGB}{230,159,0} % Orange for "wrong"
+\definecolor{CBBlue}{RGB}{86,180,233}  % Blue for "right"
 
 
 \lstdefinelanguage{MyPython}{
@@ -223,8 +225,8 @@
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
 
-\newcommand{\cmark}{\textcolor{forestgreen}{\ding{51}}}%
-\newcommand{\xmark}{\textcolor{firebrick}{\ding{55}}}%
+\newcommand{\cmark}{\textcolor{CBBlue}{\ding{51}}}%
+\newcommand{\xmark}{\textcolor{CBOrange}{\ding{55}}}%
 
 % Hyperlinks setup
 \hypersetup{
