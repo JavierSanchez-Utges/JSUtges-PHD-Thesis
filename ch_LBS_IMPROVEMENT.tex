@@ -20,7 +20,7 @@ We define pocket prediction redundancy as the prediction of pockets with centroi
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.99\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG6_PREDICTION_REDUNDANCY_SPLIT_1.png}
+    \includegraphics[width=0.99\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG6_PREDICTION_REDUNDANCY_SPLIT_1.png}
     \caption[The issue of redundancy in ligand binding site prediction]{\textbf{The issue of redundancy in ligand binding site prediction.} \textbf{(A)} A set of predictions where 6/10 predictions are redundant, resulting in a low recall (1/5) and inflated precision (7/7); \textbf{(B)} When redundancy is removed, only four predictions remain and recall increases to 3/5 (60\%) and precision decreases to 3/4 (75\%).}
     \label{fig:prediction_redundancy}
 \end{figure}
@@ -31,7 +31,7 @@ We define pocket prediction redundancy as the prediction of pockets with centroi
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG6_PREDICTION_REDUNDANCY_SPLIT_2.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG6_PREDICTION_REDUNDANCY_SPLIT_2.png}
     \caption[Example of redundant predictions]{\textbf{Example of redundant predictions.} Predictions by VN-EGNN, IF-SitePred and PUResNet, on chain D of PDB: 4Z9M (Rabeh WM, Tempel W, Nedyalkova L, Landry R, Arrowsmith CH, Edwards AM, Bountra C, Bochkarev A, Park H, Structural Genomics Consortium (SGC), 2015), where ADP binds. For this ADP binding site, VN-EGNN reports 7 predictions, IF-SitePred 33, and PUResNet a single prediction. These three methods correctly predict this site, however, VN-EGNN and IF-SitePred report redundant pocket predictions, which centroids are very close, $\leq$ 5\AA{}, in space and residues overlap high ($\geq$ 0.75).}
     \label{fig:prediction_redundancy_examples}
 \end{figure}
@@ -46,7 +46,7 @@ Figure 5D shows that prediction redundancy is an issue particularly for VN-EGNN,
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG9_CLOSESET_PREDICTED_POCKETS.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG9_CLOSESET_PREDICTED_POCKETS.png}
     \caption[Closest predicted pockets for each methods]{\textbf{Closest predicted pockets for each method.} For each method, the two closest predicted pockets across all protein chains are shown. This is the pair of pockets with the minimum Euclidean distance between their centroids. Protein surface is coloured in tan. The larger pocket (more residues)}
     \label{fig:closest_pred_pockets}
 \end{figure}
@@ -90,7 +90,7 @@ The score distributions of ``\textsubscript{AA}'', ``\textsubscript{SS}'' and ``
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG3_SCORE_vs_RANK.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG3_SCORE_vs_RANK.png}
     \caption[Pocket score \textit{vs} pocket ranking]{\textbf{Pocket score \textit{vs} pocket ranking.}}
     \label{fig:pocket_score_vs_rank}
 \end{figure}
@@ -105,14 +105,14 @@ Using PRANK to re-score fpocket predictions was the most impactful across the me
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG4_RECALL_VARIANTS_1.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG4_RECALL_VARIANTS_1.png}
     \caption[ROC100 curves for non-redundant and re-scored variants (I)]{\textbf{ROC100 curves for non-redundant and re-scored variants (I).}}
     \label{fig:pocker_recall_variants1}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG5_RECALL_VARIANTS_2.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG5_RECALL_VARIANTS_2.png}
     \caption[ROC100 curves for non-redundant and re-scored variants (II)]{\textbf{ROC100 curves for non-redundant and re-scored variants (II).}}
     \label{fig:pocker_recall_variants2}
 \end{figure}
@@ -137,7 +137,7 @@ For the last three methods, PocketFinder\textsuperscript{+}, Ligsite\textsupersc
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG6_TP100FP_VARIANTS.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG6_TP100FP_VARIANTS.png}
     \caption[ROC100 curves for non-redundant and re-scored variants]{\textbf{ROC100 curves for non-redundant and re-scored variants.} For each method, predicted pockets across the whole dataset, i.e., all LIGYSIS protein chains, are ranked by their score. This way, pockets with the highest scores will be at the top of the list, whereas pockets with the lowest scores will be at the bottom. This ranking will not correspond to ranking pockets across the dataset by their rank, as a pocket ranked \#2, \#3 or lower could have a higher score than a pocket \#1 of a different protein. Each method has a colour assigned, and each variant resulting of redundancy removal or pocket (re-)scoring a different line style. \textbf{(A)} VN-EGNN and ``\textsubscript{NR}'' variant; \textbf{(B)} IF-SitePred and ``\textsubscript{NR}'', re-scored ``\textsubscript{RESC}'' and ``\textsubscript{RESC-NR}'' variants; \textbf{(C)} PUResNet and ``\textsubscript{AA}'' and ``\textsubscript{PRANK}'' variants; \textbf{(D)} DeepPocket\textsubscript{SEG} and ``\textsubscript{NR}'' variant; \textbf{(E)} fpocket and ``\textsubscript{PRANK}'' variant; \textbf{(F)} PocketFinder\textsuperscript{+} and ``\textsubscript{AA}'', ``\textsubscript{PRANK}'' and ``\textsubscript{SS}'' variants; \textbf{(G)} Ligsite\textsuperscript{+} and variants; \textbf{(H)} Surfnet\textsuperscript{+} and variants.}
     \label{fig:pocket_ROC100_variants}
 \end{figure}
@@ -154,7 +154,7 @@ There is no significant ($p >$ 0.05) change in precision between VN-EGNN and VN-
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG7_PRECISION_VARIANTS.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG7_PRECISION_VARIANTS.png}
     \caption[Precision\textsubscript{1K} curves for non-redundant and re-scored variants]{\textbf{Precision\textsubscript{1K} curves for non-redundant and re-scored variants.}  Precision\textsubscript{1K} represents the precision (\%) calculated for the top-scoring 1,000 predictions. For each method, predicted pockets across the whole LIGYSIS set, are ranked by their score. This way, pockets with the highest scores will be at the top of the list, whereas pockets with the lowest scores will be at the bottom. Each method has a colour assigned, and each scoring variant its own line style. $\Delta_{Precision}$ indicates the difference in precision between the selected method variant and the default one.  \textbf{(A)} VN-EGNN and ``\textsubscript{NR}'' variant; \textbf{(B)} IF-SitePred and ``\textsubscript{NR}'', re-scored ``\textsubscript{RESC}'' and ``\textsubscript{RESC-NR}'' variants; \textbf{(C)} PUResNet and ``\textsubscript{AA}'' and ``\textsubscript{PRANK}'' variants; \textbf{(D)} DeepPocket\textsubscript{SEG} and ``\textsubscript{NR}'' variant; \textbf{(E)} fpocket and ``\textsubscript{PRANK}'' variant; \textbf{(F)} PocketFinder\textsuperscript{+} and ``\textsubscript{AA}'', ``\textsubscript{PRANK}'' and ``\textsubscript{SS}'' variants; \textbf{(G)} Ligsite\textsuperscript{+} and variants; \textbf{(H)} Surfnet\textsuperscript{+} and variants. Error bars indicate 95\% CI of the precision (proportion) and are displayed every 100 predictions.}
     \label{fig:pocket_precision_variants}
 \end{figure}
@@ -165,7 +165,7 @@ There is no significant ($p >$ 0.05) change in precision between VN-EGNN and VN-
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG8_POCKET_LEVEL_BENCHMARK_IMPROVED.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG8_POCKET_LEVEL_BENCHMARK_IMPROVED.png}
     \caption[Ligand binding site prediction at the pocket level (variants)]{\textbf{Ligand binding site prediction at the pocket level (variants).} Only the top-performing, i.e., highest recall, variant of each method is drawn on this figure, e.g., IF-SitePred\textsubscript{RESC-NR}, VN-EGNN\textsubscript{NR}, or fpocket\textsubscript{PRANK} instead of their default modes. \textbf{(A)} \% Recall, percentage of observed sites that are correctly predicted by a method according to a DCC threshold. Reported recall on \autoref{tab:pocket_level_benchmark_variants} corresponds to DCC = 12\AA{}; \textbf{(B)} \% Recall using DCC = 12\AA{} but considering increasing rank thresholds. \textit{ALL} represents the maximum recall of a method, obtained by considering all predictions, regardless of their rank or score; \textbf{(C)} \% Recall curve using $I_{rel}$ as a criterion; \textbf{(D)} ROC100 curve (cumulative TP against cumulative FP until 100 FP are reached); \textbf{(E)} Precision curve for the top-1,000 predictions of each method across the LIGYSIS dataset. Error bars represent 95\% CI of the recall (A-C) and precision (E), which are 100 $\times$ proportion. Numbers at the right of the panels indicate groups or blocks of methods that perform similarly for each metric. Asterisks ``*'' indicate outlier methods, or methods that perform very differently than the rest.}
     \label{fig:pocket_level_benchmark_variants}
 \end{figure}

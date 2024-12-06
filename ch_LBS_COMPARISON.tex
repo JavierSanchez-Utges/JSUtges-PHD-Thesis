@@ -122,7 +122,7 @@ On this chapter, thirteen ligand binding site prediction tools, spanning three d
 
 \subsection{Comparison of datasets}
 
-Training and test datasets were downloaded for all machine learning-based methods reviewed in this chapter. Datasets were compared to the LIGYSIS reference set, in terms of number of sites per protein, ligand-interacting chains, chain length, site size (number of amino acids), ligand composition, size and diversity. Ligand diversity was quantified by Shannon's Entropy \cite{SHANNON_1948_ENTROPY} (\autoref{eq:entropy_shannon}) where $p_i$ represents the proportion of each ligand $i$ of the $R$ ligands observed in a dataset. Ligand data was extracted from the Chemical Component Dictionary (CCD) \cite{WESTBROOK_2015_CCD}. An overlap (\%) was calculated for each dataset as the proportion of LIGYSIS binding sites that were covered by at least one ligand in a test dataset. A simplistic approach was adopted by calculating the intersection of ligand codes between LIGYSIS and each dataset. Ligand codes were defined as a string of PDB ID + ``\_'' + ligand ID, e.g., ``6GXT\_GTP'' corresponds to the guanosine-5’-triphosphate (GTP) of the PDB entry with ID: 6GX7 \cite{CAMPANACCI_2019_TUBULIN}.
+Training and test datasets were downloaded for all machine learning-based methods reviewed in this chapter. Datasets were compared to the LIGYSIS reference set, in terms of number of sites per protein, ligand-interacting chains, chain length, site size (number of amino acids), ligand composition, size and diversity. Ligand diversity was quantified by Shannon's Entropy \cite{SHANNON_1948_ENTROPY} (\autoref{eq:entropy_shannon}) where $p_i$ represents the proportion of each ligand $i$ of the $R$ ligands observed in a dataset. Ligand data was extracted from the Chemical Component Dictionary (CCD) \cite{WESTBROOK_2015_CCD}. An overlap (\%) was calculated for each dataset as the proportion of LIGYSIS binding sites that were covered by at least one ligand in a test dataset. A simplistic approach was adopted by calculating the intersection of ligand codes between LIGYSIS and each dataset. Ligand codes were defined as a string of PDB ID + ``\_'' + ligand ID, e.g., ``6GXT\_GTP'' corresponds to the guanosine-5’-triphosphate (GTP) of the PDB entry with ID: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/6gx7}{6GX7} \cite{CAMPANACCI_2019_TUBULIN}.
 
 \begin{equation}
 H' = - \sum_{i=1}^{R} p_i \ln(p_i)
@@ -136,11 +136,11 @@ VN-EGNN is trained on a subset \cite{KANDEL_2021_PURESNET} of the sc-PDB (v2017)
 
 \subsection{Test datasets}
 
-The majority of ligand binding site predictors published since 2018 have been using two datasets that were first presented by Krivák \textit{et al.} \cite{KRIVAK_2018_P2RANK}: COACH420 and HOLO4K, or subsets of them. COACH420 is comprised by a set of 420 single-chain structures binding a mix of drug-like molecules and naturally occurring ligands which is disjunct with the CHEN11 and JOINED datasets. COACH420 is a modified version of the original COACH test set \cite{ROY_2012_COFACTOR, YANG_2013_COFACTOR}. HOLO4K is a larger set, $N \approx$ 4,000, based on the list by Schmidtke \textit{et al.} \cite{SCHMIDTKE_2010_BENCHMARK}, which includes a mix of single- and multi-chain complexes, also disjunct with P2Rank training (CHEN11) and validation (JOINED) datasets. VN-EGNN, DeepPocket and GrASP use the Mlig and Mlig+ subsets of the COACH and HOLO4K datasets, which comprise strictly biologically relevant ligands as defined by the binding MOAD. IF-SitePred is tested on the HOLO4K-AlphaFold2 Paired (HAP) and HAP-small sets. HAP is a subset of the HOLO4K dataset which presents high quality models in the AlphaFold database \cite{VARADI_2022_ALPHAFOLDDB}. HAP-small is a smaller subset of HAP that only contains proteins with sequence identity lower than 25\% to proteins in the P2Rank training set. VN-EGNN uses the refined version of PDBbind (v2020), referred here as PDBbind\textsubscript{REF}, \cite{WANG_2004_PDBBIND, WANG_2005_PDBBIND, CHENG_2009_PDBBIND, LI_2014_PDBBIND, LIU_2015_PDBBIND, LIU_2017_PDBBIND} as a third test set. Like binding MOAD, the PDBbind database provides a comprehensive collection of experimentally measured binding affinity data for macromolecular complexes. Specifically, the refined set includes those protein-ligand complexes for which binding data was obtained with the literature and met certain experimental quality thresholds. Lastly, SC6K is a dataset presented by Aggarwal \textit{et al.} \cite{AGGARWAL_2022_DEEPPOCKET} containing 6,000 protein-ligand pairs from PDB entries submitted from 01/01/2018 – 28/02/2020.
+The majority of ligand binding site predictors published since 2018 have been using two datasets that were first presented by Krivák \textit{et al.} \cite{KRIVAK_2018_P2RANK}: COACH420 and HOLO4K, or subsets of them. COACH420 is comprised by a set of 420 single-chain structures binding a mix of drug-like molecules and naturally occurring ligands which is disjunct with the CHEN11 and JOINED datasets. COACH420 is a modified version of the original COACH test set \cite{ROY_2012_COFACTOR, YANG_2013_COFACTOR}. HOLO4K is a larger set, $N \approx$ 4000, based on the list by Schmidtke \textit{et al.} \cite{SCHMIDTKE_2010_BENCHMARK}, which includes a mix of single- and multi-chain complexes, also disjunct with P2Rank training (CHEN11) and validation (JOINED) datasets. PRANK employed the small datasets comprising the JOINED set for testing. VN-EGNN, DeepPocket and GrASP use the Mlig and Mlig+ subsets of the COACH and HOLO4K datasets, which include strictly biologically relevant ligands as defined by the binding MOAD. IF-SitePred tested on the HOLO4K-AlphaFold2 Paired (HAP) and HAP-small sets. HAP is a subset of the HOLO4K dataset which presents high quality models in the AlphaFold database \cite{VARADI_2022_ALPHAFOLDDB}. HAP-small is a smaller subset of HAP that only contains proteins with sequence identity lower than 25\% to proteins in the P2Rank training set. VN-EGNN uses the refined version of PDBbind (v2020), referred here as PDBbind\textsubscript{REF}, \cite{WANG_2004_PDBBIND, WANG_2005_PDBBIND, CHENG_2009_PDBBIND, LI_2014_PDBBIND, LIU_2015_PDBBIND, LIU_2017_PDBBIND} as a third test set. Like binding MOAD, the PDBbind database provides a comprehensive collection of experimentally measured binding affinity data for macromolecular complexes. Specifically, the refined set includes those protein-ligand complexes for which binding data was obtained with the literature and met certain experimental quality thresholds. Lastly, SC6K is a dataset presented by Aggarwal \textit{et al.} \cite{AGGARWAL_2022_DEEPPOCKET} containing 6000 protein-ligand pairs from PDB entries submitted from 01/01/2018 – 28/02/2020.
 
 \subsection{Protein chain alignment}
 
-For each protein chain, atomic coordinates were translated to be centred at the origin, $O = (0, 0, 0)$, and rotated using a rotation matrix, $R$. The two principal components of the coordinate space $pc_{1}$ and $pc_{2}$ were obtained using principal component analysis (PCA) \cite{HOTELLING_1933_PCA}. A third component, $pc_{\perp}$, was obtained with the cross-product of the other two, to ensure orthogonality. A rotation matrix $P$ is constructed from these vectors (\autoref{eq:pca_components}). By placing the main component $pc_{1}$ on the second row of $P$, we ensure the $Y$ axis will be the major axis, representing the height of the protein chain. The second largest axis will be the $X$ axis, representing the width of the protein, and lastly the depth will be represented by the smaller magnitude of the $Z$ axis. The final rotation matrix $R$ is obtained by multiplying $P$ by the negative identity matrix $NI$ (\autoref{eq:NI_matrix} and \autoref{eq:R_matrix}). This was done to maintain the left-handedness of the protein chains whilst ensuring a consistent alignment on the major axes.
+For each protein chain, atomic coordinates were translated to be centred at the origin, $O = (0, 0, 0)$, and rotated using a rotation matrix, $R$. The two principal components of the coordinate space $pc_{1}$ and $pc_{2}$ were obtained using principal component analysis (PCA) \cite{HOTELLING_1933_PCA}. A third component, $pc_{\perp}$, was obtained with the cross-product of the other two, to ensure orthogonality. A rotation matrix $P$ was constructed from these vectors (\autoref{eq:pca_components}). By placing the main component $pc_{1}$ on the second row of $P$, the $Y$ axis was fixed as the major axis, representing the height of the protein chain. The second largest axis is the $X$ axis, representing the width of the protein, and lastly the depth is represented by the smaller magnitude of the $Z$ axis. The final rotation matrix $R$ was obtained by multiplying $P$ by the negative identity matrix $NI$ (\autoref{eq:NI_matrix} and \autoref{eq:R_matrix}). This was done to maintain the left-handedness of the protein chains whilst ensuring a consistent alignment on the major axes.
 
 \begin{equation}
 pc_{\perp} = pc_{1} \times pc_{2} \quad \rightarrow \quad P = \begin{bmatrix}
@@ -174,7 +174,7 @@ R = P \cdot NI
 
 \subsection{Protein chain characterisation}
 
-For a protein chain with $N$ amino acid residues, the centre of mass, $CM$, was calculated by averaging the coordinates, $r_{i}$, of all atoms (\autoref{eq:centre_of_mass}), and from it, the radius of gyration, $R_{g}$, was derived (\autoref{eq:radius_of_gyration}) \cite{FIXMAN_1962_ROG}. As the protein chains are already aligned on the axis and centred on $O = (0, 0, 0)$ the dimensions of the protein chain can be obtained as the magnitude of the PCA components or \textit{eigenvectors}, i.e., the \textit{eigenvalues}. The dimensions represent width, height, and depth for the $X$, $Y$ and $Z$ axes, respectively.
+For a protein chain with $N$ amino acid residues, the centre of mass, $CM$, was calculated by averaging the coordinates, $r_{i}$, of all atoms (\autoref{eq:centre_of_mass}), and from it, the radius of gyration, $R_{g}$, was derived (\autoref{eq:radius_of_gyration}) \cite{FIXMAN_1962_ROG}. Since the protein chains were already aligned on the axis and centred on $O = (0, 0, 0)$, the dimensions of the protein chain could be obtained as the magnitude of the PCA components or \textit{eigenvectors}, i.e., the \textit{eigenvalues}. The dimensions represent width, height, and depth for the $X$, $Y$ and $Z$ axes, respectively.
 
 \begin{equation}
 CM = \frac{1}{n} \sum_{i=1}^{n} r_i \rightarrow CM = O = (0,0,0)
@@ -190,12 +190,12 @@ R_g = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (r_i - CM)^2} = \sqrt{\frac{1}{n} \sum_{i
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.98\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG11_PROTEIN_SHAPE_APPROACH.png}
-    \caption[Protein chain shape and size classification approach]{\textbf{Protein chain shape and size classification approach.} \textbf{(A)} The volume of the sphere enclosing the protein chain as well as the protein chain volumes are calculated, and their ratio obtained ($VR$). Globular proteins present more spherical shapes and therefore occupy a higher portion of the sphere volume, resulting in higher volume ratios. Non-globular, elongated or fibrous proteins on the other hand do not and present lower volume ratios. After extensive visual examination, a threshold was established at $VR$ = 0.08, and so proteins classified in these two groups. Proteins were classified as ``tiny'' if their chain was $\leq$ 100 amino acids; \textbf{(B)} Eight examples of each protein chain group to illustrate the outcome of the approach.}
+    \includegraphics[width=0.98\textwidth]{figures/ch_LBS_COMP/PNG/FIG11_PROTEIN_SHAPE_APPROACH.png}
+    \caption[Protein chain shape and size classification approach]{\textbf{Protein chain shape and size classification approach.} \textbf{(A)} The volume of the sphere enclosing the protein chain as well as the protein chain volumes were calculated, and their ratio obtained ($VR$). Globular proteins present more spherical shapes and therefore occupy a higher portion of the sphere volume, resulting in higher volume ratios. Non-globular, elongated or fibrous proteins on the other hand do not and present lower volume ratios. After extensive visual examination, a threshold was established at $VR$ = 0.08, and so proteins classified in these two groups. Proteins were classified as ``tiny'' if their chain was $\leq$ 100 amino acids; \textbf{(B)} Eight examples of each protein chain group to illustrate the outcome of the approach.}
     \label{fig:protein_class_approach}
 \end{figure}
 
-Protein chain volumes were calculated using ProteinVolume \cite{CHEN_2015_PROTEINVOLUME}. A sphere enclosing the protein and centred on the protein centre of mass was obtained. The radius of this sphere is the maximum Euclidean distance between the protein atoms and the $CM$ (\autoref{eq:radius_protein}). The volume of the sphere is calculated using \autoref{eq:volume_sphere}. Proteins were classified into four different groups based on their shape and size. Protein chains with $\leq$ 100 amino acids were classified as ``tiny''. Regarding the shape, protein chains were classified into ``elongated'' if their protein to sphere volume ratio $\leq$ 0.08 ($VR$) (\autoref{eq:volume_ratio}), i.e., the protein volume contains no more than 8\% of the sphere volume. This threshold was derived empirically by the visual inspection of all 3,448 protein chains on the LIGYSIS set. Otherwise, proteins were considered globular (\autoref{fig:protein_class_approach}). In this manner, protein chains were classified into \textit{globular} ($N$ = 2,104; 61\%), \textit{elongated} ($N$ = 670; 19\%), \textit{elongated tiny} ($N$= 341; 10\%) and \textit{globular tiny} ($N$ = 333; 10\%).
+Protein chain volumes were calculated using ProteinVolume \cite{CHEN_2015_PROTEINVOLUME}. A sphere enclosing the protein and centred on the protein centre of mass was obtained. The radius of this sphere was the maximum Euclidean distance between the protein atoms and the $CM$ (\autoref{eq:radius_protein}). The volume of the sphere is calculated using \autoref{eq:volume_sphere}. Proteins were classified into four different groups based on their shape and size. Protein chains with $\leq$ 100 amino acids were classified as ``tiny''. Regarding the shape, protein chains were classified into ``elongated'' if their protein to sphere volume ratio $\leq$ 0.08 ($VR$) (\autoref{eq:volume_ratio}), i.e., the protein volume contains no more than 8\% of the sphere volume. This threshold was derived empirically by the visual inspection of all 3448 protein chains on the LIGYSIS set. Otherwise, proteins were considered globular (\autoref{fig:protein_class_approach}). In this manner, protein chains were classified into \textit{globular} ($N$ = 2104; 61\%), \textit{elongated} ($N$ = 670; 19\%), \textit{elongated tiny} ($N$= 341; 10\%) and \textit{globular tiny} ($N$ = 333; 10\%).
 
 \begin{equation}
 R = \max \| r_i - CM \|
@@ -219,7 +219,7 @@ VR = \frac{Volume_{Protein}}{Volume_{Sphere}}
 
 \subsection{Ligand binding site prediction}
 
-For each segment in the LIGYSIS dataset, the representative chain as defined in the PDBe-KB was selected. Structures were cleaned using the \textit{clean\_pdb.py} script \cite{JUBB_2019_PDBTOOLS}. Eleven different ligand binding site prediction tools were employed to predict on the 3,448 representative chains: VN-EGNN \cite{SESTAK_2024_VNEGNN}, IF-SitePred \cite{CARBERY_2024_IFSP}, GrASP \cite{SMITH_2024_GrASP}, PUResNet \cite{KANDEL_2021_PURESNET, KANDEL_2024_PURESNET}, DeepPocket \cite{AGGARWAL_2022_DEEPPOCKET}, P2Rank \cite{KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK}, P2Rank\textsubscript{CONS} \cite{JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}, fpocket \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2}, PocketFinder\textsuperscript{+} \cite{AN_2005_POCKETFINDER}, Ligsite\textsuperscript{+} \cite{HENDLICH_1997_LIGSITE}, and Surfnet\textsuperscript{+} \cite{LASKOWSKI_1995_SURFNET}. Conservation scores for P2Rank were obtained from PrankWeb \url{https://prankweb.cz/}. Re-implementations of Capra \textit{et al.} \cite{CAPRA_2009_CONCAVITY} were used for PocketFinder, Ligsite and Surfnet, indicated by the ``+'' superscript. VN-EGNN, IF-SitePred, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not provide a list of residues for each pocket, but a list of centroids and their scores for the first two, and a list of grid points for each predicted pocket for the last three. For VN-EGNN, residues within 6\AA{} of the virtual nodes were considered pocket residues. For 429 predicted pockets ($\approx$3\%) no residues were found within this threshold. For IF-SitePred, residues within 6\AA{} of the clustered cloud points that resulted on a predicted pocket centroid were considered as pocket residues. Pocket residues were obtained in a similar manner for PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+}, by taking those residues within 6\AA{} of the pocket grid points. When running DeepPocket, the $-r$ threshold was removed and so all fpocket candidates were passed to the CNN-based segmentation module for pocket shape estimation. fpocket predictions re-scored by DeepPocket will be referred as DeepPocket\textsubscript{RESC}, whereas pockets extracted by the segmentation module of DeepPocket will be referred as DeepPocket\textsubscript{SEG}.
+For each segment in the LIGYSIS dataset, the representative chain as defined in the PDBe-KB was selected. Structures were cleaned using the \textit{clean\_pdb.py} script \cite{JUBB_2019_PDBTOOLS}. Eleven different ligand binding site prediction tools were used to predict on the 3448 representative chains: VN-EGNN \cite{SESTAK_2024_VNEGNN}, IF-SitePred \cite{CARBERY_2024_IFSP}, GrASP \cite{SMITH_2024_GrASP}, PUResNet \cite{KANDEL_2021_PURESNET, KANDEL_2024_PURESNET}, DeepPocket \cite{AGGARWAL_2022_DEEPPOCKET}, P2Rank \cite{KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK}, PRANK \cite{KRIVAK_2015_PRANK}, fpocket \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2}, PocketFinder\textsuperscript{+} \cite{AN_2005_POCKETFINDER}, Ligsite\textsuperscript{+} \cite{HENDLICH_1997_LIGSITE}, and Surfnet\textsuperscript{+} \cite{LASKOWSKI_1995_SURFNET}. Conservation scores for P2Rank were obtained from PrankWeb: \url{https://prankweb.cz/} and used for further prediction. This variant of P2Rank employing amino acid conservation is referred to as P2Rank\textsubscript{CONS} \cite{JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}. When running DeepPocket, the $-r$ threshold was removed and so all fpocket candidates were passed to the CNN-based segmentation module for pocket shape estimation. fpocket predictions re-scored by DeepPocket will be referred as DeepPocket\textsubscript{RESC}, whereas pockets extracted by the segmentation module of DeepPocket will be referred as DeepPocket\textsubscript{SEG}. fpocket predictions were also re-scored with PRANK \cite{KRIVAK_2015_PRANK} (fpocket\textsubscript{PRANK}), as introduced in previous studies \cite{KRIVAK_2015_PRANK, KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK, COMAJUNCOSA_2024_POCKETS}. Re-implementations of Capra \textit{et al.} \cite{CAPRA_2009_CONCAVITY} were used for PocketFinder, Ligsite and Surfnet, indicated by the ``+'' superscript. VN-EGNN, IF-SitePred, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not provide a list of residues for each pocket, but a list of centroids and their scores for the first two, and a list of grid points for each predicted pocket for the last three. For VN-EGNN, residues within 6 \AA{} of the virtual nodes were considered pocket residues. For 429 predicted pockets ($\approx$3\%) no residues were found within this threshold. For IF-SitePred, residues within 6 \AA{} of the clustered cloud points that resulted on a predicted pocket centroid were considered as pocket residues. Pocket residues were obtained in a similar manner for PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+}, by taking those residues within 6 \AA{} of the pocket grid points. In total, thirteen methods are considered in this analysis: VN-EGNN, IF-SitePred, GrASP, PUResNet, DeepPocket\textsubscript{RESC}, DeepPocket\textsubscript{SEG}, P2Rank\textsubscript{CONS}, P2Rank, fpocket\textsubscript{PRANK}, fpocket, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+}.
 
 Seven of the considered methods provide residue \textit{ligandability} scores. P2Rank and P2Rank\textsubscript{CONS} report calibrated probabilities of residues being ligand-binding. Similarly, GrASP predicts the likelihood for any given heavy atom to be part of a binding site. A residue-level score was obtained for GrASP predictions by taking the maximum score of the residue atoms. For IF-SitePred, a residue ligandability score $LS$ can be obtained by averaging the 40 independently predicted probabilities of a residue being ligand-binding (\autoref{eq:IFSP_score}). Though calculated in a different way, these three scores range 0-1 and represent the likelihood of a residue binding a ligand and can therefore be compared. PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+}, and Surfnet\textsuperscript{+} also provide residue scores which maximum value can be $>$ 1.
 
@@ -245,7 +245,7 @@ JI(A, B) = \frac{|A \cap B|}{|A \cup B|}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG12_POCKET_VOLUME_APPROACH.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG12_POCKET_VOLUME_APPROACH.png}
     \caption[Pocket volume calculation algorithm]{\textbf{Pocket volume calculation algorithm.} \textbf{(A)} PUResNet predicted pocket for PDB: 4PX2 (Jordan, S.R., Chmait, S., 2015). Pocket residues are coloured in blue and have their side chains displayed; \textbf{(B)} An inclusion region is determined using the coordinates of the pocket residue atoms; \textbf{(C)} POVME 2.0 calculates the shape of the pocket defined by the residues and contained within the inclusion region; \textbf{(D)} The pocket shape is defined by a series of unit volume (1\AA{}\textsuperscript{3}) spheres. The volume of the pocket is calculated as the addition of the sphere volumes or the number of spheres within the pocket. Structure visualisation with PyMOL v2.5.2 \cite{SCHRODINGER_2015_PYMOL}.}
     \label{fig:protein_volume_approach}
 \end{figure}
@@ -256,7 +256,7 @@ Most methods employ distance to any atom of the ligand (DCA) and a threshold of 
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG10_IREL_vs_DCC.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG10_IREL_vs_DCC.png}
     \caption[$I_{rel}$ \textit{vs} DCC]{\textbf{$I_{rel}$ \textit{vs} DCC.} \textbf{(A)} Hexagonal binned plot of $I_{rel}$ (Y) \textit{vs} DCC (X). Data points are grouped into hexagonal bins, and these are coloured by the number of data points within each bin using the \textit{viridis} colour palette. Colour bar axis is in log scale. Black dashed lines indicate the literature consensus DCC = 4\AA{} threshold and an arbitrary $I_{rel}$ threshold of 0.5, i.e., coverage of half of the observed residues by the predicted pocket.  Red lines delimit the likely location of a potentially more informative DCC thresholds; \textbf{(B)} Cumulative proportion of predicted pockets with $I_{rel} \geq$ 0.5 for each DCC 1\AA{} interval. The commonly used threshold of DCC = 4\AA{} would label $>$15,000 predictions with $I_{rel} \geq$ 0.5 as false. Error bars indicate 95\% CI of the proportion.}
     \label{fig:irel_vs_dcc}
 \end{figure}
@@ -271,7 +271,7 @@ We set a hard threshold at D = 20\AA{} and decided that based purely on distance
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG11_DETERMINING_DCC_THRESHOLD_2.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG11_DETERMINING_DCC_THRESHOLD_2.png}
     
     \caption[Determination of DCC threshold]{\textbf{Determination of DCC threshold.} Highest and lowest-residue overlap predictions for each 2\AA{} DCC unit interval. Observed LIGYSIS sites are coloured in green, predicted pockets in other colours. $D$ represents DCC and $I_{rel}$ the relative intersection between predicted and observed pocket residues, i.e., proportion of observed site residues covered by predicted pocket residues. ``YES'' or ``NO'' labels indicate whether we considered a given prediction as correct upon visual inspection. ``?'' at DCC = 12\AA{} illustrates    }
     \label{fig:DCC_determination}
@@ -285,7 +285,7 @@ We set a hard threshold at D = 20\AA{} and decided that based purely on distance
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG12_EXAMPLES_DCC_10.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG12_EXAMPLES_DCC_10.png}
     \caption[Predicted-observed pocket pairs at DCC = 10\AA{} and $I_{rel} <$ 0.25]{\textbf{Predicted-observed pocket pairs at DCC = 10\AA{} and $I_{rel} <$ 0.25} Out of the 100 examples visually inspected, 94 were considered as correct predictions on the bases that the predicted and observed pockets are adjacent, i.e., their surface area is in contact, and it is therefore easy to imagine a ligand that would bind to this region. LIGYSIS observed sites are coloured in green, and predicted pockets in other colours.}
     \label{fig:DCC_10_examples}
 \end{figure}
@@ -293,16 +293,16 @@ We set a hard threshold at D = 20\AA{} and decided that based purely on distance
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG13_EXAMPLES_DCC_11.png}
-    \caption[Predicted-observed pocket pairs at DCC = 11\AA{} and $I_{rel} <$ 0.25]{\textbf{Predicted-observed pocket pairs at DCC = 11\AA{} and $I_{rel} <$ 0.25} Out of the 100 examples visually inspected, 86 were considered as correct predictions. LIGYSIS observed sites are coloured in green, and predicted pockets in other colours.}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG13_EXAMPLES_DCC_11.png}
+    \caption[Predicted-observed pocket pairs at DCC = 11 \AA{} and $I_{rel} <$ 0.25]{\textbf{Predicted-observed pocket pairs at DCC = 11\AA{} and $I_{rel} <$ 0.25} Out of the 100 examples visually inspected, 86 were considered as correct predictions. LIGYSIS observed sites are coloured in green, and predicted pockets in other colours.}
     \label{fig:DCC_11_examples}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG14_EXAMPLES_DCC_12.png}
-    \caption[Predicted-observed pocket pairs at DCC = 12\AA{} and $I_{rel} <$ 0.25]{\textbf{Predicted-observed pocket pairs at DCC = 12\AA{} and $I_{rel} <$ 0.25} Out of the 100 examples visually inspected, 85 were considered as correct predictions. LIGYSIS observed sites are coloured in green, and predicted pockets in other colours.}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG14_EXAMPLES_DCC_12.png}
+    \caption[Predicted-observed pocket pairs at DCC = 12 \AA{} and $I_{rel} <$ 0.25]{\textbf{Predicted-observed pocket pairs at DCC = 12\AA{} and $I_{rel} <$ 0.25} Out of the 100 examples visually inspected, 85 were considered as correct predictions. LIGYSIS observed sites are coloured in green, and predicted pockets in other colours.}
     \label{fig:DCC_12_examples}
 \end{figure}
 \FloatBarrier
@@ -380,7 +380,7 @@ Additionally, instead of conventional ROC, ROC100 \cite{WEBBER_2003_ROC100, SCOT
 
 \begin{figure}[htbp!]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG13_VOLUME_OVERLAP_APPROACH.png}
+    \includegraphics[width=0.9\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG13_VOLUME_OVERLAP_APPROACH.png}
     \caption[Relative Volume Overlap ($RVO$) calculation]{\textbf{Relative Volume Overlap ($RVO$) calculation.} \textbf{(A)} Example of two very accurate predictions by PUResNet and P2Rank on PDB: 4PX2 (Jordan, S.R., Chmait, S., 2015). Pocket volumes are calculated with POVME 2.0 and represented by coloured surfaces. These volumes result from the addition of unit volume spheres on a grid. To obtain the $RVO$, the intersection of these spheres between predicted and observed site is divided by the number of observed pocket spheres. Both predictions cover the entirety of the observed pocket volume; \textbf{(B)} GrASP and VN-EGNN predictions of a site on PDB: 2ZOX \cite{NOGUCHI_2008_STRUCTURE}. Th volumes of these predicted sites overlap less with the observed site: $RVO$ = 0.67 for GrASP and $RVO$ = 0.11 for VN-EGNN.}
     \label{fig:protein_RVO_approach}
 \end{figure}
@@ -425,7 +425,7 @@ The human subset of the LIGYSIS dataset, LIGYSIS\textsubscript{HUMAN}. comprises
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG1_REDUNDANT_PLIS_SPLIT_1.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG1_REDUNDANT_PLIS_SPLIT_1.png}
     \caption[Redundancy in protein-ligand interfaces (I)]{\textbf{Redundancy in protein-ligand interfaces (I).} For PDB: 1QJY, the asymmetric unit comprises three copies of a homo-pentamer, whereas the biologically functional assembly is a single pentamer. A BMSC-0010 ligand molecule binds to each copy, except for one, of each of the three pentamers. This results in the same protein-ligand interface repeated 14 times, i.e., 14x redundancy. Dashed rectangles indicate the asymmetric and biological units.}
     \label{fig:redundant_plis_1}
 \end{figure}
@@ -436,7 +436,7 @@ The LIGYSIS dataset differs from previous train and test sets for ligand binding
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG1_REDUNDANT_PLIS_SPLIT_2.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG1_REDUNDANT_PLIS_SPLIT_2.png}
     \caption[Redundancy in protein-ligand interfaces (II)]{\textbf{Redundancy in protein-ligand interfaces (II).} For PDB: 1PPR both the asymmetric and biological units are a homo-trimer. Different molecules of the same ligands are binding to the same interfaces across the three copies of the trimer, i.e., 3x redundancy. Dashed rectangle indicate the asymmetric/biological unit.}
     \label{fig:redundant_plis_2}
 \end{figure}
@@ -456,7 +456,7 @@ Protein-ligand interface redundancy can also be an issue when the asymmetric uni
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=0.9\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG2_LIGYSIS_vs_PDBbind.png}
+    \includegraphics[width=0.9\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG2_LIGYSIS_vs_PDBbind.png}
     \caption[Comparison of PDBbind and LIGYSIS]{\textbf{Comparison of PDBbind and LIGYSIS.} PDBbind is comprised by complexes between a protein and the most biologically relevant ligand in a structure. For PDB: 4GQQ, this is ethyl caffeate (0XR). LIGYSIS considers all unique biologically relevant protein-ligand interactions across all the structures for a given protein. For human pancreatic alpha-amylase (P04746), which representative structure is 4GQQ, 13 ligand binding sites are defined from 195 ligands across 51 structures. LIGYSIS provides a better representation of the ligand-binding capabilities of a protein than a single protein-ligand complex and constitutes therefore a better benchmark for ligand binding site prediction tools.}
     \label{fig:PDBbind_VS_LIGYSIS}
 \end{figure}
@@ -491,7 +491,7 @@ COACH420   & TEST  & 413           & 624      & 624        & 0.5        & VN-EGN
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG3_DATASET_COMPARISON_SPLIT_1.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG3_DATASET_COMPARISON_SPLIT_1.png}
     \caption[Comparison of datasets (I)]{\textbf{Comparison of datasets (I).} Panels A, B, C, E and F plot the frequencies of binned intervals of a discrete variable, coloured using the \textit{cividis} palette. Interval ranges were selected to facilitate data interpretation. \textbf{(A)} Number of ligand binding sites per dataset entry; \textbf{(B)} Number of ligand-interacting protein chains. This represents whether the ligand interacts with a single protein chain or more; \textbf{(C)} Length of ligand-interacting protein chains (number of amino acids); \textbf{(D)} Ligand molecule type frequency as described in the CCD; \textbf{(E)} Number of ligand atoms; \textbf{(F)} Binding site size, i.e., number of ligand-interacting protein residues. Dashed lines drawn at $p$ = 0.5.}
     \label{fig:dataset_comp_1}
 \end{figure}
@@ -500,7 +500,7 @@ COACH420   & TEST  & 413           & 624      & 624        & 0.5        & VN-EGN
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG3_DATASET_COMPARISON_SPLIT_2.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG3_DATASET_COMPARISON_SPLIT_2.png}
     \caption[Comparison of datasets (II)]{\textbf{Comparison of datasets (II).} Five most frequent ligands per dataset. Error bars represent 95\% confidence interval of the proportion \cite{WILSON_197_PROP_CI}. Ligands of similar type are coloured in shades of the same colour: greens for ions, reds for co-factors, blues for energy-carrier molecules, yellows for sugars, grey for peptides and white for other non-polymeric ligands. Above the bars, Shannon Entropy and the proportion of all ligands in each set covered by these top-5 can be found. Both are measures of ligand diversity within each dataset. A subset of LIGYSIS with no ions (NI), LIGYSIS\textsubscript{NI}, is included in this analysis, as most training and test datasets do not consider ions. CLR: cholesterol; MAN: mannose; FUC: fucose; NAP: nicotinamide-adenine-dinucleotide phosphate; SAH: S-Adenosyl-L-homocysteine; FMN: Flavin mononucleotide; GAL: galactose; N-mer: protein peptides of N amino acids; 017: Darunavir; PLP: Vitamin B6 phosphate; BGC: glucose; XYP: xylose.}
     \label{fig:dataset_comp_2}
 \end{figure}
@@ -513,14 +513,14 @@ After removing backbone-only chains and those with missing residue mapping to Un
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=0.50\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG1_MISSED_PREDS_PROT_CLASS.png}
+    \includegraphics[width=0.50\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG1_MISSED_PREDS_PROT_CLASS.png}
     \caption[Where methods do not predict any sites]{\textbf{Where methods do not predict any sites.} IF-SitePred does not predict any ligand binding sites on 700 of the 2,775 protein chains in the LIGYSIS set (25\%), PUResNet on 415 (15\%), DeepPocket\textsubscript{SEG} (426; 15\%), P2Rank\textsubscript{CONS} (196; 7\%) and P2Rank (373; 13\%). All methods struggle to predict on elongated proteins, regardless of their size, as well as on tiny globular proteins. Globular proteins comprise the most common group amongst the proteins with no predictions for IF-SitePred (53\%).}
     \label{fig:missed_preds_prot_class}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG4_IFSP_MISSED_PREDICTIONS.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG4_IFSP_MISSED_PREDICTIONS.png}
     \caption[IF-SitePred ``missed'' predictions]{\textbf{IF-SitePred ``missed'' predictions.} Eight examples of human protein chains where IF-SitePred does not report any predicted ligand binding sites. Predictions are made on ligand-stripped chains. Ligand molecules, in orange, are superposed to illustrate how the ligandability scores recapitulate the observed binding site. These are protein representative chains and ligand molecules might not be observed in the same entry; \textbf{(A)} GDP-fucose protein O-fucosyltransferase 2, Q9Y2G5, with GFB superimposed (PDB: 4AP6) \cite{CHEN_2012_POFUT2}; \textbf{(B)} tRNA (cytosine(72)-C(5))-methyltransferase NSUN6, Q8TEA1, (PDB: 5WWT) \cite{LIU_2017_NSUN6} with superposed SFG (PDB: 5WWR); \textbf{(C)} Tubulin beta-2B chain, Q9BVA1, with G2P (PDB: 7ZCW) \cite{RAMIREZ_2023_VASH2}; \textbf{(D)} Cyclic GMP-AMP phosphodiesterase SMPDL3A, Q92484, with C5P (PDB: 5EBE) \cite{LIM_2016_SPHINGOMYELIN}; \textbf{(E)} tRNA (adenine(58)-N(1))-methyltransferase catalytic subunit, Q96FX7, with SAH (PDB: 5CCB) \cite{FINER_2015_tRNA}; \textbf{(F)} Chronophin, Q96GD0, (PDB: 5GYN) (Lee HJ, Cho HJ, Kang BS, 2017) with PLP (PDB: 2FCT) \cite{BLASIAK_2006_SYRB2}; \textbf{(G)} Mitochondrial Methylmalonic aciduria type A protein, Q8IVH4, with GDP (PDB: 8GJU) \cite{MASCARENHAS_2023_GPROTEIN}; \textbf{(H)} Renalase, Q5VYX0, (PDB: 3QJ4) with FAD \cite{MILANI_2011_NADP}. Residues are coloured based on the ligandability score calculated by averaging the probabilities predicted by each of the 40 IF-SitePred prediction models. This is a score ranging 0-1 which is indicative of the likelihood of a given residue binding a ligand. Clear pockets can be observed formed by residues with high ligandability scores (darker blue colour), which agree with the sites where ligands bind.}
     \label{fig:ifsp_missed_preds}
 \end{figure}
@@ -529,14 +529,14 @@ After removing backbone-only chains and those with missing residue mapping to Un
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/SUPP/PNG/SUPP_FIG2_POVKETS_VS_PROTEIN_SIZE.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/SUPP/PNG/SUPP_FIG2_POVKETS_VS_PROTEIN_SIZE.png}
     \caption[Number of pockets \textit{vs} protein size]{\textbf{Number of pockets \textit{vs} protein size.} Number of defined (LIGYSIS) and predicted sites against protein chain size, i.e., number of amino acid residues. Number of residues has been discretised into intervals of 50 until 650, and larger intervals until the maximum, $\approx$3,800. Error bars represent one standard deviation (SD).}
     \label{fig:sites_vs_prot_size}
 \end{figure}
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG5_BINDING_POCKET_FEATURES_SPLIT_1.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG5_BINDING_POCKET_FEATURES_SPLIT_1.png}
     \caption[Binding pocket characterisation (I)]{\textbf{Binding pocket characterisation (I).} Violin plots show the main distributions and swarm plots are used to show outliers. Data points farther than four standard deviations (SD) from the mean are considered outliers. The limit of the Y axis is the maximum non-outlier value plus a buffer value. This way, only the most extreme outliers are hidden, which maximises visual interpretation of the data whilst minimising the number of data points not shown. Within the violin plots are box plots representing the underlying distribution. Line represents the median, box contains the interquartile range (IQR), and whiskers extend to 1.5 $\times$ IQR. \textbf{(A)} Number of pockets per protein; \textbf{(B)} Pocket radius of gyration $R_{g}$ (\AA{}).}
     \label{fig:pocket_features_1}
 \end{figure}
@@ -554,7 +554,7 @@ After removing backbone-only chains and those with missing residue mapping to Un
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG5_BINDING_POCKET_FEATURES_SPLIT_2.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG5_BINDING_POCKET_FEATURES_SPLIT_2.png}
     \caption[Binding pocket characterisation (II)]{\textbf{Binding pocket characterisation (II).} Violin plots show the main distributions and swarm plots are used to show outliers. Data points farther than four standard deviations (SD) from the mean are considered outliers. The limit of the Y axis is the maximum non-outlier value plus a buffer value. This way, only the most extreme outliers are hidden, which maximises visual interpretation of the data whilst minimising the number of data points not shown. Within the violin plots are box plots representing the underlying distribution. Line represents the median, box contains the interquartile range (IQR), and whiskers extend to 1.5 $\times$ IQR. \textbf{(A)} Minimum inter-pocket centroid distance (MCD) (\AA{}). This is a measure of how close predicted pockets are to each other within a protein; \textbf{(B)} Maximum inter-pocket residue overlap (MRO). Residue overlap was calculated as Jaccard Index. This is a measure of how much the pockets overlap in terms of binding residues.}
     \label{fig:pocket_features_2}
 \end{figure}
@@ -608,7 +608,7 @@ The ideal ligand binding site predictor would have a high precision, i.e., most 
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG7_POCKET_LEVEL_BENCHMARK_OG.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG7_POCKET_LEVEL_BENCHMARK_OG.png}
     \caption[Ligand binding site prediction benchmark at the pocket level]{\textbf{Ligand binding site prediction benchmark at the pocket level.} \textbf{(A)} Recall, percentage of observed sites that are correctly predicted by a method according to a DCC = 12\AA{} threshold; \textbf{(B)} Recall using DCC = 12\AA{} but considering increasing rank thresholds, i.e., top-$N$, $N$+1, $N$+2, etc. \textit{ALL} represents the maximum recall of a method, obtained by considering all predictions, regardless of their rank or score; \textbf{(C)} Recall curve using $I_{rel}$ as a criterion; \textbf{(D)} ROC100 curve  (cumulative \#TP against cumulative FP until 100 FP are reached); \textbf{(E)} Precision curve for the top-1,000 predictions of each method across the LIGYSIS dataset, Precision\textsubscript{1K}. Error bars represent 95\% CI of the recall (A-C) and precision (E), which are 100 $\times$ proportion. Numbers at the right of the panels indicate groups or blocks of methods that perform similarly for each metric. Asterisks (*) indicate outlier methods, or methods that perform very differently than the rest.}
     \label{fig:pocket_level_benchmark_OG}
 \end{figure}
@@ -656,7 +656,7 @@ Ligand binding site prediction tools can also be evaluated at the residue level.
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/MAIN/PNG/FIG8_RESIDUE_LEVEL_BENCHMARK.png}
+    \includegraphics[width=\textwidth]{figures/ch_LBS_COMP/OLD/MAIN/PNG/FIG8_RESIDUE_LEVEL_BENCHMARK.png}
     \caption[Ligand binding site prediction benchmark at the residue level]{\textbf{Ligand binding site prediction benchmark at the residue level.} \textbf{(A)} F1 score distributions; \textbf{(B)} MCC distributions. In both panels, each data point in the distribution corresponds to the score obtained from all residues in a protein chain; (C) ROC curve for methods that report a residue score. Dashed line represents the baseline, 1 FP for each TP, i.e., diagonal and AUC = 0.5; (D) PR curve. Dashed line represents the baseline, i.e., proportion of observed binding residues (true positives) = 0.1; (E) Distribution of residue ligandability scores for IF-SitePred, GrASP, P2Rank\textsubscript{CONS} and P2Rank. PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} are not included as their scores do not range 0-1, and a small number of scores can reach values $>$ 25.}
     \label{fig:residue_level_benchmark}
 \end{figure}
