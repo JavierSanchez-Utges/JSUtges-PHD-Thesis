@@ -43,7 +43,7 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
 \end{figure}
 
 \begin{equation}
-    I_{\text{rel}} = \frac{A \cap B}{A \cap B_{\text{max}}}
+    I_{rel} = \frac{A \cap B}{A \cap B_{max}}
 \label{eq:relative_intersection} % Label for the equation
 \end{equation}
 \myequations{Relative Intersection}
@@ -51,7 +51,7 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
 \vspace{-35pt} % Adjust this value as needed
 
 \begin{equation}
-    A \cap B_{\text{max}} = \text{min}(\text{len}(A), \text{len}(B))
+    A \cap B_{max} = \text{min}(\text{len}(A), \text{len}(B))
 \label{eq:max_intersection}
 \end{equation}
 \myequations{Maximum Intersection}
@@ -74,14 +74,14 @@ Secondary structures were defined with DSSP \cite{KABSCH_1983_DSSP} via ProIntVa
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG9_bs_clust.png}
-    \caption[Binding site clustering algorithm]{\textbf{Binding site clustering algorithm.} The method here clusters ligand binding sites defined across different proteins based on their solvent accessibility profiles. \textbf{(A)} Defined ligand binding site for PTP-1B on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU} \cite{KEEDY_2018_PTP1B}; \textbf{(B)} Relative solvent accessibility profile of a binding site, represented by the RSA of the site residues; \textbf{(C)} Formula of the employed distance metric: distance U, $U_{D}$; \textbf{(D)} Multidimensional scaling (MDS) representation of binding sites coloured according to the four clusters determined by the $K$-means algorithm. Dashed lines represent the cluster limits.}
+    \caption[Binding site clustering algorithm]{\textbf{Binding site clustering algorithm.} The method here clusters ligand binding sites defined across different proteins based on their solvent accessibility profiles. \textbf{(A)} Defined ligand binding site for PTP-1B on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU} \cite{KEEDY_2018_PTP1B}; \textbf{(B)} Relative solvent accessibility profile of a binding site, represented by the RSA of the site residues; \textbf{(C)} Formula of the employed distance metric: distance $U$, $U_{D}$; \textbf{(D)} Multidimensional scaling (MDS) representation of binding sites coloured according to the four clusters determined by the $K$-means algorithm. Dashed lines represent the cluster limits.}
     \label{fig:fragsys_bs_clust}
 \end{figure}
 
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=0.7\textwidth]{figures/ch_FRAGSYS/PNG/SUPP_FIG1_ward_clust.png}
-    \caption[Binding sites Ward clustering]{\textbf{Binding sites Ward clustering.} Cluster map of the U distance, $U_{D}$, matrix of the 293 defined binding sites clustered by the Ward hierarchical clustering method implemented in SciPy. The tree is cut at $D_{Ward}$ = 1.8, giving four clear clusters. These clusters are labelled so they correspond to the ones obtained with $K$-means. Clusters in the heat map are represented by dark squares around the diagonal. $U_{D}$ is a distance; therefore, clusters include sites that are similar to each other, and present lower distances (dark colour).}
+    \caption[Binding sites Ward clustering]{\textbf{Binding sites Ward clustering.} Cluster map of the $U$ distance, $U_{D}$, matrix of the 293 defined binding sites clustered by the Ward hierarchical clustering method implemented in SciPy. The tree is cut at $D_{Ward}$ = 1.8, giving four clear clusters. These clusters are labelled so they correspond to the ones obtained with $K$-means. Clusters in the heat map are represented by dark squares around the diagonal. $U_{D}$ is a distance; therefore, clusters include sites that are similar to each other, and present lower distances (dark colour).}
     \label{fig:fragsys_bs_clust_ward}
 \end{figure}
 
@@ -96,7 +96,7 @@ U_A = R_A - \frac{n_A(n_A + 1)}{2}, \quad U_B = R_B - \frac{n_B(n_B + 1)}{2} \qu
 \vspace{-31pt} % Adjust this value as needed
 
 \begin{equation}
-U_A + U_B = n_A n_B, \quad U = \min(U_A, U_B) \rightarrow U_{\max} = \frac{n_A n_B}{2} \quad
+U_A + U_B = n_A n_B, \quad U = \min(U_A, U_B) \rightarrow U_{max} = \frac{n_A n_B}{2} \quad
 \label{eq:maximum_U} 
 \end{equation}
 \myequations{Maximum U}
@@ -104,7 +104,7 @@ U_A + U_B = n_A n_B, \quad U = \min(U_A, U_B) \rightarrow U_{\max} = \frac{n_A n
 \vspace{-31pt} % Adjust this value as needed
 
 \begin{equation}
-U_{\text{rel}} = \frac{U}{U_{\max}} \rightarrow U_D = 1 - U_{\text{rel}} \quad 
+U_{rel} = \frac{U}{U_{max}} \rightarrow U_D = 1 - U_{rel} \quad 
 \label{eq:relative_U}
 \end{equation}
 \myequations{Relative U}
@@ -187,13 +187,13 @@ Overall, implementing kernel, bias, or activity regularisation techniques did no
 
 \begin{longtable}{|c|c|c|c|}
 \hline
-\textbf{Model}              & \textbf{Accuracy (\%)} & \textbf{$\Delta_{acc}$ (\%)} & \textbf{FDR} \\ \hline
+\textbf{Model}              & \textbf{Accuracy} (\%) & \textbf{$\Delta_{acc}$} (\%) & \textbf{FDR} \\ \hline
 \endfirsthead
 %
 \multicolumn{4}{c}%
 {{\bfseries Table \thetable} (continued)} \\
 \hline
-\textbf{Model}              & \textbf{Accuracy (\%)} & \textbf{$\Delta_{acc}$ (\%)} & \textbf{FDR} \\ \hline
+\textbf{Model}              & \textbf{Accuracy} (\%) & \textbf{$\Delta_{acc}$} (\%) & \textbf{FDR} \\ \hline
 \endhead{}
 %
 \textit{current}            & 93.9              & -                       & -            \\ \hline
@@ -346,7 +346,7 @@ Despite the diversity among sites, some general trends can be observed. \autoref
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG3_bs_feats_corr.png}
-    \caption[Relation between different binding site properties]{\textbf{Relation between different binding site properties.} A regression line is fitted to all data points previous to binning ($N$ = 293 binding sites). Pearson’s correlation coefficient $r$ \cite{RODGERS_1988_CORRELATION} and associated $p$-value and 95\% CI of $r$ \cite{BOWLEY_1928_R_CI} are also shown. Data points are grouped into bins according to different binding site size intervals, represented by box and swarm plots. \textbf{(A)} Median site RSA \% \textit{vs} binding site size, in amino acids; \textbf{(B)} Average $N_{Shenkin}$ \textit{vs} binding site size; \textbf{(C)} Average site MES \textit{vs} site size. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR.}
+    \caption[Relation between different binding site properties]{\textbf{Relation between different binding site properties.} A regression line is fitted to all data points previous to binning ($N$ = 293 binding sites). Pearson’s correlation coefficient $r$ \cite{RODGERS_1988_CORRELATION} and associated $p$-value and 95\% CI of $r$ \cite{BOWLEY_1928_R_CI} are also shown. Data points are grouped into bins according to different binding site size intervals, represented by box and swarm plots. \textbf{(A)} Median site RSA (\%) \textit{vs} binding site size, in amino acids; \textbf{(B)} Average $N_{Shenkin}$ \textit{vs} binding site size; \textbf{(C)} Average site MES \textit{vs} site size. Boxes represent the IQR, and whiskers extend to 1.5 $\times$ IQR.}
     \label{fig:bss_feats_corr}
 \end{figure}
 
@@ -481,12 +481,12 @@ It is natural to focus on sites that are most likely to be of functional signifi
 \begin{landscape}
 \begin{longtable}{|M{22mm}|M{17mm}|M{20mm}|M{12mm}|M{12mm}|M{10mm}|M{10mm}|M{48mm}|M{48mm}|}
 \hline
-\textbf{UniProt ID} & \textbf{RSA (\%)}  & \textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}                                                   \\ \hline
+\textbf{UniProt ID} & \textbf{RSA} (\%)  & \textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}                                                   \\ \hline
 \endfirsthead
 \multicolumn{9}{c}%
 {{\bfseries Table \thetable} (continued)} \\
 \hline
-\textbf{UniProt ID} & \textbf{RSA (\%)}  &\textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}
+\textbf{UniProt ID} & \textbf{RSA} (\%)  &\textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                       & \textbf{Literature support}
 %
 \endhead
 %
@@ -510,12 +510,12 @@ It is natural to focus on sites that are most likely to be of functional signifi
 \begin{landscape}
 \begin{longtable}{|M{22mm}|M{17mm}|M{18mm}|M{13mm}|M{13mm}|M{10mm}|M{10mm}|M{96mm}|}
 \hline
-\textbf{UniProt ID} & \textbf{RSA (\%)}  & \textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                                                                    \\ \hline
+\textbf{UniProt ID} & \textbf{RSA} (\%)  & \textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                                                                    \\ \hline
 \endfirsthead
 \multicolumn{8}{c}%
 {{\bfseries Table \thetable} (continued)} \\
 \hline
-\textbf{UniProt ID} & \textbf{RSA (\%)}  & \textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                      
+\textbf{UniProt ID} & \textbf{RSA} (\%)  & \textbf{N\textsubscript{Shenkin}} & \textbf{MES}   & \textbf{p}    & \textbf{\# aas} & \textbf{\# ligs} & \textbf{UniProt residue numbers}                                                                                      
 %
 \endhead
 %
