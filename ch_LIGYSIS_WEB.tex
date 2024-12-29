@@ -15,7 +15,7 @@ G.J.B., S.A.M. and J.S.U. conceived, designed, and developed the research. J.S.U
 
 \section{Introduction}
 
-Ligands play a critical role in protein function acting as natural co-factors, substrates, inhibitors and drugs in disease therapy. Identifying the protein regions where these molecules bind, understanding the mode in which they do so and characterising that interface is therefore key to understanding and modulating protein function. The UniProt knowledgebase (UPKB) catalogues 248 million protein sequences \cite{UNIPROT_2018_UNIPROT, UNIPROT_2023_UNIPROT}. While structure models for most of these proteins are available through resources such as the AlphaFold Database \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB, ABRAMSON_2024_ALPHAFOLD3} and other providers \cite{GUEX_2009_SWISSMODEL, BEIENERT_2016_SWISSMODEL, WATERHOUSE_2018_SWISSMODEL}, only a small fraction present residue-level functional annotations in UniProt – 55 thousand (0.02\% of UPKB) or include biologically relevant ligands co-crystallised in the Protein Data Bank Europe (PDBe) \cite{BERMAN_2003_PDB, wwPDB_2019_PDB, ARMSTRONG_2020_PDBE} – 29 thousand (0.01\%). The significant expense and time required for experimental validation underscores an urgent need for computational methods to characterise ligand sites  systematically and highlight residues likely to be relevant to protein function.
+Ligands play a critical role in protein function acting as natural co-factors, substrates, inhibitors and drugs in disease therapy. Identifying the protein regions where these molecules bind, understanding the mode in which they do so and characterising that interface is therefore key to understanding and modulating protein function. The UniProt knowledgebase (UPKB) catalogues 248 million protein sequences \cite{UNIPROT_2018_UNIPROT, UNIPROT_2023_UNIPROT}. While structure models for most of these proteins are available through resources such as the AlphaFold Database \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB, ABRAMSON_2024_ALPHAFOLD3} and other providers \cite{GUEX_2009_SWISSMODEL, BEIENERT_2016_SWISSMODEL, WATERHOUSE_2018_SWISSMODEL}, only a small fraction present residue-level functional annotations in UniProt – 55 thousand (0.02\% of UPKB) or include biologically relevant ligands co-crystallised in the Protein Data Bank Europe (PDBe) \cite{BERMAN_2003_PDB, wwPDB_2019_PDB} – 29 thousand (0.01\%). The significant expense and time required for experimental validation underscores an urgent need for computational methods to characterise ligand sites  systematically and highlight residues likely to be relevant to protein function.
 
 In Chapter \ref{chap:FRAGSYS} a novel method was proposed for defining ligand binding sites from multiple protein-ligand complexes derived from fragment screening. Fragment screening is a widely used technique for identifying lead molecules in drug discovery \cite{CONGREVE_2003_RO3, REES_2004_FBLD, MURRAY_2009_FBDD}. Unlike traditional approaches, which rely on spatial ligand positioning \cite{SHIN_2005_PDBLIGAND, KOZAKOV_2005_CLUSTERING, WASS_2010_3DLIGANDSITE, MCGREIG_2022_3DLIGANDSITE}, Utgés, \textit{et al.} \cite{UTGES_2024_FRAGSYS} used protein-ligand interactions to group ligands into binding sites. Sites were categorised by solvent accessibility into four clusters, each showing differential enrichment in known functional sites. These clusters provide a basis for ranking sites by likelihood of functional significance. This method was subsequently applied to the entire PDBe, resulting in the LIGYSIS dataset, which Utgés and Barton \cite{UTGES_2024_LBSCOMP} employed to benchmark protein-ligand binding site prediction methods. This will be discussed in detail in Chapters \ref{chap:LBS_COMP} and \ref{chap:LBS_IMPROV}.
 
@@ -24,13 +24,18 @@ This Chapter introduces the ligand site analysis web server \textit{LIGYSIS-web}
 
 \section{Methods}
 
-\subsection{LIGYSIS dataset}
+\subsection{Derivation of the LIGYSIS dataset}
 
-There are \textbf{XXX} reviewed proteins in UniProt \cite{UNIPROT_2019_UNIPROT}. For each protein with at least one experimentally resolved three-dimensional (3D) structure, a superposition matrix was obtained from the PDBe FTP site \cite{PDBE_2022_PDBEKB} at \url{http://ftp.ebi.ac.uk/pub/databases/pdbe-kb/superposition}. This represents \textbf{XXX} (\textbf{XXX \%}) of the human proteins (\textbf{XXX} structures), whereas \textbf{XXX} (\textbf{XXX \%}) present no experimentally determined structures. 
+There are 248 million proteins in the UniProtKB database \cite{UNIPROT_2020_UNIPROT}, $\approx$65,000 of which (0.02\%) of which have at least one experimentally determined three-dimensional structure deposited in the Protein Data Bank (PDB) \cite{ARMSTRONG_2020_PDBE}. 28,997 of these (45\%; 0.01\% of UPKB) proteins present at least one structure in complex with a biologically relevant ligand as defined by BioLiP \cite{YANG_2013_BIOLIP}, represented by 29,657 different \textit{structural segments}, as defined on the PDBe-KB. These segments represent a UniProt sequence region with one or more structurally overlapping chains  \cite{ELLAWAY_2024_CONFORMATIONS}. A protein might present multiple domains which are usually represented by different structural segments. Protein chains mapping to a given UniProt accession identifier were obtained from the PDBe aggregated API endpoint: \url{https://www.ebi.ac.uk/pdbe/graph-api/uniprot/superposition/} \cite{PDBEKB_2019_PDBEKB}. Transformation matrices to superpose protein chains for a structural segment were downloaded from the PDBe FTP site at \url{http://ftp.ebi.ac.uk/pub/databases/pdbe-kb/superposition} \cite{PDBE_2022_PDBEKB} and used to structurally align all chains mapping to each segment.
 
-\subsection{Binding site definition}
+Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. \autoref{fig:LIGYSIS_method} illustrates the ligand site definition approach used to obtain the new dataset presented here: LIGYSIS. This approach is an extension of the one used in Chapter \ref{chap:FRAGSYS}. For a pair of ligands, $L_A$, $L_B$, fingerprints $A$, $B$ are defined as sets containing the UniProt residue numbers of the amino acids interacting with each ligand. PDB residues were cross-referenced to UniProt using the SIFTS mapping present in the macromolecular crystallographic information file (mmCIF) files, located under the \texttt{\_atom\_site.pdbx\_si-fts\_xref\_db} fields \cite{VELANKAR_2012_SIFTS, DANA_2018_SIFTS}. Relative intersection, $I_{rel}$, (\autoref{eq:relative_intersection}) is a similarity metric that quantifies how similar these fingerprints are \cite{UTGES_2024_FRAGSYS}. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 0 when $A$ and $B$ share all the binding residues and 1 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints were clustered using average linkage with SciPy \cite{VIRTANEN_2020_SCIPY} and ligand sites obtained by cutting the tree at $D$ = 0.5. Note that pdbe-arpeggio currently does not support multiple occupancy atoms, and so ligands with atom occupancy $\neq$ 1 were not considered in our analysis. This affects 6256 structures (6\% of LIGYSIS dataset). 64,782 sites were defined from 435,038 ligands across 26,260 structural segments. These segments mapped to 25,003 different proteins, which were represented by 104,456 structures.
 
-Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. Figure 10 illustrates the ligand site definition approach used to obtain our reference dataset: LIGYSIS. For a pair of ligands, $L_{A}$, $L_{B}$, fingerprints $A$, $B$ are defined as sets containing the residue numbers of the amino acids interacting with each ligand. Relative intersection, $I_{rel}$, is a similarity metric that quantifies how similar the fingerprints are [5]. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 1 when $A$ and $B$ share all the binding residues and 0 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints are clustered using average linkage with SciPy [95] and ligand sites obtained by cutting the tree at $D$ = 0.5. This resulted in \textbf{XXX} ligand binding sites.
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/FIG1_LIGYSIS_APPROACH.png}
+    \caption[LIGYSIS ligand binding site definition algorithm]{\textbf{LIGYSIS ligand binding site definition algorithm.} For a given protein-ligand interaction complex \textbf{(A)}, a ligand binding fingerprint \textbf{(B)} is obtained as the set of unique UniProt sequence residue numbers interacting with the ligand as defined by pdbe-arpeggio; \textbf{(C)} Fingerprints from different ligands binding to the same protein can be compared and a distance calculated; \textbf{(D)} This distance can be used to perform hierarchical clustering, which groups the different ligands in distinct clusters binding to the same region of the protein or binding site \textbf{(E)}. Example is human arginase-2, mitochondrial (\href{https://www.uniprot.org/uniprotkb/P78540/entry}{P78540}) represented by PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4ixv}{4IXV} \cite{GOLEBIOWSKI_2013_ARGINASE} with \href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/XA1}{XA1} bound.}
+    \label{fig:LIGYSIS_method}
+\end{figure}
 
 \begin{equation}
 D = 1 - I_{rel}
@@ -38,29 +43,65 @@ D = 1 - I_{rel}
 \end{equation}
 \myequations{Ligand fingerprint distance}
 
-\subsection{Multiple sequence alignments}
+\subsection{Alignments and variants}
 
-The representative entry of the first structure cluster for each segment was obtained from the PDBe superposition data, and its amino acid sequence retrieved using the PDBe GRAPH API domains endpoint: \url{https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/domains}. The approach described on the previous chapter was employed here and this sequence was used as query to perform a homologue sequence search in SwissProt \cite{BOUTET_2016_UNIPROT} using jackHMMER \cite{EDDY_1995_HMMER} to generate a multiple sequence alignment (MSA). The normalised version of the Shenkin divergence score \cite{SHENKIN_1991_SCORE}, $N_{Shenkin}$ \cite{UTGES_2021_ANKS}, was employed to quantify amino acid conservation within the MSA. For \textbf{XXX} protein segments, no homologues were found. Consequently, no conservation data was obtained for these segments. 
+For each UniProt accession, the canonical sequence was used to perform a homologue sequence search in SwissProt \cite{BOUTET_2016_UNIPROT}. jackHMMER \cite{EDDY_1995_HMMER} was employed with three iterations to generate a multiple sequence alignment (MSA). Amino acid divergence was quantified with the normalised Shenkin divergence score \cite{SHENKIN_1991_SCORE} $N_{Shenkin}$ \cite{UTGES_2021_ANKS}. Genetic missense variants mapping to human sequences in the MSA were retrieved from gnomAD \cite{KARCZEWSKI_2020_GNOMAD} using VarAlign \cite{MACGOWAN_2017_VARIANTS}. Missense enrichment scores (MES), i.e., odds ratio (OR), were calculated for alignment columns \cite{MACGOWAN_2024_VARIANTS} and 95\% confidence intervals and $p$-values used to evaluate their significance \cite{SZUMILAS_2010_ODDSRATIOS}.
 
-\subsection{Human variants enrichment}
+\subsection{RSA-based clustering ans score}
 
-Human missense genetic variants mapping to human sequences in the MSA were retrieved from gnomAD \cite{KARCZEWSKI_2020_GNOMAD} using VarAlign \cite{MACGOWAN_2017_VARIANTS, MACGOWAN_2024_VARIANTS}, as described on the previous chapter. Missense enrichment scores, i.e., odds ratio (OR), (MES) were calculated for alignment columns and 95\% confidence intervals and $p$-values used to evaluate their significance \cite{SZUMILAS_2010_ODDSRATIOS}. MES could not be calculated for \textbf{XXX} protein segments, as no human homologues were found in their alignments, nor for \textbf{XXX} segments, which presented human homologues, yet no missense variants in gnomAD. Scores were calculated for a total of \textbf{XXX} segments.
+Accessible surface area was calculated by DSSP \cite{KABSCH_1983_DSSP} via ProIntVar \cite{MACGOWAN_2020_DRSASP} and normalised \cite{TIEN_2013_RSA} to relative solvent accessibility (RSA). A Keras \cite{CHOLLET_2015_KERAS} multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP} described in Chapter \ref{chap:FRAGSYS} \cite{UTGES_2024_FRAGSYS} was employed to predict site RSA-based cluster labels: C1 – C4. These clusters are differentially enriched in functional sites annotated in UniProt \cite{NIGHTINGALE_2017_API} (OR\textsubscript{C1} $\approx$ 28 $\times$ OR\textsubscript{C4}). For a binding site $i$, a functional score $FS$ is calculated with \autoref{eq:func_score}. In this equation, $p_{i_{j}}$ represents the probability of site $i$ belonging in Cluster $j$ and $f_j$ denotes the proportion of annotated functional sites within Cluster $j$. The probabilities $p_{i_{j}}$ are derived from the vector $P$ (\autoref{eq:probability_vector}), which is returned by the MLP and provides the probabilities of a site belonging to each class. The vector $F$ (\autoref{eq:func_prob_vector}) contains the proportions of functional sites in each cluster, which were determined through hierarchical clustering and functional classification of the human subset of the LIGYSIS dataset, composed of 13,000 sites across 3500 proteins. Both the functional label and score serve as metrics that indicate the likelihood of a binding site being functional and can be used to rank binding sites within a protein.
 
-\subsection{Binding site clustering}
+\begin{equation}
+FS_i = \sum_{j=1}^{4} p_{i_{j}} f_j
+\label{eq:func_score}
+\end{equation}
+\myequations{Functional score}
 
-XXX.
+\begin{equation}
+P = [\,p_{c_1},\,p_{c_2},\,p_{c_3},\,p_{c_4}\,]
+\label{eq:probability_vector}
+\end{equation}
+\myequations{RSA cluster probability vector}
 
-\subsection{Binding site cluster prediction}
+\begin{equation}
+F = [\,f_{1},\,f_{2},\,f_{3},\,f_{4}\,] 
+    = [\,0.52,\,0.18,\,0.05,\,0.04\,]
+\label{eq:func_prob_vector}
+\end{equation}
+\myequations{Functional enrichment vector}
 
-A multilayer perceptron (MLP) was implemented with Keras \cite{CHOLLET_2015_KERAS} to predict RSA-based cluster labels on new ligand binding sites. This model is built exactly as described on the previous chapter. However, there is a considerable difference in the size of training and test sets. The human component of the LIGYSIS dataset, LIGYSIS\textsubscript{HUMAN} was employed to train, validate, and test this new model. LIGYSIS\textsubscript{HUMAN} comprises $\approx$13,000 sites coming from $\approx$3,5000 proteins. The new set is $>$40 times larger than the previous one of 293 sites across 35 proteins.
 
-\subsection{Functional score calculation}
+%\subsection{LIGYSIS dataset}
 
-XXX.
+%There are \textbf{XXX} reviewed proteins in UniProt \cite{UNIPROT_2019_UNIPROT}. For each protein with at least one experimentally resolved three-dimensional (3D) structure, a superposition matrix was obtained from the PDBe FTP site \cite{PDBE_2022_PDBEKB} at \url{http://ftp.ebi.ac.uk/pub/databases/pdbe-kb/superposition}. This represents \textbf{XXX} (\textbf{XXX \%}) of the human proteins (\textbf{XXX} structures), whereas \textbf{XXX} (\textbf{XXX \%}) present no experimentally determined structures. 
 
-\subsection{Site function classification}
+%\subsection{Binding site definition}
 
-UniProt features were retrieved using the UniProt proteins API \cite{NIGHTINGALE_2017_API} on the features endpoint: \url{https://www.ebi.ac.uk/proteins/api/features/}. \textbf{XXX} of the \textbf{XXX} (92.5\%) proteins presented UniProt features. Only features of the category ``DOMAINS\_AND\_SITES'' and the types ``BINDING'', ``SITE'', and ``ACT\_SITE'' were used for functional assignment of a protein, which resulted in \textbf{XXX} (\textbf{XXX\%}) proteins with such annotations. Binding sites presenting at least a functionally annotated residue were classified as known function (KF) ($N$ = \textbf{XXX}), and those with no annotations as unknown function (UF) ($N$ = \textbf{XXX}). 
+%Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. Figure 10 illustrates the ligand site definition approach used to obtain our reference dataset: LIGYSIS. For a pair of ligands, $L_{A}$, $L_{B}$, fingerprints $A$, $B$ are defined as sets containing the residue numbers of the amino acids interacting with each ligand. Relative intersection, $I_{rel}$, is a similarity metric that quantifies how similar the fingerprints are [5]. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 1 when $A$ and $B$ share all the binding residues and 0 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints are clustered using average linkage with SciPy [95] and ligand sites obtained by cutting the tree at $D$ = 0.5. This resulted in \textbf{XXX} ligand binding sites.
+
+%\subsection{Multiple sequence alignments}
+
+%The representative entry of the first structure cluster for each segment was obtained from the PDBe superposition data, and its amino acid sequence retrieved using the PDBe GRAPH API domains endpoint: \url{https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/domains}. The approach described on the previous chapter was employed here and this sequence was used as query to perform a homologue sequence search in SwissProt \cite{BOUTET_2016_UNIPROT} using jackHMMER \cite{EDDY_1995_HMMER} to generate a multiple sequence alignment (MSA). The normalised version of the Shenkin divergence score \cite{SHENKIN_1991_SCORE}, $N_{Shenkin}$ \cite{UTGES_2021_ANKS}, was employed to quantify amino acid conservation within the MSA. For \textbf{XXX} protein segments, no homologues were found. Consequently, no conservation data was obtained for these segments. 
+
+%\subsection{Human variants enrichment}
+
+%Human missense genetic variants mapping to human sequences in the MSA were retrieved from gnomAD \cite{KARCZEWSKI_2020_GNOMAD} using VarAlign \cite{MACGOWAN_2017_VARIANTS, MACGOWAN_2024_VARIANTS}, as described on the previous chapter. Missense enrichment scores, i.e., odds ratio (OR), (MES) were calculated for alignment columns and 95\% confidence intervals and $p$-values used to evaluate their significance \cite{SZUMILAS_2010_ODDSRATIOS}. MES could not be calculated for \textbf{XXX} protein segments, as no human homologues were found in their alignments, nor for \textbf{XXX} segments, which presented human homologues, yet no missense variants in gnomAD. Scores were calculated for a total of \textbf{XXX} segments.
+
+%\subsection{Binding site clustering}
+
+%XXX.
+
+%\subsection{Binding site cluster prediction}
+
+%A multilayer perceptron (MLP) was implemented with Keras \cite{CHOLLET_2015_KERAS} to predict RSA-based cluster labels on new ligand binding sites. This model is built exactly as described on the previous chapter. However, there is a considerable difference in the size of training and test sets. The human component of the LIGYSIS dataset, LIGYSIS\textsubscript{HUMAN} was employed to train, validate, and test this new model. LIGYSIS\textsubscript{HUMAN} comprises $\approx$13,000 sites coming from $\approx$3,5000 proteins. The new set is $>$40 times larger than the previous one of 293 sites across 35 proteins.
+
+%\subsection{Functional score calculation}
+
+%XXX.
+
+%\subsection{Site function classification}
+
+%UniProt features were retrieved using the UniProt proteins API \cite{NIGHTINGALE_2017_API} on the features endpoint: \url{https://www.ebi.ac.uk/proteins/api/features/}. \textbf{XXX} of the \textbf{XXX} (92.5\%) proteins presented UniProt features. Only features of the category ``DOMAINS\_AND\_SITES'' and the types ``BINDING'', ``SITE'', and ``ACT\_SITE'' were used for functional assignment of a protein, which resulted in \textbf{XXX} (\textbf{XXX\%}) proteins with such annotations. Binding sites presenting at least a functionally annotated residue were classified as known function (KF) ($N$ = \textbf{XXX}), and those with no annotations as unknown function (UF) ($N$ = \textbf{XXX}). 
 
 \subsection{The LIGYSIS web resource}
 
