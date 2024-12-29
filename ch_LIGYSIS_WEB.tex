@@ -11,16 +11,22 @@ Utgés, J.S., MacGowan, S.M., Barton, G.J. LIGYSIS-web: a resource for the analy
 
 \section*{Author contributions}
 
-G.J.B., S.A.M. and J.S.U. conceived, designed, and developed the research. J.S.U. analysed the data. J.S.U. and S.A.M. developed the software. J.S.U. and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
+J.S.U., S.A.M. and G.J.B. conceived, designed, and developed the research. J.S.U. analysed the data. J.S.U. and S.A.M. developed the software. J.S.U., S.A.M and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
 
 \section{Introduction}
 
 Ligands play a critical role in protein function acting as natural co-factors, substrates, inhibitors and drugs in disease therapy. Identifying the protein regions where these molecules bind, understanding the mode in which they do so and characterising that interface is therefore key to understanding and modulating protein function. The UniProt knowledgebase (UPKB) catalogues 248 million protein sequences \cite{UNIPROT_2018_UNIPROT, UNIPROT_2023_UNIPROT}. While structure models for most of these proteins are available through resources such as the AlphaFold Database \cite{JUMPER_2021_ALPHAFOLD, VARADI_2022_ALPHAFOLDDB, ABRAMSON_2024_ALPHAFOLD3} and other providers \cite{GUEX_2009_SWISSMODEL, BEIENERT_2016_SWISSMODEL, WATERHOUSE_2018_SWISSMODEL}, only a small fraction present residue-level functional annotations in UniProt – 55 thousand (0.02\% of UPKB) or include biologically relevant ligands co-crystallised in the Protein Data Bank Europe (PDBe) \cite{BERMAN_2003_PDB, wwPDB_2019_PDB} – 29 thousand (0.01\%). The significant expense and time required for experimental validation underscores an urgent need for computational methods to characterise ligand sites  systematically and highlight residues likely to be relevant to protein function.
 
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/LIGYSIS_WEB_GRAPHICAL_ABSTRACT.png}
+    \caption[LIGYSIS-web]{\textbf{LIGYSIS-web.} LIGYSIS-web is a resource for the analysis of protein-ligand binding sites. Users can query the pre-computed LIGYSIS database of 64,782 protein-ligand binding sites across 25,003 proteins in UniProt, or submit their own set of protein-ligand complexes for analysis. Results can then be explored dynamically in the LIGYSIS web server, a web application. These results include protein-ligand contacts information, evolutionary divergence scores from multiple sequence alignments of homologous proteins, human missense enrichment scores and solvent accessibility providing an integrative view of the likelihood of function of the defined binding sites and individual residues that form them.}
+    \label{fig:LIGYSIS_WEB}
+\end{figure}
+
 In Chapter \ref{chap:FRAGSYS} a novel method was proposed for defining ligand binding sites from multiple protein-ligand complexes derived from fragment screening. Fragment screening is a widely used technique for identifying lead molecules in drug discovery \cite{CONGREVE_2003_RO3, REES_2004_FBLD, MURRAY_2009_FBDD}. Unlike traditional approaches, which rely on spatial ligand positioning \cite{SHIN_2005_PDBLIGAND, KOZAKOV_2005_CLUSTERING, WASS_2010_3DLIGANDSITE, MCGREIG_2022_3DLIGANDSITE}, Utgés, \textit{et al.} \cite{UTGES_2024_FRAGSYS} used protein-ligand interactions to group ligands into binding sites. Sites were categorised by solvent accessibility into four clusters, each showing differential enrichment in known functional sites. These clusters provide a basis for ranking sites by likelihood of functional significance. This method was subsequently applied to the entire PDBe, resulting in the LIGYSIS dataset, which Utgés and Barton \cite{UTGES_2024_LBSCOMP} employed to benchmark protein-ligand binding site prediction methods. This will be discussed in detail in Chapters \ref{chap:LBS_COMP} and \ref{chap:LBS_IMPROV}.
 
-This Chapter introduces the ligand site analysis web server \textit{LIGYSIS-web}, a resource for the analysis of protein-ligand binding sites. LIGYSIS-web hosts the LIGYSIS dataset, comprising 64,782 ligand binding sites, defined from 435,038 biologically relevant ligands, across 25,003 proteins with protein-ligand complexes deposited in the PDBe. Additionally, users can submit their own structures to the LIGYSIS web server for analysis, visualise the results in a dynamic and interactive manner and download the results for further analysis.
-
+This Chapter introduces the ligand site analysis web server \textit{LIGYSIS-web}, a resource for the analysis of protein-ligand binding sites \autoref{fig:LIGYSIS_WEB}. LIGYSIS-web hosts the LIGYSIS dataset, comprising 64,782 ligand binding sites, defined from 435,038 biologically relevant ligands, across 25,003 proteins with protein-ligand complexes deposited in the PDBe. Additionally, users can submit their own structures to the LIGYSIS web server for analysis, visualise the results in a dynamic and interactive manner and download the results for further analysis.
 
 \section{Methods}
 
@@ -28,7 +34,7 @@ This Chapter introduces the ligand site analysis web server \textit{LIGYSIS-web}
 
 There are 248 million proteins in the UniProtKB database \cite{UNIPROT_2020_UNIPROT}, $\approx$65,000 of which (0.02\%) of which have at least one experimentally determined three-dimensional structure deposited in the Protein Data Bank (PDB) \cite{ARMSTRONG_2020_PDBE}. 28,997 of these (45\%; 0.01\% of UPKB) proteins present at least one structure in complex with a biologically relevant ligand as defined by BioLiP \cite{YANG_2013_BIOLIP}, represented by 29,657 different \textit{structural segments}, as defined on the PDBe-KB. These segments represent a UniProt sequence region with one or more structurally overlapping chains  \cite{ELLAWAY_2024_CONFORMATIONS}. A protein might present multiple domains which are usually represented by different structural segments. Protein chains mapping to a given UniProt accession identifier were obtained from the PDBe aggregated API endpoint: \url{https://www.ebi.ac.uk/pdbe/graph-api/uniprot/superposition/} \cite{PDBEKB_2019_PDBEKB}. Transformation matrices to superpose protein chains for a structural segment were downloaded from the PDBe FTP site at \url{http://ftp.ebi.ac.uk/pub/databases/pdbe-kb/superposition} \cite{PDBE_2022_PDBEKB} and used to structurally align all chains mapping to each segment.
 
-Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. \autoref{fig:LIGYSIS_method} illustrates the ligand site definition approach used to obtain the new dataset presented here: LIGYSIS. This approach is an extension of the one used in Chapter \ref{chap:FRAGSYS}. For a pair of ligands, $L_A$, $L_B$, fingerprints $A$, $B$ are defined as sets containing the UniProt residue numbers of the amino acids interacting with each ligand. PDB residues were cross-referenced to UniProt using the SIFTS mapping present in the macromolecular crystallographic information file (mmCIF) files, located under the \texttt{\_atom\_site.pdbx\_si-fts\_xref\_db} fields \cite{VELANKAR_2012_SIFTS, DANA_2018_SIFTS}. Relative intersection, $I_{rel}$, (\autoref{eq:relative_intersection}) is a similarity metric that quantifies how similar these fingerprints are \cite{UTGES_2024_FRAGSYS}. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 0 when $A$ and $B$ share all the binding residues and 1 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints were clustered using average linkage with SciPy \cite{VIRTANEN_2020_SCIPY} and ligand sites obtained by cutting the tree at $D$ = 0.5. Note that pdbe-arpeggio currently does not support multiple occupancy atoms, and so ligands with atom occupancy $\neq$ 1 were not considered in our analysis. This affects 6256 structures (6\% of LIGYSIS dataset). 64,782 sites were defined from 435,038 ligands across 26,260 structural segments. These segments mapped to 25,003 different proteins, which were represented by 104,456 structures.
+Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. \autoref{fig:LIGYSIS_method} illustrates the ligand site definition approach used to obtain the new dataset presented here: LIGYSIS. This approach is an extension of the one used in Chapter \ref{chap:FRAGSYS}. For a pair of ligands, $L_A$, $L_B$, fingerprints $A$, $B$ are defined as sets containing the UniProt residue numbers of the amino acids interacting with each ligand. PDB residues were cross-referenced to UniProt using the SIFTS mapping present in the macromolecular crystallographic information file (mmCIF) files, located under the \texttt{\_atom\_site.pdbx\_si\discretionary{-}{}{}fts\_xref\_db} fields \cite{VELANKAR_2012_SIFTS, DANA_2018_SIFTS}. Relative intersection, $I_{rel}$, (\autoref{eq:relative_intersection}) is a similarity metric that quantifies how similar these fingerprints are \cite{UTGES_2024_FRAGSYS}. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 0 when $A$ and $B$ share all the binding residues and 1 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints were clustered using average linkage with SciPy \cite{VIRTANEN_2020_SCIPY} and ligand sites obtained by cutting the tree at $D$ = 0.5. Note that pdbe-arpeggio currently does not support multiple occupancy atoms, and so ligands with atom occupancy $\neq$ 1 were not considered in our analysis. This affects 6256 structures (6\% of LIGYSIS dataset). 64,782 sites were defined from 435,038 ligands across 26,260 structural segments. These segments mapped to 25,003 different proteins, which were represented by 104,456 structures.
 
 \begin{figure}[htb!]
     \centering
@@ -70,97 +76,59 @@ F = [\,f_{1},\,f_{2},\,f_{3},\,f_{4}\,]
 \end{equation}
 \myequations{Functional enrichment vector}
 
+\subsection{LIGYSIS customised pipeline}
 
-%\subsection{LIGYSIS dataset}
-
-%There are \textbf{XXX} reviewed proteins in UniProt \cite{UNIPROT_2019_UNIPROT}. For each protein with at least one experimentally resolved three-dimensional (3D) structure, a superposition matrix was obtained from the PDBe FTP site \cite{PDBE_2022_PDBEKB} at \url{http://ftp.ebi.ac.uk/pub/databases/pdbe-kb/superposition}. This represents \textbf{XXX} (\textbf{XXX \%}) of the human proteins (\textbf{XXX} structures), whereas \textbf{XXX} (\textbf{XXX \%}) present no experimentally determined structures. 
-
-%\subsection{Binding site definition}
-
-%Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. Protein-ligand contacts were determined with pdbe-arpeggio \cite{JUBB_2017_ARPEGGIO}. Figure 10 illustrates the ligand site definition approach used to obtain our reference dataset: LIGYSIS. For a pair of ligands, $L_{A}$, $L_{B}$, fingerprints $A$, $B$ are defined as sets containing the residue numbers of the amino acids interacting with each ligand. Relative intersection, $I_{rel}$, is a similarity metric that quantifies how similar the fingerprints are [5]. Subtracting $I_{rel}$ from 1 gives a distance, $D$ (\autoref{eq:Irel_distance}), which takes the value of 1 when $A$ and $B$ share all the binding residues and 0 when they share none. For a given protein segment, interacting with $M$ biologically meaningful ligands across $N$ chains, ligand fingerprints are clustered using average linkage with SciPy [95] and ligand sites obtained by cutting the tree at $D$ = 0.5. This resulted in \textbf{XXX} ligand binding sites.
-
-%\subsection{Multiple sequence alignments}
-
-%The representative entry of the first structure cluster for each segment was obtained from the PDBe superposition data, and its amino acid sequence retrieved using the PDBe GRAPH API domains endpoint: \url{https://www.ebi.ac.uk/pdbe/graph-api/pdbe_pages/domains}. The approach described on the previous chapter was employed here and this sequence was used as query to perform a homologue sequence search in SwissProt \cite{BOUTET_2016_UNIPROT} using jackHMMER \cite{EDDY_1995_HMMER} to generate a multiple sequence alignment (MSA). The normalised version of the Shenkin divergence score \cite{SHENKIN_1991_SCORE}, $N_{Shenkin}$ \cite{UTGES_2021_ANKS}, was employed to quantify amino acid conservation within the MSA. For \textbf{XXX} protein segments, no homologues were found. Consequently, no conservation data was obtained for these segments. 
-
-%\subsection{Human variants enrichment}
-
-%Human missense genetic variants mapping to human sequences in the MSA were retrieved from gnomAD \cite{KARCZEWSKI_2020_GNOMAD} using VarAlign \cite{MACGOWAN_2017_VARIANTS, MACGOWAN_2024_VARIANTS}, as described on the previous chapter. Missense enrichment scores, i.e., odds ratio (OR), (MES) were calculated for alignment columns and 95\% confidence intervals and $p$-values used to evaluate their significance \cite{SZUMILAS_2010_ODDSRATIOS}. MES could not be calculated for \textbf{XXX} protein segments, as no human homologues were found in their alignments, nor for \textbf{XXX} segments, which presented human homologues, yet no missense variants in gnomAD. Scores were calculated for a total of \textbf{XXX} segments.
-
-%\subsection{Binding site clustering}
-
-%XXX.
-
-%\subsection{Binding site cluster prediction}
-
-%A multilayer perceptron (MLP) was implemented with Keras \cite{CHOLLET_2015_KERAS} to predict RSA-based cluster labels on new ligand binding sites. This model is built exactly as described on the previous chapter. However, there is a considerable difference in the size of training and test sets. The human component of the LIGYSIS dataset, LIGYSIS\textsubscript{HUMAN} was employed to train, validate, and test this new model. LIGYSIS\textsubscript{HUMAN} comprises $\approx$13,000 sites coming from $\approx$3,5000 proteins. The new set is $>$40 times larger than the previous one of 293 sites across 35 proteins.
-
-%\subsection{Functional score calculation}
-
-%XXX.
+The LIGYSIS customised pipeline is used for the analysis of user-submitted structures to the server. The customised pipeline does not rely on the PDBe-KB for mapping chains to a protein, nor transformation matrices. Instead, STAMP \cite{RUSSELL_1992_STAMP} is used to superpose the uploaded structures, which can be in PDB (\textit{.ent}, \textit{.pdb}) or mmCIF \textit{.cif}  format. However, all structures in the set must be in the same format, e.g., either all PDB or all mmCIF. Structures must present the same number of protein chains, either all monomers, dimers, trimers, etc. The LIGYSIS web server currently supports only homomeric protein-ligand complexes, i.e., complexes between $N$ copies of a single protein sequence and any number of ligands. For structures mapping to a protein in UniProt, it is required to submit the corresponding UniProt identifier, so residues across different structures can all be mapped to the same reference. If the submitted structures represent a protein not in UniProt, this field can be left blank. The residue numbering employed will be the structure one, so structures are expected to present the same numbering scheme.
 
 %\subsection{Site function classification}
 
-%UniProt features were retrieved using the UniProt proteins API \cite{NIGHTINGALE_2017_API} on the features endpoint: \url{https://www.ebi.ac.uk/proteins/api/features/}. \textbf{XXX} of the \textbf{XXX} (92.5\%) proteins presented UniProt features. Only features of the category ``DOMAINS\_AND\_SITES'' and the types ``BINDING'', ``SITE'', and ``ACT\_SITE'' were used for functional assignment of a protein, which resulted in \textbf{XXX} (\textbf{XXX\%}) proteins with such annotations. Binding sites presenting at least a functionally annotated residue were classified as known function (KF) ($N$ = \textbf{XXX}), and those with no annotations as unknown function (UF) ($N$ = \textbf{XXX}). 
+%UniProt features were retrieved using the UniProt proteins API \cite{NIGHTINGALE_2017_API} on the features endpoint: \url{https://www.ebi.ac.uk/proteins/api/features/}. \textbf{XXX} of the \textbf{XXX} (92.5\%) proteins presented UniProt features. Only features of the category ``DOMAINS\_AND\_SITES'' and the types ``BINDING'', ``SITE'', and ``ACT\_SITE'' were used for functional assignment of a protein, which resulted in \textbf{XXX} (\textbf{XXX\%}) proteins with such annotations. Binding sites presenting at least a functionally annotated residue were classified as known function (KF) ($N$ = \textbf{XXX}), and those with no annotations as unknown function (UF) ($N$ = \textbf{XXX}).
 
-\subsection{The LIGYSIS web resource}
+\subsection{Data Availability}
 
-XXX.
+The code for the LIGYSIS-web Python Flask application can be found in our GitHub repository: \url{https://github.com/bartongroup/LIGYSIS-web} \cite{UTGES_2024_LIGYSIS_WEB_ZENODO}. The code for the LIGYSIS pipeline, employed to generate the LIGYSIS dataset, which LIGYSIS-web explores can be found here: \url{https://github.com/bartongroup/LIGYSIS} \cite{UTGES_2024_LIGYSIS_ZENODO}. The code for the LIGYSIS pipeline adapted to handle user-submitted jobs can be found in our repository: \url{https://github.com/bartongroup/LIGYSIS-custom} \cite{UTGES_2024_LIGYSIS_CUSTOM_ZENODO}. Source code for Slivka-bio can be found on the project repository:  \url{https://github.com/bartongroup/slivka-bio} \cite{MACGOWAN_2020_DRSASP}. 
 
-\subsubsection{Flask application backend}
 
-\autoref{get_contacts_route} shows how bla, bla, bla.
+\section{LIGYSIS-web}
 
-\lstset{style=mystyle}
+\subsection{LIGYSIS-web results page}
 
-\begin{lstlisting}[language=MyPython, caption={[/get-contacts route]\textbf{/get-contacts route.} This Python code block shows an example of a Flask Web Application route that bla, bla, bla.}, label={get_contacts_route}]
-@app.route('/get-contacts', methods = ['POST'])
-def get_contacts():
-    data = request.json
-    active_model = data['modelData']
-    prot_id = data['proteinId']
-    seg_id = data['segmentId']
-		(...)	
-    response_data = {
-        'contacts': json_cons,
-        'ligands': struc_ligs_data,
-        'protein': struc_prot_data,
-    }
-    return jsonify(response_data)
-\end{lstlisting}
+The LIGYSIS web server can be used in two modes: (1) to explore the LIGYSIS dataset and (2) to submit a set of structures for analysis to the LIGYSIS pipeline. The LIGYSIS dataset comprises $\approx$25,000 proteins with deposited structures of proteins bound to BioLiP biologically relevant ligands on the PDBe. Results can be explored by searching for a UniProt accession, entry, or name of the protein of interest. Results for user-submitted jobs can be accessed through the provided link when submitting the job, or through the jobs table at the user session tab.
 
-\subsubsection{HTML templates}
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/LIGYSIS_WEB_RESULTS_PAGE_P00517.png}
+    \caption[LIGYSIS-web results page]{\textbf{LIGYSIS-web results page.} The results page is divided in three panels: \textit{Binding Sites} (left), \textit{Structure} (centre), and \textit{Binding Residues} (right) panels. In this example, 103 ligands across 84 structures have been clustered into 8 different ligand binding sites for bovine cAMP-dependent protein kinase catalytic subunit alpha, PKA C-alpha, (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). This is the only segment of PKA C-alpha and covers its whole sequence (1-351). Chart.js scatter points and table rows represent binding sites and their average features on the Binding Sites Panel, whereas they represent individual amino acid residues on the Binding Residues Panel. Both panels interact with the 3Dmol.js central structure viewer through hover and click events. Below this viewer, function buttons can be found to hide/show slab controls, surfaces, labels, ligands, water molecules and protein-ligand contacts. Structures and contact data can also be downloaded from these buttons. Surfaces, ligands and water molecules are displayed in this screenshot. Superposition representative PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1svh}{1SVH} \cite{BREITENLECHNER_2004_PKB}, chain: A.}
+    \label{fig:LIGYSIS_web_results_page}
+\end{figure}
 
-XXX.
+\autoref{fig:LIGYSIS_web_results_page} illustrates the LIGYSIS-web main results page. This page is divided into three panels, from left to right: \textit{Binding Sites}, \textit{Structure}, and \textit{Binding Residues} panels. The results page is the same when exploring a LIGYSIS entry and user job results. At the top of the panels, general information about the target protein can be found, from left to right: UniProt accession identifier (link to UniProt), entry, protein names and number of chains, ligands and defined binding sites for the target protein.
 
-\subsubsection{JavaScript frontend}
+\subsection{Binding Sites panel}
 
-XXX.
+\autoref{fig:LIGYSIS_web_BINDING_SITES_PANEL} depicts the Binding Sites panel of the results page. This panel is formed by a dynamic Chart.js canvas and a table. Both are displaying the mean binding site features, calculated from averaging the features of the residues forming the site. These features are Relative Solvent Accessibility (RSA), Normalised Shenkin Divergence Score (DS), Missense Enrichment Score (MES), the size of the site, i.e., number of amino acid residues, the RSA-derived Cluster label and its associated Functional Score (FS). The table rows can be sorted by any of these variables and the axes of the chart dynamically changed. MES uses logarithmic scale, as it is an odds ratio. The chart as well as the table are linked to the structure viewer by hover and click events. Hovering on a data point/row will temporarily display the side chains of the site residues, whereas clicking on it would fix them in the view until another site is clicked or the current one unclicked. Refer to Figure 2 legend for more details on how to interpret this graph.
 
-\subsubsection{CSS stylings}
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/ch_LIGYSIS_WEB/PNG/BINDING_SITES_PANEL_P00517.png}
+    \caption[LIGYSIS-web results page Binding Sites Panel]{\textbf{LIGYSIS-web results page Binding Sites Panel.} UniProt accession identifier and entry name for cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}) (top). Below, Chart.js scatter of MES (log\textsubscript{10} scale) \textit{vs} divergence score for the 8 binding sites defined for PKA C-alpha. Dashed line indicates neutrality, i.e., missense variation within the site is no different than at the rest of the protein. Binding Site 2 (cyan) is an example of this. In contrast, Binding site 1 (pastel red), the known active site of the kinase, is depleted in missense variation (MES = 0.81). Additionally, it is buried (RSA = 12\%), conserved across homologues (DS = 27/100) and presents a high functional score (FS = 0.52). Binding sites with low divergence and missense enrichment scores (lower-left quadrant) are most likely to be functional, whereas those at the top-right are least likely to have biological effect when bound a ligand, e.g., BS6 (purple). Binding sites table is sorted by functional score (FS). Binding Site 0 is clicked (green highlight) and Binding Site 5 is being hovered on (yellow highlight).}
+    \label{fig:LIGYSIS_web_BINDING_SITES_PANEL}
+\end{figure}
 
-XXX.
+\subsection{Structure panel}
 
-\subsubsection{Job submission}
+\autoref{LIGYSIS_web_STRUCTURE_PANEL} depicts the central Structure panel of the results page. This panel is divided in three parts: the main 3Dmol.js viewer, in the centre, segment and structure selectors above it, and the structure buttons below it. The Segment selector  is a drop-down menu showing the segment identifier and its protein sequence coordinates. The Structure selector is a drop-up menu that allows the user to swap between the Superposition view (default) and individual biological assemblies. The Superposition view consists of a white cartoon representation of a segment representative chain and the superposed ligands coloured by binding site. These are hidden to start with and can be displayed by clicking on the ``LIGAND'' button and hidden if clicked again. The ``SURF'' button will display the protein chain surface, which will be white for non-ligand binding residues and coloured for binding residues. The same applies to water molecules and the ``HOH'' button. To see the labels of a clicked binding site, click on the ``LABEL'' button, and click again to hide them. The ``CONTACT'' button is disabled for the superposition view but can be clicked when exploring an assembly or structure. The relevant ligands, as well as the residues interacting with them will be coloured based on their site, and dashed cylinders depicting the protein-ligand interactions calculated by pdbe-arpeggio will be displayed. They are coloured based on the Arpeggio colour scheme, e.g., green for hydrophobic, red for polar, or yellow for ionic. The width of these cylinders is representative of the distance between the atoms. Thicker cylinders denote a clash between the Van der Waals (VdW) radii of the atoms (closer) whilst thinner cylinders indicate interaction between the VdW radii of the atoms. The view can also be sliced between two planes to focus on a region of interest. The slab or slice controls are displayed with the ``SLICE'' button. Hiding them does not reset the slab, just hides the controls. Click on button again to keep changing the slab. Clicking on the circular arrow generates a spin animation on the Y axis. Clicking on any ligand atom on the structure viewer links to the new PDBe-KB Ligand Pages \cite{CHOUDHARY_2024_PDBETOOLS} providing enhanced ligand annotations and a holistic view of small molecules for their biological context.
 
-XXX.
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/ch_LIGYSIS_WEB/PNG/STRUCTURE_PANEL_P00517.png}
+    \caption[LIGYSIS-web results page Structure Panel]{\textbf{LIGYSIS-web results page Structure panel.} Structure Panel of the LIGYSIS-web results page. Preferred biological assembly of PKA C-alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}) PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1Q24}{1Q24} \cite{GAEL_2003_AKT} with displayed interactions with adenosine tri-phosphate (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/ATP}{ATP}). Water molecules and ligand-binding residue labels are displayed. Interaction label between NZ atom of LYS73 chain: A and O2B of \href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/ATP}{ATP} 400 chain: D is displayed on hover. This is a hydrogen bond and the distance between the atoms is of 3.16 \AA{}. Residues in contact with multiple ligand atoms, as LYS73, which forms hydrogen bond and ionic interactions with three atoms, or ASP185, which interacts with four \href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/ATP}{ATP} atoms, are likely to be more relevant for the binding mode than residues with a single contribution to the binding interface, as ALA71. Non-carbona atoms are coloured based on the Jmol colouring scheme \cite{JMOL}.}
+    \label{fig:LIGYSIS_web_STRUCTURE_PANEL}
+\end{figure}
 
-\subsubsection{Deployment}
-
-XXX.
-
-\subsection{Data availability}
-
-XXX.
-
-\subsection{Code availability}
-
-XXX.
-
-\section{Results}
-
-XXX.
 
 \section{Discussion}
 
-XXX.
+The LIGYSIS web server is a free open resource accessible to all users without any login requirement for the analysis of protein-ligand binding sites. It hosts the LIGYSIS dataset, an integrative protein-ligand complex dataset including 65,000 biologically relevant binding sites across 25,000 proteins with structures on the PDBe. Additionally, users can upload their structures for analysis, visualisation and download. LIGYSIS defines binding sites by clustering protein-ligand interactions and characterises them by evolutionary divergence, missense variation and solvent accessibility, thus offering insight into the likelihood of function of sites as well as individual residues. These results are dynamically displayed on LIGYSIS-web, a Python Flask web application using Chart.js for dynamic graph rendering and 3Dmol.js for structure visualisation.
+
+Future steps include implementing a search by ligand functionality, overcoming the current limitation of multi-occupancy ligand atoms, the implementation of heteromeric protein-ligand complexes or analysing predicted ligand binding sites by methods as P2Rank \cite{KRIVAK_2015_PRANK, KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK, JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}, fpocket \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2} or IF-SitePred \cite{CARBERY_2024_IFSP}.
