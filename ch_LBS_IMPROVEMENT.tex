@@ -3,7 +3,7 @@
 
 \section*{Preface}
 
-This chapter explores in detail fifteen non-redundant and scoring variants of the thirteen methods evaluated in the previous chapter. The negative effect of poor scoring schemes and redundancy in ligand site prediction is demonstrated through the performance evaluation of these variants relative to their default modes using more than ten informative metrics.
+This Chapter explores in detail fifteen non-redundant and scoring variants of the thirteen methods evaluated in the previous chapter. The negative effect of poor scoring schemes and redundancy in ligand site prediction is demonstrated through the performance evaluation of these variants relative to their default modes using more than ten informative metrics.
 
 \section*{Publications}
 
@@ -52,7 +52,7 @@ Pocket prediction redundancy is defined here as the prediction of pockets with c
 
 \subsection{Pocket re-scoring strategies}
 
-PUResNet, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not score, nor explicitly rank their pockets, and so they were taken in the order given by their pocket ID. This means that when sorting across the dataset, the order of all pockets with the same rank is arbitrary. To obtain a score for these pockets, multiple strategies were employed. Firstly, a pocket score was obtained as the number of pocket amino acids, resulting in variants PUResNet\textsubscript{AA}, PocketFinder\textsuperscript{+}\textsubscript{AA}, Ligsite\textsuperscript{+}\textsubscript{AA} and Surfnet\textsuperscript{+}\textsubscript{AA}. Secondly, PRANK pocket scoring was employed, resulting in variants PUResNet\textsubscript{PRANK}, PocketFinder\textsuperscript{+}\textsubscript{PRANK}, Ligsite\textsuperscript{+}\textsubscript{PRANK} and Surfnet\textsuperscript{+}\textsubscript{PRANK}. IF-SitePred uses a simple pocket scoring scheme, whtih assigns to each centroid the number of clustered cloud points it results from. In this chapter, newly defined IF-SitePred pocket scores were calculated were calculated as the sum of squares (SS) of the ligandability scores ($LS_{i}$), calculated with \autoref{eq:IFSP_score}, of the $K$ residues on a site (\autoref{eq:IFSP_pocket_score}) resulting in IF-SitePred\textsubscript{RESC}. For PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+}, and Surfnet\textsuperscript{+} the same was done but instead of residue scores, grid point scores ($GS_{i}$) were used (\autoref{eq:leagcy_methos_pocket_score}). This resulted in further variants PocketFinder\textsuperscript{+}\textsubscript{SS}, Ligsite\textsuperscript{+}\textsubscript{SS}, and Surfnet\textsuperscript{+}\textsubscript{SS}. This is the same approach introduced by Krivák, \textit{et al.} \cite{KRIVAK_2015_P2RANK} and later adopted by Smith \textit{et al.} \cite{SMITH_2024_GrASP}.
+PUResNet, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+} do not score, nor explicitly rank their pockets, and so they were taken in the order given by their pocket ID. This means that when sorting across the dataset, the order of all pockets with the same rank is arbitrary. To obtain a score for these pockets, multiple strategies were employed. Firstly, a pocket score was obtained as the number of pocket amino acids, resulting in variants PUResNet\textsubscript{AA}, PocketFinder\textsuperscript{+}\textsubscript{AA}, Ligsite\textsuperscript{+}\textsubscript{AA} and Surfnet\textsuperscript{+}\textsubscript{AA}. Secondly, PRANK pocket scoring was employed, resulting in variants PUResNet\textsubscript{PRANK}, PocketFinder\textsuperscript{+}\textsubscript{PRANK}, Ligsite\textsuperscript{+}\textsubscript{PRANK} and Surfnet\textsuperscript{+}\textsubscript{PRANK}. IF-SitePred uses a simple pocket scoring scheme, whtih assigns to each centroid the number of clustered cloud points it results from. In this Chapter, newly defined IF-SitePred pocket scores were calculated were calculated as the sum of squares (SS) of the ligandability scores ($LS_{i}$), calculated with \autoref{eq:IFSP_score}, of the $K$ residues on a site (\autoref{eq:IFSP_pocket_score}) resulting in IF-SitePred\textsubscript{RESC}. For PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+}, and Surfnet\textsuperscript{+} the same was done but instead of residue scores, grid point scores ($GS_{i}$) were used (\autoref{eq:leagcy_methos_pocket_score}). This resulted in further variants PocketFinder\textsuperscript{+}\textsubscript{SS}, Ligsite\textsuperscript{+}\textsubscript{SS}, and Surfnet\textsuperscript{+}\textsubscript{SS}. This is the same approach introduced by Krivák, \textit{et al.} \cite{KRIVAK_2015_P2RANK} and later adopted by Smith \textit{et al.} \cite{SMITH_2024_GrASP}.
 
 \begin{equation}
 SS_{\text{IF--SitePred}} = \sum_{i=1}^{K} LS_i^2
@@ -214,7 +214,7 @@ fpocket\textsubscript{PRANK} (60\%) and DeepPocket\textsubscript{RESC} (58\%) pr
 
 \section{Conclusions}
 
-The conclusions resulting from the work presented in this chapter are as follows:
+The conclusions resulting from the work presented in this Chapter are as follows:
 
 \begin{itemize}
 
