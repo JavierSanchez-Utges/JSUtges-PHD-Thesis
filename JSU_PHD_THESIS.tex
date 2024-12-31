@@ -10,6 +10,7 @@
 \usepackage{amsmath} % for equations
 \usepackage{times} % to set font
 \usepackage{hyperref} % Add this line to include the hyperref package
+\usepackage{nameref}
 %\usepackage[compress]{cite} % Add this line to include the cite package with compression
 \usepackage{xcolor} % For text colors
 \usepackage{xurl}
@@ -175,6 +176,12 @@
 
 \setcounter{tocdepth}{4} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections
+
+\renewcommand{\chapterautorefname}{Chapter} % For chapters
+\renewcommand{\sectionautorefname}{Section} % For sections
+\renewcommand{\subsectionautorefname}{Section} % For subsections
+\renewcommand{\subsubsectionautorefname}{Section} % For subsubsections
+
 
 % Set up the margins
 \geometry{
