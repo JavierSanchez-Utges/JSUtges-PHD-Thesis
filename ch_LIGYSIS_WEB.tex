@@ -43,11 +43,19 @@ Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, 
     \label{fig:LIGYSIS_method}
 \end{figure}
 
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
+
 \begin{equation}
 D = 1 - I_{rel}
 \label{eq:Irel_distance}
 \end{equation}
 \myequations{Ligand fingerprint distance}
+
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
 
 \subsection{Alignments and variants}
 
@@ -55,7 +63,9 @@ For each UniProt accession, the canonical sequence was used to perform a homolog
 
 \subsection{RSA-based clustering ans score}
 
-Accessible surface area was calculated by DSSP \cite{KABSCH_1983_DSSP} via ProIntVar \cite{MACGOWAN_2020_DRSASP} and normalised \cite{TIEN_2013_RSA} to relative solvent accessibility (RSA). A Keras \cite{CHOLLET_2015_KERAS} multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP} described in \autoref{chap:FRAGSYS} \cite{UTGES_2024_FRAGSYS} was employed to predict site RSA-based cluster labels: C1 – C4. These clusters are differentially enriched in functional sites annotated in UniProt \cite{NIGHTINGALE_2017_API} (OR\textsubscript{C1} $\approx$ 28 $\times$ OR\textsubscript{C4}). For a binding site $i$, a functional score $FS$ is calculated with \autoref{eq:func_score}. In this equation, $p_{i_{j}}$ represents the probability of site $i$ belonging in Cluster $j$ and $f_j$ denotes the proportion of annotated functional sites within Cluster $j$. The probabilities $p_{i_{j}}$ are derived from the vector $P$ (\autoref{eq:probability_vector}), which is returned by the MLP and provides the probabilities of a site belonging to each class. The vector $F$ (\autoref{eq:func_prob_vector}) contains the proportions of functional sites in each cluster, which were determined through hierarchical clustering and functional classification of the human subset of the LIGYSIS dataset, composed of 13,000 sites across 3500 proteins. Both the functional label and score serve as metrics that indicate the likelihood of a binding site being functional and can be used to rank binding sites within a protein.
+Accessible surface area was calculated by DSSP \cite{KABSCH_1983_DSSP} via ProIntVar \cite{MACGOWAN_2020_DRSASP} and normalised \cite{TIEN_2013_RSA} to relative solvent accessibility (RSA). A Keras \cite{CHOLLET_2015_KERAS} multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP} described in \autoref{chap:FRAGSYS} \cite{UTGES_2024_FRAGSYS} was employed to predict site RSA-based cluster labels: C1 – C4. These clusters are differentially enriched in functional sites annotated in UniProt \cite{NIGHTINGALE_2017_API} (OR\textsubscript{C1} $\approx$ 28 $\times$ OR\textsubscript{C4}).
+
+For a binding site $i$, a functional score $FS$ is calculated with \autoref{eq:func_score}. In this equation, $p_{i_{j}}$ represents the probability of site $i$ belonging in Cluster $j$ and $f_j$ denotes the proportion of annotated functional sites within Cluster $j$. The probabilities $p_{i_{j}}$ are derived from the vector $P$ (\autoref{eq:probability_vector}), which is returned by the MLP and provides the probabilities of a site belonging to each class. The vector $F$ (\autoref{eq:func_prob_vector}) contains the proportions of functional sites in each cluster, which were determined through hierarchical clustering and functional classification of the human subset of the LIGYSIS dataset, composed of 13,000 sites across 3500 proteins. Both the functional label and score serve as metrics that indicate the likelihood of a binding site being functional and can be used to rank binding sites within a protein.
 
 \begin{equation}
 FS_i = \sum_{j=1}^{4} p_{i_{j}} f_j
@@ -63,11 +73,17 @@ FS_i = \sum_{j=1}^{4} p_{i_{j}} f_j
 \end{equation}
 \myequations{Functional score}
 
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
+
 \begin{equation}
 P = [\,p_{c_1},\,p_{c_2},\,p_{c_3},\,p_{c_4}\,]
 \label{eq:probability_vector}
 \end{equation}
 \myequations{RSA cluster probability vector}
+
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
 
 \begin{equation}
 F = [\,f_{1},\,f_{2},\,f_{3},\,f_{4}\,] 
@@ -75,6 +91,9 @@ F = [\,f_{1},\,f_{2},\,f_{3},\,f_{4}\,]
 \label{eq:func_prob_vector}
 \end{equation}
 \myequations{Functional enrichment vector}
+
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
 
 \subsection{LIGYSIS customised pipeline}
 
@@ -143,13 +162,6 @@ A ``Download Table'' button can be found on the Binding Site and Binding Residue
 
 The ligand superposition view, i.e., representative chain with bound ligands across structures can be saved to ChimeraX (\textit{.cxc}) or PyMOL (\textit{.pml}) script files by clicking on ``Download Superposition'' and then selecting the preferred viewer. The same can be done for individual (``Download Current Assembly'') or all assemblies (``Download ALL Assemblies''). \autorefpanel{fig:supp_suport}{ A-C} exemplifies this with the ligand superposition for human PKA C-alpha and \autorefpanel{fig:supp_suport}{ D-F} illustrates contacts between PKA C-alpha and \href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/M77}{M77} on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1q8w}{1Q8W} \cite{BREITENLECHNER_2003_PKA}. Screenshots of both graphs as well as 3Dmol.js view can be saved to PNG (\textit{.png}) files by clicking on the camera icon on the corresponding panel.
 
-%\begin{figure}[htb!]
-%    \centering
-%    \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/supp_support_P00517.png}
-%    \caption[LIGYSIS-web supports ChimeraX and PyMOL]{\textbf{LIGYSIS-web supports ChimeraX and PyMOL.} LIGYSIS-web employs 3Dmol.js for visualisation. Additionally, it supports download of both superposition view as well as individual or all assemblies in the common structure viewers ChimeraX and PyMOL. In this example, PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1svh}{1SVH} \cite{BREITENLECHNER_2004_PKB}, chain: A is the representative chain for cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}), for which 8 binding sites are defined from 103 ligands across 84 structures. Ligands are coloured by their binding site.}
-%    \label{fig:supp_suport}
-%\end{figure}
-
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/supp_contacts_support.png}
@@ -167,14 +179,14 @@ User job submission is handled through Slivka-bio v0.8.3 \cite{MACGOWAN_2020_DRS
 
 G protein-coupled receptors (GPCR) comprise the largest protein receptor family in the human genome, with $\approx$800 members \cite{LIU_2024_GPCRs}. GPCRs have a regulatory role in most physiological processes including the visual, gustatory and smell sense, immune and nervous system activity as well as in disease \cite{LATORRACA_2017_GPCRs}. Consequently, GPCRs represent  an important target in drug therapy, covering $\approx$35\% of drugs approved by the Food and Drug Administration (FDA) \cite{HAUSER_2017_GPCRS, INSEL_2019_GPCRs}. GPCRs share a conserved seven-transmembrane helix fold connected by three intra- and three extra-cellular loops \cite{ZHANG_2024_GPCRs} and bind to a variety of endogenous ligands including peptides, ions, lipids or neurotransmitters \cite{ZARZYCKA_2019_GPCRs, MANNES_2022_GPCRs}. Once activated by external stimuli, e.g., ligand binding, GPCRs employ G-proteins to interact with downstream effectors thus triggering intracellular signalling cascades \cite{CHENG_2023_GPCRs}. To accommodate for the wide variety of substrates that GPCRs bind, specificity-determining positions (SDP) are required at the protein-ligand interface. These sites are unconserved across homologues and depleted in missense variation in human (UMD) \cite{MACGOWAN_2024_VARIANTS}.
 
+\autoref{fig:ligysis_rhodopsin} illustrates how SDPs can easily be identified in LIGYSIS-web for the example of bovine rhodopsin (GPCR). \autorefpanel{fig:ligysis_rhodopsin}{ A} shows the average site missense enrichment \textit{vs} divergence for the 16 binding sites defined in LIGYSIS from 145 ligands of interest across 45 structures (\autorefpanel{fig:ligysis_rhodopsin}{ B}). Binding Site 0 corresponds to the orthosteric GPCR site and is on average unconserved (DS $>$ 50) and missense-depleted (MES $<$ 1). Four of the 38 residues within this site are significantly depleted in missense variation ($p <$ 0.05): GLU113, ALA117, SER186 and TYR288 (\autorefpanel{fig:ligysis_rhodopsin}{ C}). \autorefpanel{fig:ligysis_rhodopsin}{ D} exemplifies the specificity role of these positions by showing how different GPCRs bind to their substrates with different amino acids at these positions.
+
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/LIGYSIS_use_case_NEW.png}
     \caption[LIGYSIS analysis of bovine rhodopsin]{\textbf{LIGYSIS analysis of bovine rhodopsin.} \textbf{(A)} Scatter of average site missense enrichment score (MES) \textit{vs}  divergence (DS) for the 16 ligand binding sites defined for bovine rhodopsin (\href{https://www.uniprot.org/uniprotkb/P06299/entry}{P06299}). Binding Site 0 is divergent (unconserved) (DS = 56) and depleted in missense variation (MES = 0.95); \textbf{(B)} Superposition view of 145 ligands of interest across 49 structures of rhodopsin visualised with 3Dmol.js;\textbf{(C)} MES \textit{vs} DS for the 38 residues forming Binding Site 0. Residues within the dashed rectangle are conserved across homologues and depleted in missense variation in human, indicating common function and constraint across members of the family. However, GLU113, ALA117, SER186 and TYR288 in bovine rhodopsin are divergent within the family yet constrained in human, suggesting a substrate specificity determining role for these residues; \textbf{(D)} Examples of multiple GPCRs binding to endogenous substrates (retinal and lysophosphatidic acid) and inverse agonist (carazolol). (I) Bovine rhodopsin (\href{https://www.uniprot.org/uniprotkb/P06299/entry}{P06299}) binding to retinal (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/RET}{RET}) – PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1jfp}{1JFP} \cite{YEAGLE_2001_GPCRs}. (II) Human lysophosphatidic acid receptor 1 (\href{https://www.uniprot.org/uniprotkb/Q92633/entry}{Q92633}) binding to oleoyl lysophosphatidic acid (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/NKP}{NKP}) - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/7TD0}{7TD0} \cite{LIU_2022_GPCRs}. (III) Turkey beta-1-adrenergic receptor (\href{https://www.uniprot.org/uniprotkb/P07700/entry}{P07700}) binding to carazolol (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/CAU}{CAU}) – PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/2YCW}{2YCW} \cite{MOUKHAMETZIANOV_2011_GPCRs}. The same alignment position presents different amino acids across members of the family to accommodate for a variety of substrates. However, each of these residues is missense-depleted and forms ligand-specific interactions within each GPCR. Jmol colouring scheme \cite{JMOL} is applied to non-carbon atoms.}
     \label{fig:ligysis_rhodopsin}
 \end{figure}
-
-\autoref{fig:ligysis_rhodopsin} illustrates how SDPs can easily be identified in LIGYSIS-web for the example of bovine rhodopsin (GPCR). \autorefpanel{fig:ligysis_rhodopsin}{ A} shows the average site missense enrichment \textit{vs} divergence for the 16 binding sites defined in LIGYSIS from 145 ligands of interest across 45 structures (\autorefpanel{fig:ligysis_rhodopsin}{ B}). Binding Site 0 corresponds to the orthosteric GPCR site and is on average unconserved (DS $>$ 50) and missense-depleted (MES $<$ 1). Four of the 38 residues within this site are significantly depleted in missense variation ($p <$ 0.05): GLU113, ALA117, SER186 and TYR288 (\autorefpanel{fig:ligysis_rhodopsin}{ C}). \autorefpanel{fig:ligysis_rhodopsin}{ D} exemplifies the specificity role of these positions by showing how different GPCRs bind to their substrates with different amino acids at these positions.
 
 \section{Discussion}
 
