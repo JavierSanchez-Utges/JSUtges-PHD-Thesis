@@ -198,6 +198,27 @@ There is no significant ($p >$ 0.05) change in precision between VN-EGNN and VN-
 \end{landscape}
 \endgroup
 
+\begin{landscape}
+\begin{longtable}[c]{|c|c|c|c|c|c|c|}
+\hline
+\textbf{Default method (d)} & \textbf{Best variant (\textit{v})} & \textbf{\textDelta\textsubscript{Recall\textsubscript{top-\textit{N}}}} (\%) & \textbf{\textDelta\textsubscript{Recall\textsubscript{top-\textit{N}+2}}} (\%) & \textbf{\textDelta\textsubscript{Recall\textsubscript{max}}} (\%) & \textbf{\textDelta\textsubscript{Precision\textsubscript{1K}}} (\%) & \textbf{\textDelta\textsubscript{\# TP\textsubscript{100 FP}}} \\ \hline
+\endfirsthead
+%
+\endhead
+%
+VN-EGNN                     & VN-EGNN\textsubscript{NR}              & +17.0                          & +5.2                           & \textminus3.0                        & \textminus1.0                          & \textminus273                     \\ \hline
+IF-SitePred                 & IF-SitePred\textsubscript{RESC-NR}      & +9.9                         & +13.4                          & \textminus0.5                      & +3.3                         & +285                      \\ \hline
+PUResNet                    & PUResNet\textsubscript{PRANK}          & +0.2                         & 0.0                             & 0.0                         & +11.7                        & +558                      \\ \hline
+DeepPocket\textsubscript{SEG}              & DeepPocket\textsubscript{SEG-NR}       & +8.0                           & +5.6                           & \textminus1.1                      & \textminus1.0                          & \textminus27                      \\ \hline
+PocketFinder\textsuperscript{+}                & PocketFinder\textsuperscript{+}\textsubscript{AA}         & +5.3                         & +1.1                           & 0.0                         & +23.3                        & +114                      \\ \hline
+Ligsite\textsuperscript{+}                     & Ligsite\textsuperscript{+}\textsubscript{AA}              & +3.6                         & +0.6                           & 0.0                         & +16.5                        & +44                       \\ \hline
+Surfnet\textsuperscript{+}                     & Surfnet\textsuperscript{+}\textsubscript{AA}              & +6.0                           & +1.6                           & 0.0                         & +29.1                        & +247                      \\ \hline
+\caption[Methods improvement summary]{\textbf{Methods improvement summary.} Summary of the performance improvement for the seven methods for which non-redundant or re-scoring variants were generated in this Chapter: VN-EGNN, IF-SitePred, PUResNet, DeepPocket\textsubscript{SEG}, PocketFinder\textsuperscript{+}, Ligsite\textsuperscript{+} and Surfnet\textsuperscript{+}. Performance increase is calculated for each metric from the \textit{best} variant (\textit{v}), i.e., highest top-$N$+2 recall, relative to the default original method (\textbf{d}). Maximum recall is reduced for VN-EGNN, IF-SitePred and DeepPocket\textsubscript{SEG} as their non-redundant variants present fewer pockets. The same happens for Precision\textsubscript{1K} and \# TP\textsubscript{100 FP} for VN-EGNN. Overall, the method variants introduced in this work have a significant positive effect on performance.
+}
+\label{tab:methods_improvement_summary}\\
+\end{longtable}
+\end{landscape}
+
 \section{Discussion}
 
 We have shown how redundancy in prediction, i.e., predicting multiple times the same observed site, can underestimate the recall, and overestimate the precision of the methods, therefore providing a misleading assessment of the methods' performance. Redundancy removal and subsequent pocket re-ranking can yield a significant increase in recall. The importance of a robust pocket scoring scheme can have a strong impact in the performance, both in recall and precision of the methods and emphasis should be put into this area. Even if a single site is predicted per protein, a pocket score can be highly useful when ranking pockets in different proteins, e.g., when having a list of potential drug targets and deciding which protein might be best to target therapeutically.
