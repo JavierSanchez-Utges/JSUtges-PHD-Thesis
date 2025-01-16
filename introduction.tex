@@ -67,7 +67,7 @@ These physicochemical properties of amino acids are crucial to understand the ar
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/properties.png}
+    \includegraphics[width=0.90\textwidth]{figures/ch_INTRO/PNG/properties.png}
     \caption[Amino acid properties]{\textbf{Amino acid properties.} Taylor Venn diagram illustrating the different physicochemical properties of the twenty proteinogenic amino acids. Adapted from Livingstone and Barton \cite{LIVINGSTONE_1993_MSA}.}
     \label{fig:properties}
 \end{figure}
@@ -78,13 +78,13 @@ Similar or identical protein sequences carrying out related functions and displa
 
 \subsection{Multiple sequence alignment}
 
-In an MSA, multiple sequences (\textit{rows}) are piled up and aligned in a way that positions across proteins that are thought to be homologous, i.e., share common ancestry, are located on the same column \cite{NEEDLEMAN_1970_MSA}. Through time, sequences diverge and might suffer point mutations, insertions or deletions. To accommodate for this, aligners introduce \textit{gaps} (--) \cite{SMITH_1981_MSA}. By looking at the distribution of amino acid residues across columns in the alignment patterns of amino acid conservation can be observed when residues or their physicochemical properties are invariant across sequences or rows. Columns that present little or no variation are called \textit{conserved} whereas columns that present a wider variety of amino acids with different properties are called \textit{unconserved} or \textit{divergent} \cite{LIVINGSTONE_1993_CONS}. Many methods for the alignment of multiple sequence have been developed over the years with Clustal \cite{HIGGINS_1988_CLUSTAL, HIGGINS_1992_CLUSTALV, THOMPSON_1994_CLUSTALW, JEANMOUGIN_1998_CLUSTALX, SIEVERS_2011_CLUSTALO}, MAFFT \cite{KATOH_2002_MAFFT, KATOH_2008_MAFFT, KATOH_2013_MAFFT} or MUSCLE \cite{EDGAR_2004_MUSCLE, EDGAR_2022_MUSCLE5} being some of the most widely used.
+In an multiple sequence alignment, more than two sequences (\textit{rows}) are piled up and aligned in a way that positions across proteins that are thought to be homologous, i.e., share common ancestry, are located on the same column \cite{NEEDLEMAN_1970_MSA}. Through time, sequences diverge and might suffer point mutations, insertions or deletions. To accommodate for this, aligners introduce \textit{gaps} (--) \cite{SMITH_1981_MSA}. By looking at the distribution of amino acid residues across columns in the alignment patterns of amino acid conservation can be observed when residues or their physicochemical properties are invariant across sequences or rows. Columns that present little or no variation are called \textit{conserved} whereas columns that present a wider variety of amino acids with different properties are called \textit{unconserved} or \textit{divergent} \cite{LIVINGSTONE_1993_CONS}. Many methods for the alignment of multiple sequences have been developed over the years with Clustal \cite{HIGGINS_1988_CLUSTAL, HIGGINS_1992_CLUSTALV, THOMPSON_1994_CLUSTALW, JEANMOUGIN_1998_CLUSTALX, SIEVERS_2011_CLUSTALO}, MAFFT \cite{KATOH_2002_MAFFT, KATOH_2008_MAFFT, KATOH_2013_MAFFT} or MUSCLE \cite{EDGAR_2004_MUSCLE, EDGAR_2022_MUSCLE5} being some of the most widely used.
 
 \subsection{Amino acid conservation}
 
-Amino acid conservation observed in MSAs is evidence of evolutionary constraint. Throughout evolution, conserved positions have remained fixed due to their functional or structural relevance while divergent positions accumulate substitutions resulting in variability in amino acid residues across proteins within the same family \cite{ZUCKERKANDL_1965_DIVERGENCE}. There is not an obvious way to quantify amino acid conservation. Because of this, several scores exploring different approaches have been developed through the years \cite{VALDAR_2002_SCORES}. Some of these scores consider amino acids as symbols and use their relative frequencies \cite{WU_1970_SCORE, JORES_1990_SCORE, LOCKLESS_1999_SCORE}, or entropy \cite{SANDER_1991_SCORE, SHENKIN_1991_SCORE, GERSTEIN_1995_SCORE} to score conservation. Others focus on their stereochemical properties \cite{TAYLOR_1986_PROPERTIES, ZVELEBIL_1987_PREDICTION}, use mutation data \cite{KARLIN_1996_SCORE, THOMPSON_1997_SCORE, LANDGRAF_1999_SCORE, PILPEL_1999_SCORE, ARMON_2001_SCORE, VALDAR_2001_SCORE} or combine amino acid properties and symbol entropy \cite{WILLIAMSON_1995_SCORE, MIRNY_1999_SCORE}.
+Amino acid conservation observed in MSAs is evidence of evolutionary constraint. Throughout evolution, conserved positions have remained fixed due to their functional or structural relevance, while divergent positions accumulate substitutions resulting in variability in amino acid residues across proteins within the same family \cite{ZUCKERKANDL_1965_DIVERGENCE}. There is not an obvious way to quantify amino acid conservation. Because of this, several scores exploring different approaches have been developed through the years \cite{VALDAR_2002_SCORES}. Some of these scores consider amino acids as symbols and use their relative frequencies \cite{WU_1970_SCORE, JORES_1990_SCORE, LOCKLESS_1999_SCORE}, or entropy \cite{SANDER_1991_SCORE, SHENKIN_1991_SCORE, GERSTEIN_1995_SCORE} to score conservation. Others focus on their stereochemical properties \cite{TAYLOR_1986_PROPERTIES, ZVELEBIL_1987_PREDICTION}, use mutation data \cite{KARLIN_1996_SCORE, THOMPSON_1997_SCORE, LANDGRAF_1999_SCORE, PILPEL_1999_SCORE, ARMON_2001_SCORE, VALDAR_2001_SCORE} or combine amino acid properties and symbol entropy \cite{WILLIAMSON_1995_SCORE, MIRNY_1999_SCORE}.
 
-The score developed by Shenkin \textit{et al.} \cite{SHENKIN_1991_SCORE} is based on Shannon's Entropy ($S$) which is calculated with \autoref{eq:entropy_shannon2} \cite{SHANNON_1948_ENTROPY}. The proportion within an alignment column of each amino acid $i$ of the $K$ = 20 naturally occurring amino acids is denoted by $p_i$. The Shenkin Score, $V_{Shenkin}$, described in \autoref{eq:shenkin}, measures divergence and increases as amino acid variability within a column grows. In a fully conserved position, where all amino acids are the same, entropy is minimum ($S$ = 0) and so is divergence ($V_{Shenkin}$ = 6). Conversely, in a fully divergent position, where all amino acids are equally represented, entropy is maximum ($S \approx$ 4.32) and so is divergence ($V_{Shenkin}$ = 120). Utgés \textit{et al.} \cite{UTGES_2021_ANKS} defined a version of this score, $N_{Shenkin}$ (\autoref{eq:shenkin_norm}) which normalises the original score by the minimum and maximum scores within the alignment and ranges 0-100. This normalised score is employed in this Thesis to measure amino acid divergence.
+The score developed by Shenkin \textit{et al.} \cite{SHENKIN_1991_SCORE} is based on Shannon's Entropy ($S$) which is calculated with \autoref{eq:entropy_shannon2} \cite{SHANNON_1948_ENTROPY}. The proportion within an alignment column of each amino acid $i$ of the $K$ = 20 naturally occurring amino acids is denoted by $p_i$. The Shenkin Score, $V_{Shenkin}$, described in \autoref{eq:shenkin}, measures divergence and increases as amino acid variability grows within a column. In a fully conserved position, where all amino acids are the same, entropy is minimum ($S$ = 0) and so is divergence ($V_{Shenkin}$ = 6). Conversely, in a fully variable position, where all amino acids are equally represented, entropy is maximum ($S \approx$ 4.32) and so is divergence ($V_{Shenkin}$ = 120). Utgés \textit{et al.} \cite{UTGES_2021_ANKS} defined a version of this score, $N_{Shenkin}$ (\autoref{eq:shenkin_norm}), which normalises the original score by the minimum and maximum scores within the alignment and ranges 0-100. This normalised score is employed in this Thesis to measure amino acid divergence.
 
 \begin{equation}
 S = - \sum_{i=1}^{K} p_i \log_2(p_i)
@@ -104,33 +104,16 @@ N_{Shenkin} = \frac{V_{Shenkin} - V_{Shenkin_{\text{min}}}}{V_{Shenkin_{\text{ma
 \end{equation}
 \myequations{Normalised Shenkin divergence score}
 
-\subsection{Protein sequence}
-
-XXX.
-
-\subsubsection{Conservation and function}
-
-XXX.
-
 \subsection{Protein structure}
 
-XXX.
+The arrangement in three-dimensional space of protein atoms is known as protein structure. Protein structure can be defined at four different levels (\autoref{fig:protein_structure}). The primary structure of a protein corresponds to the sequence of amino acids forming the polypeptide chain from the first residue in the amino terminus (N-term) to the last one in the carboxyl terminus (C-term) (\autorefpanel{fig:protein_structure}{ A}). Protein residues adopt local sub-structures by the formation of hydrogen bond interactions between the residue backbone atoms. These local conformations are referred to as secondary structure (\autorefpanel{fig:protein_structure}{ B}). There are two main types of secondary structure: $\alpha$-helix and $\beta$-sheets \cite{PAULING_1951_SS}. The absence of any of these structures could be defined as a third structure named coil or loop. Tertiary structure is the three-dimensional structure created by a single polypeptide chain which results from the process of protein folding (\autorefpanel{fig:protein_structure}{ C}). Tertiary structure is defined by the burial of hydrophobic residues in the protein core and hydrogen bonds, salt bridges and disulfide bonds ensuring a tight packing of residue side chains. Finally, quaternary structure results from the aggregation of two or more individual protein chains that come together to form the functional unit of the protein or multimer (\autorefpanel{fig:protein_structure}{ D}). These monomers are held together by the same non-covalent interactions that stabilise tertiary structure. Quaternary structure can present different architectures depending on the number of copies involved: two copies (dimer), three (trimer), four (tetramer) and whether these copies are from the same sequence (homomers) or different ones (heteromers).
 
-\subsubsection{Primary structure}
-
-XXX.
-
-\subsubsection{Secondary structure}
-
-XXX.
-
-\subsubsection{Tertiary structure}
-
-XXX.
-
-\subsubsection{Quaternary structure}
-
-XXX.
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/protein_structure.png}
+    \caption[Protein structure]{\textbf{Protein structure.} Four levels of protein structure: primary (\textbf{A}); secondary (\textbf{B}); tertiary (\textbf{C}); quaternary (\textbf{D}). Blue dashed cylinders illustrate hydrogen bonds holding together the secondary structures of $\alpha$-helix and $\beta$-sheets. Example is PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/8dhv}{8DHV} \cite{LIETZAN_2023_BETAGLUCO} of $\beta$-glucuronidase of \textit{Treponema lecithinolyticum} (\href{https://www.uniprot.org/uniprotkb/A0AA82WPE8/entry}{A0AA82WPE8}). Structure visualisation with ChimeraX \cite{PETTERSEN_2021_CHIMERAX}.}
+    \label{fig:protein_structure}
+\end{figure}
 
 \subsection{Protein structure determination}
 

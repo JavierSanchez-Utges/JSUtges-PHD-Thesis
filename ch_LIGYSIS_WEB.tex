@@ -61,7 +61,7 @@ D = 1 - I_{rel}
 
 For each UniProt accession, the canonical sequence was used to perform a homologue sequence search in SwissProt \cite{BOUTET_2016_UNIPROT}. jackHMMER \cite{EDDY_1995_HMMER} was employed with three iterations to generate a multiple sequence alignment (MSA). Amino acid divergence was quantified with the normalised Shenkin divergence score \cite{SHENKIN_1991_SCORE} $N_{Shenkin}$ \cite{UTGES_2021_ANKS}. Genetic missense variants mapping to human sequences in the MSA were retrieved from gnomAD \cite{KARCZEWSKI_2020_GNOMAD} using VarAlign \cite{MACGOWAN_2017_VARIANTS}. Missense enrichment scores (MES), i.e., odds ratio (OR), were calculated for alignment columns \cite{MACGOWAN_2024_VARIANTS} and 95\% confidence intervals and $p$-values used to evaluate their significance \cite{SZUMILAS_2010_ODDSRATIOS}.
 
-\subsection{RSA-based clustering ans score}
+\subsection{RSA-based clustering and score}
 
 Accessible surface area was calculated by DSSP \cite{KABSCH_1983_DSSP} via ProIntVar \cite{MACGOWAN_2020_DRSASP} and normalised \cite{TIEN_2013_RSA} to relative solvent accessibility (RSA). A Keras \cite{CHOLLET_2015_KERAS} multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP} described in \autoref{chap:FRAGSYS} \cite{UTGES_2024_FRAGSYS} was employed to predict site RSA-based cluster labels: C1 – C4. These clusters are differentially enriched in functional sites annotated in UniProt \cite{NIGHTINGALE_2017_API} (OR\textsubscript{C1} $\approx$ 28 $\times$ OR\textsubscript{C4}).
 
