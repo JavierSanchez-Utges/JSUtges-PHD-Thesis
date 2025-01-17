@@ -3,19 +3,19 @@
 
 \section*{Preface}
 
-In this Chapter, a series of methods to group small molecule ligands by protein interactions and cluster ligand sites by relative solvent accessibility profile are introduced. 293 unique ligand binding sites are defined from 37 fragment screening experiments and grouped into four clusters which are differentially enriched in known functional sites. A multi-layer perceptron is developed to predict cluster labels with an accuracy of 96\% so allowing functional classification of sites for proteins not in this set. 
+In this Chapter, a series of methods to group small molecule ligands by protein interactions and cluster ligand sites by relative solvent accessibility profile are introduced. 293 unique ligand binding sites are defined from 37 fragment screening experiments and grouped into four clusters which are differentially enriched in known functional sites. A multi-layer perceptron is developed to predict cluster labels with an accuracy of 96\% so allowing functional classification of sites for proteins not in this set. Dr Stuart MacGowan conceived the idea of ligand clustering by their interactions using Jalview features. Dr Callum Ives started work on the characterisation of ligand sites integrating conservation and variation data with a set of fragment screening experiments by the Structure Genomics Consortium. I developed the project, extended the code, curated the dataset and did all the analysis the results of which are described in this Chapter.
 
 \section*{Publications}
 
 Utgés, J.S., MacGowan, S.A., Ives, C.M., Barton, G.J. Classification of likely functional class for ligand binding sites identified from fragment screening. \textit{Commun Biol} \textbf{7}, 320 (2024). \url{https://doi.org/10.1038/s42003-024-05970-8}.
 
-\section*{Author contributions}
+%\section*{Author contributions}
 
-J.S.U., G.J.B., S.A.M. and C.M.I. conceived, designed, and developed the research. J.S.U. and C.M.I. analysed the data. J.S.U., C.M.I. and S.A.M. developed the software. J.S.U. and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
+%J.S.U., G.J.B., S.A.M. and C.M.I. conceived, designed, and developed the research. J.S.U. and C.M.I. analysed the data. J.S.U., C.M.I. and S.A.M. developed the software. J.S.U. and G.J.B. wrote, reviewed and edited the manuscript. G.J.B. secured funding and supervised.
 
 \section{Introduction}
 
-Fragment-based drug discovery, or fragment screening, is a widely used technique to identify lead compounds against a specific protein target \cite{MURRAY_2009_FBDD}. Fragment screening typically uses X-ray crystallography to provide detailed information on the binding mode of small molecule fragments that bind to a target protein. Fragments can then be linked or grown to form more potent leads \cite{CONGREVE_2003_RO3, REES_2004_FBLD, SCHIEBEL_2016_FRAGMENTS}. A typical fragment screening experiment will generate a collection of three-dimensional structures with fragments bound to different regions of the protein. While many fragments group around well understood catalytic or binding sites, and so provide a scaffold for drug discovery, fragments are also observed bound to regions of the protein where the functional significance is unclear. Such sites may be functionally irrelevant or could identify previously unknown allosteric or other functionally important sites worthy of experimental investigation. 
+%Fragment-based drug discovery, or fragment screening, is a widely used technique to identify lead compounds against a specific protein target \cite{MURRAY_2009_FBDD}. Fragment screening typically uses X-ray crystallography to provide detailed information on the binding mode of small molecule fragments that bind to a target protein. Fragments can then be linked or grown to form more potent leads \cite{CONGREVE_2003_RO3, REES_2004_FBLD, SCHIEBEL_2016_FRAGMENTS}. A typical fragment screening experiment will generate a collection of three-dimensional structures with fragments bound to different regions of the protein. While many fragments group around well understood catalytic or binding sites, and so provide a scaffold for drug discovery, fragments are also observed bound to regions of the protein where the functional significance is unclear. Such sites may be functionally irrelevant or could identify previously unknown allosteric or other functionally important sites worthy of experimental investigation. 
 
 In this Chapter, a strategy is presented to identify which fragment binding sites are most likely to be of functional importance and so prioritise sites for further investigation. The first step is to identify binding sites from the fragment data. Ligand binding sites are not being predicted, as is done by P2Rank \cite{KRIVAK_2018_P2RANK}, fpocket \cite{GUILLOUX_2009_FPOCKET}, or molecular dynamics-based methods such as MixMD \cite{LEXA_2011_FLEXIBILITY, GHANAKOTA_2018_MIXMD}, MDmix \cite{ALVAREZ_2014_MIXMD}, or SILCS \cite{FALLER_2015_SILCS}. Instead, from a set of experimentally determined three-dimensional structures of protein-ligand complexes, ligands are defined as binding to the same site based on their interactions with the protein.
 
@@ -24,6 +24,7 @@ In most previous studies the focus has been on clustering ligands by root mean s
 The work described in this Chapter is likely to be of interest to groups focusing on fragment screening studies, but wider applications to ligand site classification from experimentally determined or predicted structures are also discussed. 
 
 \section{Methods}
+
 \label{sec:ch_FRAGSYS_methods}
 
 \subsection{Structure dataset}
@@ -262,22 +263,24 @@ Overall, implementing kernel, bias, or activity regularisation techniques did no
 \texttt{\textit{all} L1}            & 91.8              &  \textminus2.1                   & 0            \\ \hline
 \texttt{\textit{all} L2}            & 92.2              &  \textminus1.7                    & 0            \\ \hline
 \texttt{\textit{all} L1L2}          & 91.4              &  \textminus2.5                   & 0            \\ \hline
+\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes were conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Accuracy (\%) represents the validation accuracy average across 100 random seeds. $\Delta_{acc}$ (\%) represents the difference in accuracy between the variant MLP model and our \textit{current} setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
+\label{tab:MLP_ablation}
 \end{longtable}
 
 % Prevent LaTeX from incrementing the table counter
-\addtocounter{table}{-1}
-\addcontentsline{lot}{table}{\protect\numberline{2.1}MLP ablation study}
+%\addtocounter{table}{-1}
+%\addcontentsline{lot}{table}{\protect\numberline{2.1}MLP ablation study}
 
 
 % Separate caption for the table
-\begin{center}
-\captionsetup{type=table} % Specify the type of the caption
-\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes were conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Accuracy (\%) represents the validation accuracy average across 100 random seeds. $\Delta_{acc}$ (\%) represents the difference in accuracy between the variant MLP model and our \textit{current} setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
-\label{tab:MLP_ablation}
-\end{center}
+%\begin{center}
+%\captionsetup{type=table} % Specify the type of the caption
+%\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes were conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Accuracy (\%) represents the validation accuracy average across 100 random seeds. $\Delta_{acc}$ (\%) represents the difference in accuracy between the variant MLP model and our \textit{current} setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
+%\label{tab:MLP_ablation}
+%\end{center}
 
-\vspace{-23pt} % Adjust this value as needed
-\vspace{-13pt} % Adjust this value as needed
+%\vspace{-23pt} % Adjust this value as needed
+%\vspace{-13pt} % Adjust this value as needed
 
 \subsubsection{Performance evaluation}
 
@@ -324,14 +327,14 @@ The software developed to carry out this analysis as well as the main summary re
 
 The focus here is on human proteins to allow the additional information from human population variation data to be explored. For this reason, two of the 39 protein domains, products of the SARS-CoV-2 Replicase polyprotein 1ab (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}), were removed since they did not include any human homologues. The remaining 37 protein domains accounted for 1309 three-dimensional structures that included interactions with 1601 ligands of interest, of which 998 were unique. 293 ligand binding sites were defined across these domains, formed by 2664 unique ligand binding residues. The total number of binding sites per domain ranges from 1 to 24, with 33/37 domains presenting more than one defined binding site. The median number of sites per domain is seven.
 
+\autoref{fig:bs_def_examples} illustrates three examples of the 37 domains for which ligand binding sites were defined by the algorithm presented in this Chapter. The grouping of the ligands into the defined sites reflects the similarity between the interaction fingerprints of the different ligands with the target protein.
+
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG1_bs_examples.png}
     \caption[Ligand clusters defined by the binding site definition algorithm]{\textbf{Ligand clusters defined by the binding site definition algorithm.} A single protein cartoon representation, coloured in white, is shown for simplicity for each example. Ligands are coloured according to the site they bind to. Identifiers are from UniProt. \textbf{(A)} There were 110 structures depicting human tyrosine-protein phosphatase non-receptor type 1 (\href{https://www.uniprot.org/uniprotkb/P18031/entry}{P18031}), binding 143 ligand molecules, 104 of which were unique. 18 binding sites were defined. Cartoon PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU} \cite{KEEDY_2018_PTP1B}; \textbf{(B)} The 68 ligands, 30 unique, found across 50 structures of the chestnut blight fungus endothiapepsin (\href{https://www.uniprot.org/uniprotkb/P11838/entry}{P11838}), were classified in 12 distinct binding sites. Cartoon PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5r1y}{5R1Y} \cite{WOLLENHAUPT_2020_F2X}; \textbf{(C)} For mouse mitogen-activated protein kinase 14 (\href{https://www.uniprot.org/uniprotkb/P47811/entry}{P47811}), 52 structures portrayed the interaction with 53 ligand molecules, 50 unique, which clustered in 10 ligand binding sites. Cartoon PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1lew}{1LEW} \cite{CHANG_2002_MapKinase}.}
     \label{fig:bs_def_examples}
 \end{figure}
-
-\autoref{fig:bs_def_examples} illustrates three examples of the 37 domains for which ligand binding sites were defined by the algorithm presented in this Chapter. The grouping of the ligands into the defined sites reflects the similarity between the interaction fingerprints of the different ligands with the target protein.
 
 \autoref{fig:bss_features} shows the 293 defined binding sites are diverse in size (number of amino acids), solvent accessibility, evolutionary divergence, and missense depletion. Binding site size ranges from 2-40 residues with a median of 9, while median site RSA ranges from 4-80\%, with a median of 30\%. For evolutionary divergence, the average site $N_{Shenkin}$ spread from 0-80, peaking at 40. Lastly, MES spans \textminus0.75 to 1.0, peaking at neutrality (MES $\approx$ 0).
 
@@ -342,8 +345,6 @@ The focus here is on human proteins to allow the additional information from hum
     \label{fig:bss_features}
 \end{figure}
 
-Despite the diversity among sites, some general trends can be observed. \autorefpanel{fig:bss_feats_corr}{ A} shows that larger binding sites tend to be less accessible to solvent ($r$ = \textminus0.4, p $\approx$ 0). \autorefpanel{fig:bss_feats_corr}{ B} illustrates that larger sites are less divergent across homologues ($r$ = \textminus0.21, $p$ = $10^{-4}$) while \autorefpanel{fig:bss_feats_corr}{ C} presents how larger sites show lower enrichment in neutral missense variants within the human population, i.e., are on average more depleted in missense variants than sites of a smaller size ($r$ = \textminus0.15, $p$ = 0.008). Correlations between MES and $N_{Shenkin}$, and RSA and $N_{Shenkin}$ were not significant (95\% CI $r \ni$ 0).
-
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG3_bs_feats_corr.png}
@@ -351,11 +352,13 @@ Despite the diversity among sites, some general trends can be observed. \autoref
     \label{fig:bss_feats_corr}
 \end{figure}
 
-\vspace{-17pt} % Adjust this value as needed
+Despite the diversity among sites, some general trends can be observed. \autorefpanel{fig:bss_feats_corr}{ A} shows that larger binding sites tend to be less accessible to solvent ($r$ = \textminus0.4, p $\approx$ 0). \autorefpanel{fig:bss_feats_corr}{ B} illustrates that larger sites are less divergent across homologues ($r$ = \textminus0.21, $p$ = $10^{-4}$) while \autorefpanel{fig:bss_feats_corr}{ C} presents how larger sites show lower enrichment in neutral missense variants within the human population, i.e., are on average more depleted in missense variants than sites of a smaller size ($r$ = \textminus0.15, $p$ = 0.008). Correlations between MES and $N_{Shenkin}$, and RSA and $N_{Shenkin}$ were not significant (95\% CI $r \ni$ 0).
+
+%\vspace{-17pt} % Adjust this value as needed
 
 \subsection{RSA-based binding site clustering}
 
-\autoref{fig:bss_clust_profiles} depicts the four clusters defined by our method and the RSA profiles of the sites within them while \autoref{fig:bss_clusts_examples} illustrates six binding sites from each cluster to highlight the range of binding site size. Cluster 1 includes 46 sites, 127 sites are found on C2, 91 in C3 and 29 in C4. The proportion of residues with an RSA \textless~25\% in \autoref{fig:bss_clust_profiles} follows a different profile in each cluster, which is confirmed in \autorefpanel{fig:bs_clusts_feats}{ A}. C1 is the most buried with a proportion of residues with RSA \textless~25\% of 0.68, ($p_{buried}$ = 0.68), followed by C2 with $p_{buried}$ = 0.47, then C3, $p_{buried}$ = 0.30, and lastly C4 ($p_{buried}$ = 0.10). \autorefpanel{fig:bs_clusts_feats}{ B} displays the difference in binding site size between the clusters. There is variation within clusters in site size, but certain patterns are still apparent. C1 includes the largest sites, with an average size of $\bar{s}$ = 15 residues, followed by C2 with $\bar{s}$ = 11, then C3 with $\bar{s}$ = 8, and finally C4 with $\bar{s}$ = 5. \autorefpanel{fig:bs_clusts_feats}{ C} shows the two-dimensional MDS representation of the binding sites, also shown in \autorefpanel{fig:fragsys_bs_clust}{ D}, and \autorefpanel{fig:MLP_CV_blind_test}{ C} in the \nameref{sec:ch_FRAGSYS_methods} section of this Chapter. While there is some overlap between neighbouring clusters, C1 and C4 are significantly different. Sites near the cluster borders are those that switch groups depending on the random initialisation of the clustering. To summarise, C1 includes on average the largest, most buried sites, whereas C4 includes the smallest and most accessible. C2 and C3 are not as different as C1 and C4, but still differ in size and burial proportion with C2 including larger and overall, less accessible sites than C3.
+\autoref{fig:bss_clust_profiles} depicts the four clusters defined by our method and the RSA profiles of the sites within them while \autoref{fig:bss_clusts_examples} illustrates six binding sites from each cluster to highlight the range of binding site size. Cluster 1 includes 46 sites, 127 sites are found on C2, 91 in C3 and 29 in C4.
 
 \begin{figure}[htb!]
     \centering
@@ -364,16 +367,19 @@ Despite the diversity among sites, some general trends can be observed. \autoref
 \label{fig:bss_clust_profiles}
 \end{figure}
 
-These results support $U_{D}$ as a metric that effectively quantifies the difference in solvent exposure profile across binding sites resulting in four clusters which differ not only in RSA, but also binding site size. This effect might be explained by the negative correlation between solvent accessibility and binding site size shown in \autoref{fig:bss_feats_corr}.
+The proportion of residues with an RSA \textless~25\% in \autoref{fig:bss_clust_profiles} follows a different profile in each cluster, which is confirmed in \autorefpanel{fig:bs_clusts_feats}{ A}. C1 is the most buried with a proportion of residues with RSA \textless~25\% of 0.68, ($p_{buried}$ = 0.68), followed by C2 with $p_{buried}$ = 0.47, then C3, $p_{buried}$ = 0.30, and lastly C4 ($p_{buried}$ = 0.10). \autorefpanel{fig:bs_clusts_feats}{ B} displays the difference in binding site size between the clusters. There is variation within clusters in site size, but certain patterns are still apparent. C1 includes the largest sites, with an average size of $\bar{s}$ = 15 residues, followed by C2 with $\bar{s}$ = 11, then C3 with $\bar{s}$ = 8, and finally C4 with $\bar{s}$ = 5. \autorefpanel{fig:bs_clusts_feats}{ C} shows the two-dimensional MDS representation of the binding sites, also shown in \autorefpanel{fig:fragsys_bs_clust}{ D}, and \autorefpanel{fig:MLP_CV_blind_test}{ C} in the \nameref{sec:ch_FRAGSYS_methods} section of this Chapter. While there is some overlap between neighbouring clusters, C1 and C4 are significantly different. Sites near the cluster borders are those that switch groups depending on the random initialisation of the clustering. To summarise, C1 includes on average the largest, most buried sites, whereas C4 includes the smallest and most accessible. C2 and C3 are not as different as C1 and C4, but still differ in size and burial proportion with C2 including larger and overall, less accessible sites than C3.
 
-\autorefpanel{fig:bs_clusts_feats}{ D} shows the RSA distribution across the four clusters. C1 presents a strikingly different distribution to the rest of clusters, peaking at RSA $\approx$ 5\%, indicating a high density of buried residues. C2 still presents an excess of buried residues relative to  C3-4, though not as high as C1. C4 presents the most different distribution to C1, peaking at RSA $\approx$ 50-70\%. This definition agrees with \autoref{fig:bss_clust_profiles} and \autorefpanel{fig:bs_clusts_feats}{ A}. 
-
-\begin{figure}[H]
+\begin{figure}[htbp!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_FRAGSYS/PNG/FIG4_bs_clust_results_SPLIT_2.png}
     \captionof{figure}[Examples of RSA-based binding site clusters]{\textbf{Examples of RSA-based binding site clusters.} Six examples of binding sites are shown in structure for each cluster. Examples were selected to represent the range of binding site sizes within each cluster. Binding site residues are coloured according to their RSA, using the \textit{cividis} colour scheme. The rest of the protein is coloured in white. Ligands binding to the site in question are coloured in red.  IDs are UniProt accession codes and PDB IDs are provided for protein representative structures. C1 -- \href{https://www.uniprot.org/uniprotkb/Q9UKK9/entry}{Q9UKK9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qjl}{5QJL} \cite{PDB_5QJL}, \href{https://www.uniprot.org/uniprotkb/Q9UGL1/entry}{Q9UGL1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5fz0}{5FZ0} \cite{PDB_5FZ0}, \href{https://www.uniprot.org/uniprotkb/Q9UJM8/entry}{Q9UJM8} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qib}{5QIB} \cite{PDB_5QIB}, \href{https://www.uniprot.org/uniprotkb/Q8WS26/entry}{Q8WS26} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qpm}{5QPM} \cite{PDB_5QPM}, \href{https://www.uniprot.org/uniprotkb/Q7LBC6/entry}{Q7LBC6} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ran}{5RAN} \cite{PDB_5RAN}, \href{https://www.uniprot.org/uniprotkb/Q5T0W9/entry}{Q5T0W9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qhn}{5QHN} \cite{PDB_5QHN}; C2 -- \href{https://www.uniprot.org/uniprotkb/P11838/entry}{P11838} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5r1y}{5R1Y} \cite{WOLLENHAUPT_2020_F2X}, \href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5s4b}{5S4B} \cite{SCHULLER_2021_NSP3}, \href{https://www.uniprot.org/uniprotkb/Q8IU60/entry}{Q8IU60} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qp9}{5QP9} \cite{PDB_5QP9}, \href{https://www.uniprot.org/uniprotkb/P18031/entry}{P18031} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU} \cite{KEEDY_2018_PTP1B}, \href{https://www.uniprot.org/uniprotkb/P0C024/entry}{P0C024} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qgi}{5QGI} \cite{PDB_5QGI}, \href{https://www.uniprot.org/uniprotkb/Q9UKK9/entry}{Q9UKK9} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qjl}{5QJL}; C3 -- \href{https://www.uniprot.org/uniprotkb/P47811/entry}{P47811} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ra5}{5RA5} \cite{NICHOLS_2020_MINING}, \href{https://www.uniprot.org/uniprotkb/O15178/entry}{O15178} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qsa}{5QSA} \cite{PDB_5QSA}, \href{https://www.uniprot.org/uniprotkb/Q6B0I6/entry}{Q6B0I6} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5phl}{5PHL} \cite{PEARCE_2017_PANDDA}, \href{https://www.uniprot.org/uniprotkb/P47811/entry}{P47811} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ra5}{5RA5}, \href{https://www.uniprot.org/uniprotkb/Q92835/entry}{Q92835} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ry0}{5RY0} \cite{BRADSHAW_2024_SHIP1}, \href{https://www.uniprot.org/uniprotkb/P18031/entry}{P18031} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5qdu}{5QDU}; C4 -- \href{https://www.uniprot.org/uniprotkb/Q9BRQ3/entry}{Q9BRQ3} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ra5}{5RA5} \cite{PDB_5R55}, \href{https://www.uniprot.org/uniprotkb/Q8WWQ0/entry}{Q8WWQ0} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5rju}{5RJU} \cite{PDB_5RJU}, \href{https://www.uniprot.org/uniprotkb/Q32ZE1/entry}{Q32ZE1} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5rhi}{5RHI} \cite{PDB_5RHI}, \href{https://www.uniprot.org/uniprotkb/O95696/entry}{O95696} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5pny}{5PNY} \cite{PEARCE_2017_PANDDA}, \href{https://www.uniprot.org/uniprotkb/Q7LBC6/entry}{Q7LBC6} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5ran}{5RAN}, \href{https://www.uniprot.org/uniprotkb/Q6PJP8/entry}{Q6PJP8} - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/5q1z}{5Q1Z} \cite{PDB_5Q1Z}.}
 \label{fig:bss_clusts_examples}
 \end{figure}
+
+
+These results support $U_{D}$ as a metric that effectively quantifies the difference in solvent exposure profile across binding sites resulting in four clusters which differ not only in RSA, but also binding site size. This effect might be explained by the negative correlation between solvent accessibility and binding site size shown in \autoref{fig:bss_feats_corr}.
+
+\autorefpanel{fig:bs_clusts_feats}{ D} shows the RSA distribution across the four clusters. C1 presents a strikingly different distribution to the rest of clusters, peaking at RSA $\approx$ 5\%, indicating a high density of buried residues. C2 still presents an excess of buried residues relative to  C3-4, though not as high as C1. C4 presents the most different distribution to C1, peaking at RSA $\approx$ 50-70\%. This definition agrees with \autoref{fig:bss_clust_profiles} and \autorefpanel{fig:bs_clusts_feats}{ A}. 
 
 \begin{figure}[htb!]
     \centering
