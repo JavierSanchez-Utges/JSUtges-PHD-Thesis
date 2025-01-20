@@ -18,32 +18,6 @@ DNA is a polymer composed of two polynucleotide chains that coil around each oth
 
 Messenger RNA (mRNA) corresponds to the genetic sequence of a gene and is read by the ribosomal macromolecular machinery in the process of protein synthesis, or translation. In this process, a peptide chain is formed by linking amino acids in the order specified by the codons in the mRNA \cite{CRICK_1957_CODE}. A codon is a set of three nucleotides that corresponds to one of the twenty canonical amino acids. The equivalence between these codons and the amino acid they encode is known as the \textit{Genetic Code} \cite{GAMOW_1954_CODE}.
 
-\section{Genetic variation}
-
-Genetic variation is the difference in DNA sequence between individuals or populations of the same species. The main source of genetic variation is \textit{de novo} mutation. Mutations are changes in a genetic sequence that usually arise during DNA replication due to errors made by the imperfect replication machinery. Mutation can also occur as a result of damage to DNA, e.g., ultraviolet radiation, or during the repair process of such damage. Genetic variation can affect a single nucleotide in the sequence, i.e., a single nucleotide polymorphism (SNP), or multiple nucleotides (MNP), or larger DNA regions, even entire chromosomes, e.g., insertion, deletion, translocation, or fusion. SNPs are the only type of genetic variation relevant for the research described in this Thesis.
-
-\subsection{Types of genetic variation}
-
-\subsubsection{Genomic location}
-
-Based on genomic location, genetic variation can be classified into \textit{coding} variation if it affects the mRNA that codes for the protein sequence. Alternatively, \textit{non-coding} variants are those that affect other regions that do not code for a protein product, such as introns, intergenic regions, promoters, enhancers or other regulatory elements.
-
-\subsubsection{Effect on coding sequence}
-
-The genetic code is \textit{degenerate} or redundant, as there are 4 $\times$ 4 $\times$ 4 = 64 codons coding for only twenty amino acids. For this reason, a change in the coding DNA sequence is not always reflected in the protein sequence. Mutations that due to the redundancy in the genetic code do not alter the protein sequence are called synonymous or silent. Nonsynonymous mutations \textit{do} change the protein sequence and can be further classified into: missense, nonsense, nonstop and frameshift mutations. Missense mutations are those that replace one of the twenty amino acids by a different one. Missense variants can be conservative, if the interchanged residues present similar physicochemical properties, e.g., leucine $\rightarrow$ isoleucine, or they can be non-conservative or radical if the exchanged amino acids are biochemically different, e.g., lysine $\rightarrow$ threonine. Nonsense mutations replace one of the twenty amino acids by one of the three STOP codons, resulting in an early termination of the peptide chain. Nonstop variants are the exact opposite and exchange the original stop codon by one of the twenty amino acids thus resulting in an abnormally elongated protein. Finally, frameshift mutations result from the insertion or deletion of nucleotides that are not a multiple of three. When this happens, the frame on which the translation machinery reads the mRNA is shifted and a completely different protein product is obtained.
-
-While missense mutations, which simply replace one amino acid by another and can be conservative, have a limited effect on protein sequence and structure, nonsense, nonstop and frameshift mutation have more drastic consequences. Because of this, missense variants tend to be more tolerated and are observed with higher frequency in the general population \cite{COULTER_2004_MUTATIONS}.
-
-\subsubsection{Impact on phenotype}
-
-Genetic variants can also be classified based on the effect they have on the phenotype, or clinical significance, which usually corresponds to an effect on the concentration, structure, function or activity rate of a protein \cite{VIHINEN_2022_VARIATION}. Mutations that do not have a harmful effect on the protein are called neutral or benign. Since neutral variants have no noticeable effect on the \textit{fitness} \cite{DARWIN_1859_ORIGIN}, i.e., the ability to leave offspring, they are not under selective pressure and consequently roam around in the general population \cite{KIMURA_1968_NEUTRAL}. Conversely, pathogenic variants disrupt biological processes and eventually result in disease. Disease severity will dictate the strength with which natural selection acts upon the causing variant and therefore its frequency in the population. Mutations affecting genes needed for development and survival, or essential genes, might have lethal effects and never be observed in the population \cite{GLUECKSOHN_1963_LETHALITY}.
-
-It is estimated that only 2\% of the more than 4 million observed human missense variants have been clinically classified as pathogenic or benign \cite{LEK_2016_EXAC}. Variants of unknown significance (VUS) therefore represent the vast majority of observed missense variants and the prediction of their effect on fitness is an important ongoing challenge in human genetics \cite{MCLAREN_2016_VEP}. Several methods exploiting different technologies have been developed over the years to tackle this challenge with SIFT \cite{KUMAR_2009_SIFT}, PolyPhen \cite{ADZHUBEI_2013_POLYPHEN} and the recent AlphaMissense \cite{CHENG_2023_ALPHAMISSENSE} being some of the most relevant ones.
-
-\subsection{Variation is constrained}
-
-XXX.
-
 \section{Proteins}
 
 Proteins are molecular machines that are involved in virtually all cellular processes including cell division, immune response or metabolism. They result from the process of translation of mRNA. Proteins are natural polymers formed of smaller monomers called amino acids linked to each other through peptide bonds.
@@ -131,23 +105,29 @@ Nuclear magnetic resonance spectroscopy (NMR) is a powerful technique to determi
 
 The use of electron microscopy to determine protein structure dates back to 1975 \cite{HENDERSON_1975_EM} but modern cryogenic electron microscopy (Cryo-EM) was not used to resolve a protein structure until 1990 when Henderson \textit{et al.} \cite{HENDERSON_1990_CRYOEM} determined the structure of \textit{Halobacterium halobium} bacteriorhodopsin (\href{https://www.uniprot.org/uniprotkb/P02945/entry}{P02945}). In Cryo-EM, proteins are rapidly frozen to very low temperatures to preserve their native state. The frozen sample is then put under an electron microscope which will generate a set of two-dimensional projections from the electron beams. These projections are later integrated into a 3D model. Cryo-EM tends to provide lower resolution than X-ray or NMR, however is the only method that can determine the structure of large macromolecular complexes such as the spliceosome \cite{CHUANGYE_2016_SPLICEOSOME} or the nucleopore \cite{KOSINSKI_2016_NUCLEOPORE}. This resolution limitation was breached in the last decade when Bartesaghi \textit{et al.} \cite{BARTESAGHI_2014_CRYOEM} reached a resolution of 3.2 \AA{} for \textit{Escherichia coli} $\beta$-galactosidase (\href{https://www.uniprot.org/uniprotkb/P00722/entry}{P00722}). While XRC has decades of advantage over Cryo-EM in terms of deposited structures, due to the rapid advances in the latter method, it is projected that the number of depositions between these two methods will coalesce by the year 2035 \cite{CHIU_2021_CRYOEM}.
 
-\subsection{Protein structure prediction}
-
-XXX.
-
-\subsubsection{Homology-based}
-
-XXX.
-
-\subsubsection{De novo}
-
-XXX.
+%\subsection{Protein structure prediction}
+%XXX.
+%\subsubsection{Homology-based}
+%XXX.
+%\subsubsection{De novo}
+%XXX.
 
 \subsection{Protein structure characterisation}
 
 XXX.
 
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/protein_features.png}
+    \caption[Protein structure features]{\textbf{Protein structure features.} Protein structure features exemplified on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4c38}{4C38} \cite{COUTY_2013_ONCO} of bovine cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). \textbf{(A)} Atomic displacement measured by Debye-Waller factor (DWF); \textbf{(B)} Hydrophobicity measured by molecular lipophilicity potential (MLP); \textbf{(C)} Charge measured by Coulombic electrostatic potential (ESP); \textbf{D}) Accessibility measured by relative solvent accessibility (RSA); \textbf{(E)} Ligandability as measured by P2Rank's ligandability score \cite{KRIVAK_2018_P2RANK}. Structure visualisation with ChimeraX \cite{PETTERSEN_2021_CHIMERAX}.}
+    \label{fig:protein_features}
+\end{figure}
+
 \subsubsection{Secondary structure}
+
+XXX.
+
+\subsubsection{B-factor}
 
 XXX.
 
@@ -163,7 +143,33 @@ XXX.
 
 XXX.
 
-\subsubsection{Binding pockets}
+\subsubsection{Ligandability}
+
+XXX.
+
+\section{Genetic variation}
+
+Genetic variation is the difference in DNA sequence between individuals or populations of the same species. The main source of genetic variation is \textit{de novo} mutation. Mutations are changes in a genetic sequence that usually arise during DNA replication due to errors made by the imperfect replication machinery. Mutation can also occur as a result of damage to DNA, e.g., ultraviolet radiation, or during the repair process of such damage. Genetic variation can affect a single nucleotide in the sequence, i.e., a single nucleotide polymorphism (SNP), or multiple nucleotides (MNP), or larger DNA regions, even entire chromosomes, e.g., insertion, deletion, translocation, or fusion. SNPs are the only type of genetic variation relevant for the research described in this Thesis.
+
+\subsection{Types of genetic variation}
+
+\subsubsection{Genomic location}
+
+Based on genomic location, genetic variation can be classified into \textit{coding} variation if it affects the mRNA that codes for the protein sequence. Alternatively, \textit{non-coding} variants are those that affect other regions that do not code for a protein product, such as introns, intergenic regions, promoters, enhancers or other regulatory elements.
+
+\subsubsection{Effect on coding sequence}
+
+The genetic code is \textit{degenerate} or redundant, as there are 4 $\times$ 4 $\times$ 4 = 64 codons coding for only twenty amino acids. For this reason, a change in the coding DNA sequence is not always reflected in the protein sequence. Mutations that due to the redundancy in the genetic code do not alter the protein sequence are called synonymous or silent. Nonsynonymous mutations \textit{do} change the protein sequence and can be further classified into: missense, nonsense, nonstop and frameshift mutations. Missense mutations are those that replace one of the twenty amino acids by a different one. Missense variants can be conservative, if the interchanged residues present similar physicochemical properties, e.g., leucine $\rightarrow$ isoleucine, or they can be non-conservative or radical if the exchanged amino acids are biochemically different, e.g., lysine $\rightarrow$ threonine. Nonsense mutations replace one of the twenty amino acids by one of the three STOP codons, resulting in an early termination of the peptide chain. Nonstop variants are the exact opposite and exchange the original stop codon by one of the twenty amino acids thus resulting in an abnormally elongated protein. Finally, frameshift mutations result from the insertion or deletion of nucleotides that are not a multiple of three. When this happens, the frame on which the translation machinery reads the mRNA is shifted and a completely different protein product is obtained.
+
+While missense mutations, which simply replace one amino acid by another and can be conservative, have a limited effect on protein sequence and structure, nonsense, nonstop and frameshift mutation have more drastic consequences. Because of this, missense variants tend to be more tolerated and are observed with higher frequency in the general population \cite{COULTER_2004_MUTATIONS}.
+
+\subsubsection{Impact on phenotype}
+
+Genetic variants can also be classified based on the effect they have on the phenotype, or clinical significance, which usually corresponds to an effect on the concentration, structure, function or activity rate of a protein \cite{VIHINEN_2022_VARIATION}. Mutations that do not have a harmful effect on the protein are called neutral or benign. Since neutral variants have no noticeable effect on the \textit{fitness} \cite{DARWIN_1859_ORIGIN}, i.e., the ability to leave offspring, they are not under selective pressure and consequently roam around in the general population \cite{KIMURA_1968_NEUTRAL}. Conversely, pathogenic variants disrupt biological processes and eventually result in disease. Disease severity will dictate the strength with which natural selection acts upon the causing variant and therefore its frequency in the population. Mutations affecting genes needed for development and survival, or essential genes, might have lethal effects and never be observed in the population \cite{GLUECKSOHN_1963_LETHALITY}.
+
+It is estimated that only 2\% of the more than 4 million observed human missense variants have been clinically classified as pathogenic or benign \cite{LEK_2016_EXAC}. Variants of unknown significance (VUS) therefore represent the vast majority of observed missense variants and the prediction of their effect on fitness is an important ongoing challenge in human genetics \cite{MCLAREN_2016_VEP}. Several methods exploiting different technologies have been developed over the years to tackle this challenge with SIFT \cite{KUMAR_2009_SIFT}, PolyPhen \cite{ADZHUBEI_2013_POLYPHEN} and the recent AlphaMissense \cite{CHENG_2023_ALPHAMISSENSE} being some of the most relevant ones.
+
+\subsection{Variation is constrained}
 
 XXX.
 
@@ -231,7 +237,7 @@ XXX.
 
 XXX.
 
-\section{Fragment-based based discovery}
+\section{Fragment-based drug discovery}
 
 Fragment-based drug discovery (FBDD), or fragment screening, is a widely used technique to identify lead compounds against a specific protein target \cite{MURRAY_2009_FBDD}. Fragment screening typically uses X-ray crystallography to provide detailed information on the binding mode of small molecule fragments that bind to a target protein. Fragments can then be linked or grown to form more potent leads \cite{CONGREVE_2003_RO3, REES_2004_FBLD, SCHIEBEL_2016_FRAGMENTS}. A typical fragment screening experiment will generate a collection of three-dimensional structures with fragments bound to different regions of the protein. While many fragments group around well understood catalytic or binding sites, and so provide a scaffold for drug discovery, fragments are also observed bound to regions of the protein where the functional significance is unclear. Such sites may be functionally irrelevant or could identify previously unknown allosteric or other functionally important sites worthy of experimental investigation. 
 
