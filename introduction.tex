@@ -105,14 +105,19 @@ Nuclear magnetic resonance spectroscopy (NMR) is a powerful technique to determi
 
 The use of electron microscopy to determine protein structure dates back to 1975 \cite{HENDERSON_1975_EM} but modern cryogenic electron microscopy (Cryo-EM) was not used to resolve a protein structure until 1990 when Henderson \textit{et al.} \cite{HENDERSON_1990_CRYOEM} determined the structure of \textit{Halobacterium halobium} bacteriorhodopsin (\href{https://www.uniprot.org/uniprotkb/P02945/entry}{P02945}). In Cryo-EM, proteins are rapidly frozen to very low temperatures to preserve their native state. The frozen sample is then put under an electron microscope which will generate a set of two-dimensional projections from the electron beams. These projections are later integrated into a 3D model. Cryo-EM tends to provide lower resolution than X-ray or NMR, however is the only method that can determine the structure of large macromolecular complexes such as the spliceosome \cite{CHUANGYE_2016_SPLICEOSOME} or the nucleopore \cite{KOSINSKI_2016_NUCLEOPORE}. This resolution limitation was breached in the last decade when Bartesaghi \textit{et al.} \cite{BARTESAGHI_2014_CRYOEM} reached a resolution of 3.2 \AA{} for \textit{Escherichia coli} $\beta$-galactosidase (\href{https://www.uniprot.org/uniprotkb/P00722/entry}{P00722}). While XRC has decades of advantage over Cryo-EM in terms of deposited structures, due to the rapid advances in the latter method, it is projected that the number of depositions between these two methods will coalesce by the year 2035 \cite{CHIU_2021_CRYOEM}.
 
-%\subsection{Protein structure prediction}
-%XXX.
-%\subsubsection{Homology-based}
-%XXX.
-%\subsubsection{De novo}
-%XXX.
-
 \subsection{Protein structure characterisation}
+
+Beyond the determination of the arrangement of atoms in three-dimensional space, proteins can be characterised structurally in multiple ways that offer insight into their physicochemical properties, their stability, dynamics and interaction with other molecules. These features can then be mapped onto the molecular surface of the proteins and visually analysed (\autoref{fig:protein_features}).
+
+\subsubsection{Protein flexibility}
+
+The Debye-Waller factor (DWF), or B-factor, measures the attenuation of X-ray scattering caused by thermal motion \cite{DEBYE_1913_BFACTOR, WALLER_1923_BFACTOR}. This attenuation is a decrease of intensity in diffraction caused by disorder. This disorder can be dynamic and result from the temperature-dependent vibration of the atoms, or static \cite{SUN_2019_BFACTOR}. Accordingly, low values of B-factor indicate rigid or well-ordered protein regions, while high values can identify flexible or dynamic regions in proteins such as loops or binding sites as well as intrinsically disordered regions (IDR) (\autorefpanel{fig:protein_features}{ A}). IDRs are protein regions that lack a determined three-dimensional structure and might change conformation depending on their biological context.
+
+\subsubsection{Hydrophobicity}
+
+The molecular lipophilicity potential (MLP) is a descriptor that represents the spatial distribution of lipophilicity across the surface of a molecule and provides insight into how hydrophobic or hydrophilic different regions of a molecule are based on the chemical nature of their atoms \cite{BROTO_1984_MLP, LAGUERRE_1997_MLP}. High MLP values correspond to lipophilic (hydrophobic) areas and lower MLP values correlate to less lipophilic (more hydrophilic) regions (\autorefpanel{fig:protein_features}{ B}). The analysis of protein lipophilicity is relevant for the identification of hydrophobic pockets where lipophilic ligands are likely to bind, allosteric sites, large hydrophobic patches prone to protein aggregation, as well as for protein and enzyme engineering \cite{EFREMOV_2007_MLP}. Analysing the lipophilicity of small molecules is also very relevant for optimising ligand design and improving drug absorption, permeability or solubility \cite{GAILLARD_1994_MLP}.
+
+\subsubsection{Charge}
 
 XXX.
 
@@ -123,23 +128,7 @@ XXX.
     \label{fig:protein_features}
 \end{figure}
 
-\subsubsection{Secondary structure}
-
-XXX.
-
-\subsubsection{B-factor}
-
-XXX.
-
 \subsubsection{Solvent accessibility}
-
-XXX.
-
-\subsubsection{Hydrophobicity}
-
-XXX.
-
-\subsubsection{Charge}
 
 XXX.
 
