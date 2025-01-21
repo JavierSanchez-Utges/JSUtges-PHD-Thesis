@@ -131,13 +131,20 @@ Amino acid with charged side chains, e.g., Asp, Glu, His, Lys and Arg, play an i
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/protein_features.png}
-    \caption[Protein structure features]{\textbf{Protein structure features.} Protein structure features exemplified on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4c38}{4C38} \cite{COUTY_2013_ONCO} of bovine cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). \textbf{(A)} Atomic displacement measured by Debye-Waller factor (DWF); \textbf{(B)} Hydrophobicity measured by molecular lipophilicity potential (MLP); \textbf{(C)} Charge measured by Coulombic electrostatic potential (ESP); \textbf{D}) Accessibility measured by relative solvent accessibility (RSA); \textbf{(E)} Ligandability as measured by P2Rank's ligandability score \cite{KRIVAK_2018_P2RANK}. Structure visualisation with ChimeraX \cite{PETTERSEN_2021_CHIMERAX}.}
+    \caption[Protein structure features]{\textbf{Protein structure features.} Protein structure features exemplified on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4c38}{4C38} \cite{COUTY_2013_ONCO} of bovine cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). \textbf{(A)} Atomic displacement measured by Debye-Waller factor (DWF); \textbf{(B)} Hydrophobicity measured by molecular lipophilicity potential (MLP); \textbf{(C)} Charge measured by Coulombic electrostatic potential (ESP); \textbf{(D)} Accessibility measured by relative solvent accessibility (RSA); \textbf{(E)} Ligandability as measured by P2Rank's ligandability score \cite{KRIVAK_2018_P2RANK}. Structure visualisation with ChimeraX \cite{PETTERSEN_2021_CHIMERAX}.}
     \label{fig:protein_features}
 \end{figure}
 
 \subsubsection{Accessibility}
 
-XXX.
+The surface area of a biomolecule that is accessible to solvent is known as accessible surface area (ASA) or solvent-accessible surface area (SASA). ASA was first described by Lee and Richards in 1971 \cite{LEE_1971_ASA} and is usually calculated using the ``rolling ball'' algorithm described by Shrake and Rupley \cite{SHRAKE_1973_ASA}. The van der Waals (VDW) surface of a molecule is defined by the VDW radii of the atoms forming it \cite{1873_VANDERWAALS_VDW}. In their algorithm, Shrake and Rupley draw a mesh of points equidistant to each atom on the molecule. These points are typically drawn at a distance of 1.4 \AA{}, emulating the radius of a water molecule, i.e., solvent. By \textit{rolling} this spherical probe over each atom, they established whether a mesh point was exposed to the solvent or buried and calculated the individual contribution of each atom or residue to the ASA of a protein. The ASA of a molecule is then the path traced by the centre of the spherical probe rolled over the VDW surface. Years later, Richards \cite{1977_RICHARDS_SSE} defined the molecular or solvent-excluded surface (SES) which results from the trajectory of the outer edge of the sphere probe and has two components: the contact surface and the \textit{reentrant} surface. The contact surface is the part of the VDW surface that is in direct contact with the probe. The reentrant surface is an inward-facing or concave surface resulting from the contact of the probe with multiple atoms. Conolly was the first to implement algorithms for the analytical calculation of the SES \cite{1983_CONNOLLY_SASA, 1983_CONNOLLY_SASA2}.
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/molecular_surfaces.png}
+    \caption[Molecular surfaces]{\textbf{Molecular surfaces.} Different definitions of the surfaces of a molecule including Van der Waals surface of atoms, solvent accessible surface defined area by Richards and Lee and solvent-excluded surface by Richards with its two components: reentrant and contact surfaces. Adapted from the ChimeraX website \cite{surface_diagram}.}
+    \label{fig:molecular_surfaces}
+\end{figure}
 
 \subsubsection{Ligandability}
 
