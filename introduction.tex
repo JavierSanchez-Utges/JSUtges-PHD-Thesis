@@ -156,6 +156,8 @@ The SASA measured for a given residue in a protein structure is an absolute meas
 \end{equation}
 \myequations{Relative solvent accessibility}
 
+\vspace{-13pt} % Adjust this value as needed
+
 The analysis of the solvent accessibility landscape of proteins provides rich insight into protein evolution, function, stability and folding. RSA can classify residues into buried and accessible to solvent. Residues with low RSA tend to be buried in the core of the protein and form a network of hydrophobic interactions that ensure the correct packing of the protein \cite{DILL_1990_FOLDING}. Residues with high RSA are on the surface and interact with solvent and other biomolecules. Accordingly, RSA can be used to identify active sites and hotspot residues that are key contributors to the binding interaction with ligand or protein partners \cite{JONES_1997_PROTINTERS}. Active sites tend to have intermediate RSA values (20-50\%) since they need to be accessible enough to bind to their substrates but also partially protected to allow for a stable substrate binding and catalysis. Additionally, solvent accessibility is known to be correlated with evolutionary conservation \cite{GOLDMAN_1998_SS_RSA_EVO}. Residues buried in the hydrophobic core are conserved through evolution as mutations in them have a destabilising effect and can lead to protein misfolding and aggregation.
 
 In \autoref{chap:FRAGSYS} and \autoref{chap:LIGYSIS_WEB}, ASA is calculated with DSSP \cite{KABSCH_1983_DSSP} and normalised using the method of Tien \textit{et al.} \cite{TIEN_2013_RSA} to characterise the solvent accessibility profile of ligand binding sites and predict their likelihood of function.
@@ -173,7 +175,19 @@ Ligandability is the ability of a residue, set of residues or protein to bind a 
 
 Methods that predict ligand binding sites exploit a variety of different techniques to suggest binding sites. Geometry-based techniques like fpocket \cite{GUILLOUX_2009_FPOCKET}, Ligsite \cite{HENDLICH_1997_LIGSITE} and Surfnet \cite{LASKOWSKI_1995_SURFNET} identify cavities by analysing the geometry of the molecular surface of a protein and usually rely on the use of a grid, gaps, spheres, or tessellation \cite{GUILLOUX_2009_FPOCKET, LIANG_1998_CAVITIES, HENDLICH_1997_LIGSITE, LASKOWSKI_1995_SURFNET, KLEYWEGT_1994_CAVITIES, LEVITT_1992_POCKET, BRADY_2000_PASS, WEISEL_2007_POCKETPICKER}. Energy-based methods such as PocketFinder \cite{AN_2005_POCKETFINDER} rely on the calculation of interaction energies between the protein and a chemical group or probe to identify cavities \cite{AN_2005_POCKETFINDER, GOODFORD_1982_PREDICTOR, AN_2004_PREDICTOR, LAURIE_2005_QSITEFINDER, GHERSI_2009_SITEHOUND, NGAN_2012_FTSITE}. Conservation-based methods make use of sequence evolutionary conservation information to find patterns in multiple sequence alignments and identify conserved key residues for ligand site identification \cite{ARMON_2001_CONSURF, PUPKO_2002_RATE4SITE, XIE_2012_CONSPRED}. Template-based methods rely on structural information from homologues and the assumption that structurally conserved proteins might bind ligands at a similar location \cite{ZVELEBIL_1987_PREDICTION, WASS_2010_3DLIGANDSITE, ROY_2012_COFACTOR, YANG_2013_COFACTOR, LEE_2013_PREDICTION, BRYLINSKI_2013_EFINDSITE}. Combined approaches or meta-predictors combine multiple methods, or the use of multiple types of data, to infer ligand binding sites, e.g., geometric features with sequence conservation \cite{GUTTERIDGE_2003_LBSP, HUANG_2006_BU48, GLASER_2006_PREDICTION, HALGREN_2009_PREDICITON, CAPRA_2009_CONCAVITY, HUANG_2009_METAPOCKET, BRAY_2009_SITESIDENTIFY, BRYLINSKI_2009_FINDSITE}. Finally, machine learning methods utilise a wide range of machine learning techniques including random forest, as well as deep, graph, residual, or convolutional neural networks \cite{KRIVAK_2015_PRANK, KRIVAK_2015_P2RANK, JIMENEZ_2017_DEEPSITE, KRIVAK_2018_P2RANK, SANTANA_2020_GRaSP, KOZLOVSKII_2020_BITENET, STEPNIEWSKA_2020_KALASANTY, KANDEL_2021_PURESNET, MYOLNAS_2021_DEEPSURF, YAN_2022_POINTSITE, LI_2022_RECURPOCKET, AGGARWAL_2022_DEEPPOCKET, ABDOLLAHI_2023_NODECODER, EVTEEV_2023_SITERADAR, LI_2023_GLPOCKET, ZHANG_2024_EQUIPOCKET, LIU_2023_REFINEPOCKET, SMITH_2024_GrASP, CARBERY_2024_IFSP, SESTAK_2024_VNEGNN, KANDEL_2024_PURESNET}.
 
-\autoref{chap:LBS_COMP} and \autoref{chap:LBS_IMPROV} describe the largest benchmark of ligand binding site prediction to date by analysing the performance of thirteen methods using a series of metrics on a brand new reference dataset described in \autoref{chap:LIGYSIS_WEB}. 
+\autoref{chap:LBS_COMP} and \autoref{chap:LBS_IMPROV} describe the largest benchmark of ligand binding site prediction to date by analysing the performance of thirteen methods using a series of metrics on a brand new reference dataset described in \autoref{chap:LIGYSIS_WEB}.
+
+\subsection{Databases}
+
+There are many databases providing relevant information for protein analysis but two of the most commonly used ones and extensively employed in this Thesis are UniProt and the Protein Data Bank (PDB).
+
+\subsubsection{UniProt}
+
+UniProt is a comprehensive protein sequence database including cross-references to multiple resources to provide a wealth of information about gene expression, pathogenic variation, post-translational modifications (PTMs), protein-protein interactions, domain annotations and three-dimensional structure amongst others \cite{BAIROCH_2005_UNIPROT}. It is conformed by two main components: SwissProt and TrEMBL. SwissProt is manually curated and includes 600 thousand high-quality sequences often referred to as \textit{reviewed}. TrEMBL on the other hand catalogues over 250 million \textit{unreviewed} protein sequences resulting from the automatic translation of coding sequences found in the main nucleotide databases \cite{BAIROCH_2000_UNIPROT}.
+
+\subsubsection{Protein Data Bank}
+
+The Protein Data Bank is a worldwide repository for the three-dimensional structures of biological macromolecules such as proteins, DNA and RNA. There are currently 230 thousand 3D structures deposited in the archive determined mainly through X-ray crystallography, NMR spectroscopy and Cryo-EM \cite{BERMAN_2003_PDB}. Through resources such as the Protein Data Bank Europe (PDBe) knowledgebase, or PDBe-KB, three-dimensional structure is linked to functional annotations including that of domains, predicted disorder, ligand binding sites or PTMs \cite{PDBEKB_2019_PDBEKB}.
 
 \section{Genetic variation}
 
@@ -212,6 +226,9 @@ MacGowan \textit{et al.} approached this issue in their 2017 work \cite{MACGOWAN
 \label{eq:MES}
 \end{equation}
 \myequations{Missense enrichment score}
+
+\vspace{-13pt} % Adjust this value as needed
+\vspace{-13pt} % Adjust this value as needed
 
 \subsection{Conservation plane}
 
@@ -267,22 +284,6 @@ XXX.
 XXX.
 
 \section{Machine learning}
-
-XXX.
-
-\section{Databases}
-
-XXX.
-
-\subsection{UniProt}
-
-XXX.
-
-\subsection{PDB}
-
-XXX.
-
-\subsection{gnomAD}
 
 XXX.
 
