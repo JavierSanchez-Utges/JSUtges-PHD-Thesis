@@ -253,10 +253,11 @@ CMD positions are the most constrained both across species (conserved) and withi
 \end{figure}
 
 \vspace{-13pt} % Adjust this value as needed
+\vspace{-13pt} % Adjust this value as needed
 
 \section{Drug discovery}
 
-Drug discovery is the process of developing a new drug and goes from the original idea conception to the market launch of a finished product and even beyond. This is an extremely complex process which can take 12-15 years and cost more than \$1 billion \cite{HUGHES_2011_DRUGS}. This process is also known as the drug discovery (and development) pipeline and is illustrated in \autoref{fig:drug_discovery}.
+Drug discovery is the process of developing a new drug and goes from the original idea conception to the market launch of a finished product and beyond. This is an extremely complex process which can take up to 12-15 years and cost more than \$1 billion \cite{HUGHES_2011_DRUGS}. This high economic and time cost is caused by the high rate of failure that potential drug candidates experience during the development process, also known as \textit{attrition}. The process of discovering a drug is also known as the drug discovery (and development) pipeline and is illustrated in \autoref{fig:drug_discovery}. This pipeline can be divided in two stage. Stage I is drug discovery and encompasses target identification and validation, hit identification and lead optimisation. Stage II corresponds to the development of the drug and includes pre-clinical and clinical trials and drug approval.
 
 \begin{figure}[htb!]
     \centering
@@ -265,41 +266,33 @@ Drug discovery is the process of developing a new drug and goes from the origina
     \label{fig:drug_discovery}
 \end{figure}
 
-\subsection{Drug discovery pipeline}
+\subsection{Target identification}
+
+Target identification is the first step in the drug discovery pipeline and one of the most relevant. Drugs often fail in the clinical stages due to two main reasons: they are not safe or they do not work. For this reason, a thorough target identification and subsequent validation is vital. The goal of this step is to identify a biomolecule to target with a drug and treat or cure a disease. The target can either be a gene, RNA or protein and the drug is usually a small molecule, peptide or a protein, e.g., antibody. An ideal target meets a series of requirements: efficacy, safety and most importantly \textit{druggability}, among others. A \textit{druggable} target is amenable to interact with the putative drug and the biological response of this interaction should be measurable \textit{in vitro} and \textit{in vivo} through biochemical or functional assays. The mining of available biomedical data from the literature, proteomics, 3D structure, genetic association studies, pathogenic variation or phenotypic screening are some of the most commonly used approaches in target identification \cite{SCHENONE_2013_TARGETID}.
+
+\subsection{Target validation}
+
+Target validation is the technical assessment of whether a target plays a critical role in a disease process and whether pharmacological modulation of the target could be effective in a particular patient population. It is predicted that a more effective target validation strategy could reduce attrition in phase II clinical trials by $\approx$24\% lowering the cost of developing a new molecular entity by $\approx$30\% \cite{PAUL_2010_RD}. Accordingly, the validation of a therapeutic target is a step of paramount importance within the discovery of new drugs. Some of the most frequently used approaches to validate a target include RNA interference, gene knockouts, the use of animal models and target druggability analysis, e.g., by ligand binding site prediction \cite{EMMERICH_2021_TARGET_VAL}.
+
+\subsection{Hit identification}
+
+The next step once the target has been validated is to identify \textit{hits}. Hits are compounds that bind to the target and elicit the desired biological activity in an assay. Their identification relies on a combination of experimental techniques, e.g., high-throughput (HTS) or fragment screening (FS), and computational techniques such as virtual screening (VS). In high-throughput screening, robotic automation is employed to evaluate large libraries of chemical compounds against a target in a biochemical or cell-based assay. HTS usually identifies a few compounds with the desired biological activity and high binding affinity to the target. FS is complementary to HTS and obtains high-quality information about the 3D structure of the protein-ligand complex by using X-ray crystallography. Lastly, provided the 3D structure of the target is known, virtual screening techniques can be used. VS encompasses a set of ligand-based (LBVS) and structure-based (SBVS) computational techniques, such as pharmacophore-mapping or protein-ligand docking, respectively, that are able to identify hotspot residues relevant for ligand binding and guide the design of more effective compounds \cite{SINHA_2018_DD}.
+
+\subsection{Lead optimisation}
+
+In this phase, identified hits are refined into promising \textit{lead} compounds by optimising their properties before getting to pre-clinical drug candidates. This refinement aims to optimise pharmacokinetic (PK) properties such as potency, i.e., binding affinity to the target, as well as selectivity, by minimising off-target effects, solubility, permeability, stability and toxicity. Quantitative structure-activity relationship (QSAR) studies are carried out to suggest molecules with more favourable PK properties by adding or replacing functional groups of the original hit compound. Additionally, high-throughput \textit{in vitro} assays can be carried out to optimise the absorption (how it enters the bloodstream), distribution (how it travels within the body), metabolism (how it is broken down), excretion (how it is eliminated) and toxicity (ADMET) properties of the compounds \cite{SHOU_2020_ADME}.
+
+\subsection{Pre-clinical development}
 
 XXX.
 
-\subsubsection{Target identification}
+\subsection{Clinical studies}
 
 XXX.
 
-\subsubsection{Target validation}
+\subsection{Drug approval}
 
 XXX.
-
-\subsubsection{Lead identification}
-
-XXX.
-
-\subsubsection{Lead optimisation}
-
-XXX.
-
-\subsubsection{Pre-clinical development}
-
-XXX.
-
-\subsubsection{Clinical studies}
-
-XXX.
-
-\subsubsection{Drug approval}
-
-XXX.
-
-%\section{Machine learning}
-
-%XXX.
 
 \section{Fragment-based drug discovery}
 
