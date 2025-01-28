@@ -143,11 +143,11 @@ A thorough hyperparameter optimisation was carried out by examining the effect t
 
 \paragraph{Number of layers}
 
-Removing the single hidden layer resulted in a significant decrease in accuracy, $\Delta_{acc}$ = \textminus11\% (FDR $<$ 0.05). The addition of more layers did not improve accuracy: 2-layer $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05), 10-layer $\Delta_{acc}$ = \textminus8.9\% (FDR $<$ 0.05), or was not statistically different from our current setup baseline: 5-layer $\Delta_{acc}$ = \textminus0.15\% (FDR = 0.42).
+Removing the single hidden layer resulted in a significant decrease in accuracy, Δ\textsubscript{\textit{acc}} = \textminus11\% (FDR $<$ 0.05). The addition of more layers did not improve accuracy: 2-layer Δ\textsubscript{\textit{acc}} = \textminus1\% (FDR $<$ 0.05), 10-layer Δ\textsubscript{\textit{acc}} = \textminus8.9\% (FDR $<$ 0.05), or was not statistically different from our current setup baseline: 5-layer Δ\textsubscript{\textit{acc}} = \textminus0.15\% (FDR = 0.42).
 
 \paragraph{Neurons per layer}
 
-The addition of neurons N\textsubscript{neurons} = [11, 20, 25, 50, 100] in the single layer did not improve the current accuracy (FDR $>$ 0.05). The removal of neurons did not have an effect of performance for N\textsubscript{neurons} = [4, 5, 6, 7, 8, 9] (FDR $>$ 0.05), or a significant negative effect for 1 neuron, $\Delta_{acc}$ = \textminus15\% (FDR $<$ 0.05), 2 neurons $\Delta_{acc}$ = \textminus4\% (FDR $<$ 0.05), and 3 neurons, $\Delta_{acc}$ = \textminus1\% (FDR $<$ 0.05). This result suggests that 5 neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model.
+The addition of neurons N\textsubscript{neurons} = [11, 20, 25, 50, 100] in the single layer did not improve the current accuracy (FDR $>$ 0.05). The removal of neurons did not have an effect of performance for N\textsubscript{neurons} = [4, 5, 6, 7, 8, 9] (FDR $>$ 0.05), or a significant negative effect for 1 neuron, Δ\textsubscript{\textit{acc}} = \textminus15\% (FDR $<$ 0.05), 2 neurons Δ\textsubscript{\textit{acc}}= \textminus4\% (FDR $<$ 0.05), and 3 neurons, Δ\textsubscript{\textit{acc}} = \textminus1\% (FDR $<$ 0.05). This result suggests that 5 neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model.
 
 \begin{figure}[ht!]
     \centering
@@ -159,43 +159,43 @@ The addition of neurons N\textsubscript{neurons} = [11, 20, 25, 50, 100] in the 
 
 \paragraph{Activation function}
 
-The usage of different activation functions either negatively affected the accuracy of the MLP ($\Delta_{acc} <$ 0) or had no effect (FDR $>$ 0.05).
+The usage of different activation functions either negatively affected the accuracy of the MLP (Δ\textsubscript{\textit{acc}} $<$ 0) or had no effect (FDR $>$ 0.05).
 
 \paragraph{Loss function}
 
-Different loss functions resulted in terrible loss of accuracy $\Delta_{acc} \approx$ \textminus50\% (FDR $<$ 0.05). This is expected as they are not appropriate for a multi-label classifier, unlike sparse categorical cross entropy.
+Different loss functions resulted in terrible loss of accuracy Δ\textsubscript{\textit{acc}} $\approx$ \textminus50\% (FDR $<$ 0.05). This is expected as they are not appropriate for a multi-label classifier, unlike sparse categorical cross entropy.
 
 \paragraph{Weight initialiser}
 
-Most weight initialisers were tested and either negatively affected the accuracy of the MLP ($\Delta_{acc} <$ 0) or had no effect (FDR $>$ 0.05). However, \texttt{RandomNormal}, \texttt{RandomUniform}, and \texttt{TruncatedNormal} did improve the accuracy but by less than 1\%, $\Delta_{acc} <$ +1\% (FDR $<$ 0.05).
+Most weight initialisers were tested and either negatively affected the accuracy of the MLP (Δ\textsubscript{\textit{acc}} $<$ 0) or had no effect (FDR $>$ 0.05). However, \texttt{RandomNormal}, \texttt{RandomUniform}, and \texttt{TruncatedNormal} did improve the accuracy but by less than 1\%, Δ\textsubscript{\textit{acc}} $<$ +1\% (FDR $<$ 0.05).
 
 \paragraph{Optimiser}
 
-Regarding optimisers, they either severely negatively affected accuracy $\Delta_{acc} \approx$ \textminus30\% (FDR $<$ 0.05), had no significant effect (FDR $>$ 0.05), or very slightly improved accuracy, such as \texttt{RMSProp} $\Delta_{acc} <$ +1\% (FDR $<$ 0.05).
+Regarding optimisers, they either severely negatively affected accuracy Δ\textsubscript{\textit{acc}} $\approx$ \textminus30\% (FDR $<$ 0.05), had no significant effect (FDR $>$ 0.05), or very slightly improved accuracy, such as \texttt{RMSProp} Δ\textsubscript{\textit{acc}} $<$ +1\% (FDR $<$ 0.05).
 
 \paragraph{Learning rate}
 
-Extreme learning rates of 0.001 (too small), and 1.0 (too big) negatively affected prediction $\Delta_{acc} <$ \textminus5\% (FDR $<$ 0.05). Intermediate rates had either no significant effect (FDR $>$ 0.05) or a small effect $\|\Delta_{acc}\| <$ 1\%.
+Extreme learning rates of 0.001 (too small), and 1.0 (too big) negatively affected prediction Δ\textsubscript{\textit{acc}} $<$ \textminus5\% (FDR $<$ 0.05). Intermediate rates had either no significant effect (FDR $>$ 0.05) or a small effect $\|$Δ\textsubscript{\textit{acc}}$\| <$ 1\%.
 
 \paragraph{Dropout rate}
 
-Regarding dropout rates, a rate = 75\%, negatively affected prediction  $\Delta_{acc} <$ \textminus2\%, (FDR $<$ 0.05). Lower dropout rates: 0.1, 0.25, and 0.33 did improve the accuracy, but the effect size is very small, $\Delta_{acc} <$ +1\% (FDR $<$ 0.05). This result agrees with the effect of the removal of neurons per layer and shows that fewer neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model, as dropping them out has no effect.
+Regarding dropout rates, a rate = 75\%, negatively affected prediction  Δ\textsubscript{\textit{acc}} $<$ \textminus2\%, (FDR $<$ 0.05). Lower dropout rates: 0.1, 0.25, and 0.33 did improve the accuracy, but the effect size is very small, Δ\textsubscript{\textit{acc}} $<$ +1\% (FDR $<$ 0.05). This result agrees with the effect of the removal of neurons per layer and shows that fewer neurons on a single hidden layer might be enough to achieve a comparable accuracy to our current model, as dropping them out has no effect.
 
 \paragraph{Regularisation}
 
-Overall, implementing kernel, bias, or activity regularisation techniques did not improve prediction accuracy, but worsened it $\Delta_{acc} \ni$ [\textminus2.56, \textminus0.46] (FDR $<$ 0.05).
+Overall, implementing kernel, bias, or activity regularisation techniques did not improve prediction accuracy, but worsened it Δ\textsubscript{\textit{acc}} $\ni$ [\textminus2.56, \textminus0.46] (FDR $<$ 0.05).
 
 \vspace{+19pt} % Adjust this value as needed
 
 \begin{longtable}{|c|c|c|c|}
 \hline
-\textbf{Model}              & \textbf{Accuracy} (\%) & \textbf{$\Delta_{acc}$} (\%) & \textbf{FDR} \\ \hline
+\textbf{Model}              & \textbf{Accuracy} (\%) & \textbf{Δ\textsubscript{\textit{acc}}} (\%) & \textbf{FDR} \\ \hline
 \endfirsthead
 %
 \multicolumn{4}{c}%
 {{\bfseries Table \thetable} (continued)} \\
 \hline
-\textbf{Model}              & \textbf{Accuracy} (\%) & \textbf{$\Delta_{acc}$} (\%) & \textbf{FDR} \\ \hline
+\textbf{Model}              & \textbf{Accuracy} (\%) & \textbf{Δ\textsubscript{\textit{acc}}} (\%) & \textbf{FDR} \\ \hline
 \endhead{}
 %
 \textit{current}            & 93.9              & -                       & -            \\ \hline
@@ -263,7 +263,7 @@ Overall, implementing kernel, bias, or activity regularisation techniques did no
 \texttt{\textit{all} L1}            & 91.8              &  \textminus2.1                   & 0            \\ \hline
 \texttt{\textit{all} L2}            & 92.2              &  \textminus1.7                    & 0            \\ \hline
 \texttt{\textit{all} L1L2}          & 91.4              &  \textminus2.5                   & 0            \\ \hline
-\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes were conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Accuracy (\%) represents the validation accuracy average across 100 random seeds. $\Delta_{acc}$ (\%) represents the difference in accuracy between the variant MLP model and our \textit{current} setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
+\caption[MLP ablation study]{\textbf{MLP ablation study.} Sixty-four single hyperparameter changes were conducted one at a time to explore the hyperparameter space and the effect they have on the prediction accuracy relative to our current ML setup, labelled as \textit{current}. Accuracy (\%) represents the validation accuracy average across 100 random seeds. Δ\textsubscript{\textit{acc}} (\%) represents the difference in accuracy between the variant MLP model and our \textit{current} setup. Negative values result from a decrease in performance, whereas positive ones mean an improvement in classification accuracy. FDR was employed to assess the significance of these differences.}
 \label{tab:MLP_ablation}
 \end{longtable}
 
