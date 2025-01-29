@@ -48,7 +48,7 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
     I_{rel} = \frac{A \cap B}{A \cap B_{max}}
 \label{eq:relative_intersection} % Label for the equation
 \end{equation}
-\myequations{Relative Intersection}
+\myequations{Relative intersection}
 
 \vspace{-35pt} % Adjust this value as needed
 
@@ -56,7 +56,7 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
     A \cap B_{max} = \text{min}(\text{len}(A), \text{len}(B))
 \label{eq:max_intersection}
 \end{equation}
-\myequations{Maximum Intersection}
+\myequations{Maximum intersection}
 \vspace{-21pt} % Adjust this value as needed
 
 $I_{rel}$ is thus a similarity metric, ranging 0-1, that can be used to perform hierarchical clustering on the ligands. Single-linkage hierarchical clustering was performed with the OC software \cite{BARTON_1993_OC}. After exploring various $I_{rel}$ threshold values for cutting the tree, $I_{rel}$ = 0.66 was selected as the optimal threshdold for this dataset. As $I_{rel}$ is a similarity metric, this threshold indicates that a ligand shares at least two-thirds of its binding residues with at least one other ligand within the same cluster. A total of 293 ligand binding sites across 37 protein domains were defined this way. For each protein, all structures were multiply aligned by STAMP \cite{RUSSELL_1992_STAMP}. Ligand binding sites were visualised in UCSF Chimera \cite{PETTERSEN_2004_CHIMERA}.
@@ -292,7 +292,7 @@ The complete dataset (\textit{N} = 293) was split into a blind test set (1/11 = 
 \text{confidence score} = \left\lfloor 10 \times (p_1 - p_2) \right\rfloor
 \label{eq:confidence_score}
 \end{equation}
-\myequations{Confidence Score}
+\myequations{Confidence score}
 
 \vspace{-20pt} % Adjust this value as needed
 

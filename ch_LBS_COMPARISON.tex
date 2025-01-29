@@ -138,7 +138,7 @@ Training and test datasets were downloaded for all machine learning-based method
 H' = - \sum_{i=1}^{R} p_i \ln(p_i)
 \label{eq:entropy_shannon}
 \end{equation}
-\myequations{Shannon's Entropy}
+\myequations{Shannon's entropy}
 
 \subsection{Training datasets}
 
@@ -160,7 +160,7 @@ pc_{\perp}
 \end{bmatrix}
 \label{eq:pca_components}
 \end{equation}
-\myequations{Principal Components Vector}
+\myequations{Principal components vector}
 
 \begin{equation}
 NI = -1 \cdot I_3 = -1 \cdot \begin{bmatrix}
@@ -174,13 +174,13 @@ NI = -1 \cdot I_3 = -1 \cdot \begin{bmatrix}
 \end{bmatrix}
 \label{eq:NI_matrix}
 \end{equation}
-\myequations{Negative Identity Matrix}
+\myequations{Negative identity matrix}
 
 \begin{equation}
 R = P \cdot NI
 \label{eq:R_matrix}
 \end{equation}
-\myequations{Rotation Matrix}
+\myequations{Rotation matrix}
 
 \vspace{-12pt} % Adjust this value as needed
 \vspace{-12pt} % Adjust this value as needed
@@ -194,7 +194,7 @@ For a protein chain with \textit{N} amino acid residues, the centre of mass (CM)
 \text{CM} = \frac{1}{n} \sum_{i=1}^{n} r_i \rightarrow \text{CM} = \text{O} = (0,0,0)
 \label{eq:centre_of_mass}
 \end{equation}
-\myequations{Centre of Mass}
+\myequations{Centre of mass}
 
 \vspace{-12pt} % Adjust this value as needed
 \vspace{-6pt} % Adjust this value as needed
@@ -203,7 +203,7 @@ For a protein chain with \textit{N} amino acid residues, the centre of mass (CM)
 R_g = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (r_i - \text{CM})^2} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (r_i - \text{O})^2} \rightarrow R_g = \sqrt{\frac{1}{n} \sum_{i=1}^{n} r_i^2}
 \label{eq:radius_of_gyration}
 \end{equation}
-\myequations{Radius of Gyration}
+\myequations{Radius of gyration}
 
 \begin{figure}[htb!]
     \centering
@@ -225,7 +225,7 @@ Protein chain volumes were calculated using ProteinVolume \cite{CHEN_2015_PROTEI
 R = \max \| r_i - \text{CM} \|
 \label{eq:radius_protein}
 \end{equation}
-\myequations{Protein Radius}
+\myequations{Protein radius}
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -233,7 +233,7 @@ R = \max \| r_i - \text{CM} \|
 V_{S} = \frac{4}{3} \pi R^3
 \label{eq:volume_sphere}
 \end{equation}
-\myequations{Sphere Volume}
+\myequations{Sphere volume}
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -241,7 +241,7 @@ V_{S} = \frac{4}{3} \pi R^3
 V_R = \frac{V_{P}}{V_{S}}
 \label{eq:volume_ratio}
 \end{equation}
-\myequations{Volume Ratio}
+\myequations{Volume ratio}
 
 %\FloatBarrier
 
@@ -267,7 +267,7 @@ Radius of gyration was calculated for pockets as it was done for whole protein c
 JI(A, B) = \frac{|A \cap B|}{|A \cup B|}
 \label{eq:jaccard_index}
 \end{equation}
-\myequations{Jaccard Index}
+\myequations{Jaccard index}
 
 \begin{figure}[h]
     \centering
@@ -368,7 +368,7 @@ With these four classes, true positive rate (TPR) (\autoref{eq:TPR}, false posit
 \text{TPR (\%)} = 100 \times \frac{\text{TP}}{\text{TP} + \text{FN}}
 \label{eq:TPR}
 \end{equation}
-\myequations{True Positive Rate}
+\myequations{True positive rate}
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -376,7 +376,7 @@ With these four classes, true positive rate (TPR) (\autoref{eq:TPR}, false posit
 \text{FPR (\%)} = 100 \times \frac{\mathrm{FP}}{\mathrm{FP} + \mathrm{TN}}
 \label{eq:FPR}
 \end{equation}
-\myequations{False Positive Rate}
+\myequations{False positive rate}
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -402,13 +402,13 @@ Pocket binary labels (0: no pocket residue; 1: pocket residue) can determine TP,
 \text{F1} = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
 \label{eq:F1_score}
 \end{equation}
-\myequations{F1 Score}
+\myequations{F1 score}
 
 \begin{equation}
 \text{MCC} = \frac{\text{TP} \times \text{TN} - \text{FP} \times \text{FN}}{\sqrt{(\text{TP} + \text{FP})(\text{TP} + \text{FN})(\text{TN} + \text{FP})(\text{TN} + \text{FN})}}
 \label{eq:MCC}
 \end{equation}
-\myequations{Matthews Correlation Coefficient}
+\myequations{Matthews correlation coefficient}
 
 \vspace{-12pt} % Adjust this value as needed
 \vspace{-12pt} % Adjust this value as needed
@@ -424,7 +424,7 @@ For each observed binding site in the LIGYSIS reference, the ``best'' prediction
 \text{Success rate (\%)} = 100 \times \frac{\text{observed sites with predicted site DCC} \leq 12 \text{Å}}{\text{observed sites}}
 \label{eq:success_rate}
 \end{equation}
-\myequations{Success Rate}
+\myequations{Success rate}
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -438,7 +438,7 @@ To measure the similarity in shape and residue membership between predicted and 
 \text{RRO (\%)} = 100 \times \frac{|R_p \cap R_o|}{R_o}
 \label{eq:RRO}
 \end{equation}
-\myequations{Relative Residue Overlap}
+\myequations{Relative residue overlap}
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -446,7 +446,7 @@ To measure the similarity in shape and residue membership between predicted and 
 \text{RVO (\%)} = 100 \times \frac{|V_p \cap V_o|}{V_o}
 \label{eq:RVO}
 \end{equation}
-\myequations{Relative Volume Overlap}
+\myequations{Relative volume overlap}
 
 \begin{figure}[p]
     \centering
