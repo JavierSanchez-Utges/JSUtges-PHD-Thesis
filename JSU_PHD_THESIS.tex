@@ -43,6 +43,18 @@
 }
 
 \AtEveryBibitem{
+  \ifentrytype{book}{
+    \clearfield{url}
+  }{}
+}
+
+\AtEveryBibitem{
+  \ifentrytype{inbook}{
+    \clearfield{url}
+  }{}
+}
+
+\AtEveryBibitem{
   \clearfield{doi}
   \clearfield{issn}
   %\clearfield{pages}
