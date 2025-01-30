@@ -75,6 +75,13 @@
 \DeclareFieldFormat[article]{number}{} % Issue without parentheses
 \DeclareFieldFormat{year}{\addspace(#1)} % Add space before and wrap year in parentheses
 
+\DeclareFieldFormat{labelnumber}{%
+  \ifbibliography
+    {\iffieldundef{url}
+       {#1}                                   % If no 'url' field, just print the number
+       {\href{\thefield{url}}{#1}}}           % If 'url' field, hyperlink the number
+    {#1}} 
+
 \renewbibmacro*{journal+issuetitle}{%
   \usebibmacro{journal}%
   \setunit{\addspace}% Space after journal name
