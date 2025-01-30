@@ -140,6 +140,7 @@
 \definecolor{funcColor}{RGB}{108, 148, 189} % Blue for function names
 \definecolor{stringColor}{RGB}{54, 187, 56} % Green for strings
 \definecolor{orangecolor}{RGB}{245, 113, 87} % Orange-like color
+\definecolor{lightorangecolor}{RGB}{255, 170, 67} % light orange color
 \definecolor{browncolor}{RGB}{165, 105, 79} % Brown-like color
 \definecolor{CBOrange}{RGB}{230,159,0} % Orange for "wrong"
 \definecolor{CBBlue}{RGB}{86,180,233}  % Blue for "right"
@@ -174,8 +175,8 @@
     breakatwhitespace=false,
     breaklines=true,
     captionpos=b,
-    aboveskip=\abovecaptionskip,
-	belowskip=\belowcaptionskip,
+    aboveskip=1.5\abovecaptionskip,
+	belowskip=1.5\belowcaptionskip,
     keepspaces=true,
     numbers=left,
     numbersep=10pt,
@@ -192,7 +193,39 @@
     framexleftmargin=14pt,
     framexrightmargin=-11pt,
     linewidth=\textwidth,
+    escapeinside={(*}{*)}
 }
+
+\lstdefinelanguage{MyJavaScript}{
+    keywords=[1]{function, var, let, const, if, else, for, while, do, switch, case, break, continue, new, this, typeof, in, of, class, extends, constructor, static, get, set, import, from, as, export, default, try, catch, finally, throw, null, undefined, true, false, return},
+    % Treat JS operators as “keywords” so they can share the same highlighting
+    otherkeywords={!=, ==, <=, >=, =, !, <, >, +=, -=, =>, \${, }, `},
+    keywords=[2]{canvasId, filename},
+    % Function-like or DOM methods might go here
+    keywords=[3]{document, createElement, getElementById, toDataURL, click},
+    % Add any extra special identifiers if desired
+    keywords=[4]{saveImage},
+    keywordstyle=[1]\color{kwColor},
+    keywordstyle=[2]\color{lightorangecolor},
+    keywordstyle=[3]\color{funcColor},
+    keywordstyle=[4]\color{teal},
+    sensitive=true,
+    showstringspaces=false,
+    stringstyle=\color{red}\itshape,  % Make strings italic as well
+    % Emphasise single-quoted strings similarly
+    moredelim = **[is][\beginlstdelim{'}{'}{stringColor}{teal}]{'}{'},
+    %moredelim = **[is][\beginlstdelim{`}{`}{stringColor}{teal}]{`}{`},
+    literate=
+      {.}{{\textcolor{orangecolor}{.}}}1
+      {,}{{\textcolor{browncolor}{,}}}1
+      {;}{{\textcolor{browncolor}{;}}}1
+      {:}{{\textcolor{browncolor}{:}}}1
+      {@}{{\textcolor{teal}{@}}}1
+      {\&}{{\textcolor{orangecolor}{\&}}}1
+      {1}{{\textcolor{lightorangecolor}{1}}}1
+      {`}{{\textcolor{teal}{`}}}1
+}
+
 
 \setcounter{tocdepth}{4} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections
