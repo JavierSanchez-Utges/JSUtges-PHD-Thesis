@@ -226,6 +226,45 @@
       {`}{{\textcolor{teal}{`}}}1
 }
 
+\lstdefinelanguage{MyHTML}{
+    keywords=[1]{class, style, px, id, solid, black, flex, center, onclick, src, alt, rem, nbsp},
+    % Treat JS operators as “keywords” so they can share the same highlighting
+    otherkeywords={!=, ==, <=, >=, !, >, +=, -=, =>, \${, }, `},
+    keywords=[2]{div, button, img},
+    % Function-like or DOM methods might go here
+    keywords=[3]{saveAllAssembliesContactData},
+    % Add any extra special identifiers if desired
+    keywords=[4]{saveImage},
+    keywordstyle=[1]\color{kwColor},
+    keywordstyle=[2]\color{red},
+    keywordstyle=[3]\color{funcColor},
+    keywordstyle=[4]\color{teal},
+    sensitive=true,
+    showstringspaces=false,
+    stringstyle=\color{red}\itshape,  % Make strings italic as well
+    % Emphasise single-quoted strings similarly
+    moredelim = **[is][\beginlstdelim{'}{'}{stringColor}{teal}]{'}{'},
+    %moredelim = **[is][\beginlstdelim{`}{`}{stringColor}{teal}]{`}{`},
+    literate=
+      {.}{{\textcolor{browncolor}{.}}}1
+      {,}{{\textcolor{browncolor}{,}}}1
+      {;}{{\textcolor{browncolor}{;}}}1
+      {:}{{\textcolor{browncolor}{:}}}1
+      {(}{{\textcolor{black}{(}}}1
+      {)}{{\textcolor{black}{)}}}1
+      {=}{{\textcolor{browncolor}{=}}}1
+      {<}{{\textcolor{teal}{<}}}1
+      {>}{{\textcolor{teal}{>}}}1
+      {/}{{\textcolor{teal}{/}}}1
+      {\&}{{\textcolor{teal}{\&}}}1
+      {1}{{\textcolor{lightorangecolor}{1}}}1
+      {5}{{\textcolor{lightorangecolor}{5}}}1
+      {0}{{\textcolor{lightorangecolor}{0}}}1
+      {8}{{\textcolor{lightorangecolor}{8}}}1
+      {`}{{\textcolor{teal}{`}}}1
+      {"}{{\textcolor{teal}{"}}}1
+      {'}{{\textcolor{teal}{'}}}1
+}
 
 \setcounter{tocdepth}{4} % this is to include subsubsections
 \setcounter{secnumdepth}{3}  % this is to number subsubsections

@@ -173,9 +173,11 @@ The ligand superposition view, i.e., representative chain with bound ligands acr
 
 The LIGYSIS web server is implemented using the Python Flask framework \cite{GRINBERG_2018_FLASK}, with dynamic content rendered via Jinja \cite{JINJA} templates and data transferred through Flask routes (\autoref{get_contacts_route}). The frontend, built with JavaScript \cite{JAVASCRIPT}, features a 3Dmol.js \cite{REGO_2014_3DMOL, SESHADRI_2020_3DMOL} structure viewer for molecular visualisation, integrated with Chart.js \cite{CHARTJS} graphs and interactive tables. Styling is handled using Bootstrap \cite{BOOTSTRAP} and plain CSS \cite{HTML_CSS}. Asynchronous updates are facilitated by jQuery \cite{jQUERY} and AJAX \cite{AJAX} requests, enabling dynamic data exchange between the client and server.
 
+User job submission is handled through Slivka-bio v0.8.3 \cite{WAROWNY_2021_SLIVKA, SLIVKA_BIO} and jobs run on the School of Life Sciences, University of Dundee HPC infrastructure. Once the job execution has finished, result files are served to the client and displayed in the same way as the LIGYSIS database entries.
+
 \lstset{style=mystyle}
 
-\begin{lstlisting}[language=MyPython, caption={[Python Flask \texttt{/get-contacts} route]\textbf{Python Flask \texttt{/get-contacts} route.} Simplified \texttt{/get-contacts} Python Flask route implemented in LIGYSIS-web. This route retrieves the PDB code (\texttt{modelData}) for a given structure depicting the interaction between one or multiple ligands and a protein mapping to a UniProt accession (\texttt{proteinId}) and a PDBe-KB segment (\texttt{segmentId}). Then, it reads a series of files, including pdbe-arpeggio output, processes them and returns the data in a suitable format to draw the relevant protein-ligand interactions in the 3Dmol.js viewer.}, label={get_contacts_route}]
+\begin{lstlisting}[language=MyPython, abovecaptionskip=\abovecaptionskip, caption={[Python Flask \texttt{/get-contacts} route]\textbf{Python Flask \texttt{/get-contacts} route.} Simplified \texttt{/get-contacts} Python Flask route implemented in LIGYSIS-web. This route retrieves the PDB code (\texttt{modelData}) for a given structure depicting the interaction between one or multiple ligands and a protein mapping to a UniProt accession (\texttt{proteinId}) and a PDBe-KB segment (\texttt{segmentId}). Then, it reads a series of files, including pdbe-arpeggio output, processes them and returns the data in a suitable format to draw the relevant protein-ligand interactions in the 3Dmol.js viewer.}, label={get_contacts_route}]
 @app.route('/get-contacts', methods = ['POST'])
 def get_contacts():
     data = request.json
@@ -191,17 +193,37 @@ def get_contacts():
     return jsonify(response_data)
 \end{lstlisting}
 
+\newpage
+
 \begin{lstlisting}[language=MyJavaScript, caption={[JavaScript \texttt{saveImage} function]\textbf{JavaScript \texttt{saveImage} function.} \texttt{saveImage} JavaScript function as implemented in LIGYSIS-web. This function takes a HTML canvas element identifier (\texttt{canvasId}) and a file name (\texttt{filename}) and saves a screenshot as a PNG file. It is used to save images from the Chart.js graphs as well as the 3Dmol.js viewer.}, label={saveimage_func}]
 (*\textit{\textcolor{kwColor}{function}}*) saveImage(canvasId, filename) {
-    (*\textit{\textcolor{kwColor}{var}}*) canvas = (*\textit{\textcolor{funcColor}{document}}*).getElementById((*\textcolor{black}{canvasId}*));
-    (*\textit{\textcolor{kwColor}{var}}*) link = (*\textit{\textcolor{funcColor}{document}}*).createElement('a');
-    link.href = canvas.toDataURL('image/png', 1);
-    link.download = `${(*\textcolor{black}{filename}*)}(*\textcolor{stringColor}{.png}*)`;
-    link.click();
+	(*\textit{\textcolor{kwColor}{var}}*) canvas = (*\textit{\textcolor{funcColor}{document}}*).getElementById((*\textcolor{black}{canvasId}*));
+	(*\textit{\textcolor{kwColor}{var}}*) link = (*\textit{\textcolor{funcColor}{document}}*).createElement('a');
+	link.href = canvas.toDataURL('image/png', 1);
+	link.download = `${(*\textcolor{black}{filename}*)}(*\textcolor{stringColor}{.png}*)`;
+	link.click();
 }
 \end{lstlisting}
 
-User job submission is handled through Slivka-bio v0.8.3 \cite{WAROWNY_2021_SLIVKA, SLIVKA_BIO} and jobs run on the School of Life Sciences, University of Dundee HPC infrastructure. Once the job execution has finished, result files are served to the client and displayed in the same way as the LIGYSIS database entries.
+\begin{lstlisting}[language=MyHTML, caption={[HTML element for a download button]\textbf{HTML element for a download button.} This HTML element contains a button that downloads the pdbe-arpeggio protein-ligand contacts for all biological assemblies mapping to a protein segment. The JavaScript \texttt{saveAllAssembliesContactData} is called upon clicking. A combination of Bootstrap classes and custom CSS is used for stylings.}, label={html_button}]
+<div
+	class="(*\textcolor{stringColor}{col-auto justify-content-end}*)"
+	style="(*\textit{\textcolor{black}{padding-left}}*): 0(*\textit{\textcolor{kwColor}{px}}*); (*\textit{\textcolor{black}{padding-right}}*): 0(*\textit{\textcolor{kwColor}{px}}*);">
+	<button
+		id="(*\textcolor{stringColor}{saveAllArpeggioDataButton}*)" 
+		style="(*\textit{\textcolor{black}{border}}*): 1(*\textit{\textcolor{kwColor}{px solid black}}*); (*\textit{\textcolor{black}{color}}*): (*\textit{\textcolor{kwColor}{black}}*); (*\textit{\textcolor{black}{display}}*): (*\textit{\textcolor{kwColor}{flex}}*);
+		(*\textit{\textcolor{black}{align-items}}*): (*\textit{\textcolor{kwColor}{center}}*); (*\textit{\textcolor{black}{border-radius}}*): 5(*\textit{\textcolor{kwColor}{px}}*); (*\textit{\textcolor{black}{padding}}*): 5(*\textit{\textcolor{kwColor}{px}}*) 10(*\textit{\textcolor{kwColor}{px}}*);" 
+		onclick="saveAllAssembliesContactData()">
+		<img
+			src="(*\textcolor{browncolor}{/}*)(*\textcolor{stringColor}{static}*)(*\textcolor{browncolor}{/}*)(*\textcolor{stringColor}{images}*)(*\textcolor{browncolor}{/}*)(*\textcolor{stringColor}{download.svg}*)"
+			style="(*\textit{\textcolor{black}{width}}*): 1.5(*\textit{\textcolor{kwColor}{rem}}*); (*\textit{\textcolor{black}{height}}*): 1.5(*\textit{\textcolor{kwColor}{rem}}*); (*\textit{\textcolor{black}{margin-right}}*): 8(*\textit{\textcolor{kwColor}{px}}*);">
+		&nbsp;<(*\textcolor{red}{b}*)>ALL</(*\textcolor{red}{b}*)>&nbsp;Assemblies Contacts
+	</button>
+</div>
+\end{lstlisting}
+
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
 
 \section{LIGYSIS-web analysis of bovine rhodopsin}
 
