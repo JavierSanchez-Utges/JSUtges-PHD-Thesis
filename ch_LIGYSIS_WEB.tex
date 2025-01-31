@@ -171,7 +171,7 @@ The ligand superposition view, i.e., representative chain with bound ligands acr
 
 \subsection{Server architecture}
 
-The LIGYSIS web server is implemented using the Python Flask framework \cite{GRINBERG_2018_FLASK}, with dynamic content rendered via Jinja \cite{JINJA} templates and data transferred through Flask routes (\autoref{get_contacts_route}). The frontend, built with JavaScript \cite{JAVASCRIPT}, features a 3Dmol.js \cite{REGO_2014_3DMOL, SESHADRI_2020_3DMOL} structure viewer for molecular visualisation, integrated with Chart.js \cite{CHARTJS} graphs and interactive tables. Styling is handled using Bootstrap \cite{BOOTSTRAP} and plain CSS \cite{HTML_CSS}. Asynchronous updates are facilitated by jQuery \cite{jQUERY} and AJAX \cite{AJAX} requests, enabling dynamic data exchange between the client and server.
+The LIGYSIS web server is implemented using the Python Flask framework \cite{GRINBERG_2018_FLASK}, with dynamic content rendered via Jinja \cite{JINJA} templates and data transferred through Flask routes. The frontend is structured using HTML for content and layout and a combination of Bootstrap \cite{BOOTSTRAP} and plain CSS \cite{HTML_CSS} for styling. JavaScript \cite{JAVASCRIPT} enhances interactivity by integrating a 3Dmol.js \cite{REGO_2014_3DMOL, SESHADRI_2020_3DMOL} structure viewer, for molecular visualisation, Chart.js \cite{CHARTJS} graphs and interactive tables. Asynchronous updates are facilitated by jQuery \cite{jQUERY} and AJAX \cite{AJAX} requests, enabling dynamic data exchange between the client and server. Illustrative examples of each of this components can be found in \autoref{get_contacts_route} (Python), \autoref{html_button} (HTML), \autoref{CSS_class} (CSS) and \autoref{saveimage_func} (JavaScript).
 
 User job submission is handled through Slivka-bio v0.8.3 \cite{WAROWNY_2021_SLIVKA, SLIVKA_BIO} and jobs run on the School of Life Sciences, University of Dundee HPC infrastructure. Once the job execution has finished, result files are served to the client and displayed in the same way as the LIGYSIS database entries.
 
@@ -195,17 +195,12 @@ def get_contacts():
 
 \newpage
 
-\begin{lstlisting}[language=MyJavaScript, caption={[JavaScript \texttt{saveImage} function]\textbf{JavaScript \texttt{saveImage} function.} \texttt{saveImage} JavaScript function as implemented in LIGYSIS-web. This function takes a HTML canvas element identifier (\texttt{canvasId}) and a file name (\texttt{filename}) and saves a screenshot as a PNG file. It is used to save images from the Chart.js graphs as well as the 3Dmol.js viewer.}, label={saveimage_func}]
-(*\textit{\textcolor{kwColor}{function}}*) saveImage(canvasId, filename) {
-	(*\textit{\textcolor{kwColor}{var}}*) canvas = (*\textit{\textcolor{funcColor}{document}}*).getElementById((*\textcolor{black}{canvasId}*));
-	(*\textit{\textcolor{kwColor}{var}}*) link = (*\textit{\textcolor{funcColor}{document}}*).createElement('a');
-	link.href = canvas.toDataURL('image/png', 1);
-	link.download = `${(*\textcolor{black}{filename}*)}(*\textcolor{stringColor}{.png}*)`;
-	link.click();
-}
-\end{lstlisting}
+\vspace{+12pt} % Adjust this value as needed
+\vspace{+12pt} % Adjust this value as needed
+\vspace{+12pt} % Adjust this value as needed
+\vspace{+12pt} % Adjust this value as needed
 
-\begin{lstlisting}[language=MyHTML, caption={[HTML element for a download button]\textbf{HTML element for a download button.} This HTML element contains a button that downloads the pdbe-arpeggio protein-ligand contacts for all biological assemblies mapping to a protein segment. The JavaScript \texttt{saveAllAssembliesContactData} is called upon clicking. A combination of Bootstrap classes and custom CSS is used for stylings.}, label={html_button}]
+\begin{lstlisting}[language=MyHTML, caption={[HTML \texttt{saveAllArpeggioDataButton} download button]\textbf{HTML \texttt{saveAllArpeggioDataButton} download button.} This HTML element contains a button (\texttt{saveAllArpeggioDataButton} that downloads the pdbe-arpeggio protein-ligand contacts for all biological assemblies mapping to a protein segment. The JavaScript \texttt{saveAllAssembliesContactData} is called upon clicking. A combination of Bootstrap classes and custom CSS is used for stylings.}, label={html_button}]
 <div
 	class="(*\textcolor{stringColor}{col-auto justify-content-end}*)"
 	style="(*\textit{\textcolor{black}{padding-left}}*): 0(*\textit{\textcolor{kwColor}{px}}*); (*\textit{\textcolor{black}{padding-right}}*): 0(*\textit{\textcolor{kwColor}{px}}*);">
@@ -222,6 +217,36 @@ def get_contacts():
 </div>
 \end{lstlisting}
 
+\begin{lstlisting}[language=MyCSS, caption={[CSS \texttt{spinner-overlay} class]\textbf{CSS \texttt{spinner-overlay} class.} Attributes of the \texttt{spinner-overlay} CSS class. This class is used to overlay a transparent white background to sit behind the spinner wheel that is shown whilst LIGYSIS-web is loading structures, reading files or performing calculations.}, label={CSS_class}]
+.(*\textit{\textcolor{kwColor}{spinner-overlay}}*) {
+    (*\textit{\textcolor{black}{position}}*): (*\textit{\textcolor{kwColor}{absolute}}*);
+    (*\textit{\textcolor{black}{top}}*): 0;
+    (*\textit{\textcolor{black}{left}}*): 0;
+    (*\textit{\textcolor{black}{width}}*): 100%;
+    (*\textit{\textcolor{black}{height}}*): 100%;
+    (*\textit{\textcolor{black}{background}}*): (*\textit{\textcolor{funcColor}{rgba}}*)(255, 255, 255, 0(*\textcolor{brown}{.}*)8);
+    (*\textit{\textcolor{black}{display}}*): (*\textit{\textcolor{kwColor}{flex}}*);
+    (*\textit{\textcolor{black}{justify-content}}*): (*\textit{\textcolor{kwColor}{center}}*);
+    (*\textit{\textcolor{black}{align-items}}*): (*\textit{\textcolor{kwColor}{center}}*);
+    (*\textit{\textcolor{black}{z-index}}*): 1;
+    (*\textit{\textcolor{black}{box-sizing}}*): (*\textit{\textcolor{kwColor}{border-box}}*);
+}
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[language=MyJavaScript, caption={[JavaScript \texttt{saveImage} function]\textbf{JavaScript \texttt{saveImage} function.} \texttt{saveImage} JavaScript function as implemented in LIGYSIS-web. This function takes a HTML canvas element identifier (\texttt{canvasId}) and a file name (\texttt{filename}) and saves a screenshot as a PNG file. It is used to save images from the Chart.js graphs as well as the 3Dmol.js viewer.}, label={saveimage_func}]
+(*\textit{\textcolor{kwColor}{function}}*) saveImage(canvasId, filename) {
+	(*\textit{\textcolor{kwColor}{var}}*) canvas = (*\textit{\textcolor{funcColor}{document}}*).getElementById((*\textcolor{black}{canvasId}*));
+	(*\textit{\textcolor{kwColor}{var}}*) link = (*\textit{\textcolor{funcColor}{document}}*).createElement('a');
+	link.href = canvas.toDataURL('image/png', 1);
+	link.download = `${(*\textcolor{black}{filename}*)}(*\textcolor{stringColor}{.png}*)`;
+	link.click();
+}
+\end{lstlisting}
+
+
+
 \vspace{-12pt} % Adjust this value as needed
 \vspace{-12pt} % Adjust this value as needed
 
@@ -229,17 +254,17 @@ def get_contacts():
 
 G protein-coupled receptors (GPCR) comprise the largest protein receptor family in the human genome, with $\approx$800 members \cite{LIU_2024_GPCRs}. GPCRs have a regulatory role in most physiological processes including the visual, gustatory and smell sense, immune and nervous system activity as well as in disease \cite{LATORRACA_2017_GPCRs}. Consequently, GPCRs represent  an important target in drug therapy, covering $\approx$35\% of drugs approved by the Food and Drug Administration (FDA) \cite{HAUSER_2017_GPCRS, INSEL_2019_GPCRs}. GPCRs share a conserved seven-transmembrane helix fold connected by three intra- and three extra-cellular loops \cite{ZHANG_2024_GPCRs} and bind to a variety of endogenous ligands including peptides, ions, lipids or neurotransmitters \cite{ZARZYCKA_2019_GPCRs, MANNES_2022_GPCRs}. Once activated by external stimuli, e.g., ligand binding, GPCRs employ G-proteins to interact with downstream effectors thus triggering intracellular signalling cascades \cite{CHENG_2023_GPCRs}. To accommodate for the wide variety of substrates that GPCRs bind, specificity-determining positions (SDP) are required at the protein-ligand interface. These sites are unconserved across homologues and depleted in missense variation in human (UMD) \cite{MACGOWAN_2024_VARIANTS}.
 
-\autoref{fig:ligysis_rhodopsin} illustrates how SDPs can easily be identified in LIGYSIS-web for the example of bovine rhodopsin (GPCR). \autorefpanel{fig:ligysis_rhodopsin}{ A} shows the average site missense enrichment \textit{vs} divergence for the 16 binding sites defined in LIGYSIS from 145 ligands of interest across 45 structures (\autorefpanel{fig:ligysis_rhodopsin}{ B}). Binding Site 0 corresponds to the orthosteric GPCR site and is on average unconserved (DS $>$ 50) and missense-depleted (MES $<$ 1). Four of the 38 residues within this site are significantly depleted in missense variation (\textit{p} $<$ 0.05): Glu113, Ala117, Ser186 and Tyr288 (\autorefpanel{fig:ligysis_rhodopsin}{ C}). \autorefpanel{fig:ligysis_rhodopsin}{ D} exemplifies the specificity role of these positions by showing how different GPCRs bind to their substrates with different amino acids at these positions.
-
-\begin{figure}[htb!]
+\begin{figure}[htbp!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_LIGYSIS_WEB/PNG/LIGYSIS_use_case.png}
-    \caption[LIGYSIS analysis of bovine rhodopsin]{\textbf{LIGYSIS analysis of bovine rhodopsin.} \textbf{(A)} Scatter of average site missense enrichment score (MES) \textit{vs}  divergence (DS) for the 16 ligand binding sites defined for bovine rhodopsin (\href{https://www.uniprot.org/uniprotkb/P06299/entry}{P06299}). Binding Site 0 is divergent (unconserved) (DS = 56) and depleted in missense variation (MES = 0.95); \textbf{(B)} Superposition view of 145 ligands of interest across 49 structures of rhodopsin visualised with 3Dmol.js; \textbf{(C)} MES \textit{vs} DS for the 38 residues forming Binding Site 0. Residues within the dashed rectangle are conserved across homologues and depleted in missense variation in human, indicating common function and constraint across members of the family. However, Glu113, Ala117, Ser186 and Tyr288 in bovine rhodopsin are divergent within the family yet constrained in human, suggesting a substrate specificity determining role for these residues; \textbf{(D)} Examples of multiple GPCRs binding to endogenous substrates (retinal and lysophosphatidic acid) and inverse agonist (carazolol). (I) Bovine rhodopsin (\href{https://www.uniprot.org/uniprotkb/P06299/entry}{P06299}) binding to retinal (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/RET}{RET}) – PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1jfp}{1JFP} \cite{YEAGLE_2001_GPCRs}. (II) Human lysophosphatidic acid receptor 1 (\href{https://www.uniprot.org/uniprotkb/Q92633/entry}{Q92633}) binding to oleoyl lysophosphatidic acid (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/NKP}{NKP}) - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/7TD0}{7TD0} \cite{LIU_2022_GPCRs}. (III) Turkey beta-1-adrenergic receptor (\href{https://www.uniprot.org/uniprotkb/P07700/entry}{P07700}) binding to carazolol (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/CAU}{CAU}) – PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/2YCW}{2YCW} \cite{MOUKHAMETZIANOV_2011_GPCRs}. The same alignment position presents different amino acids across members of the family to accommodate for a variety of substrates. However, each of these residues is missense-depleted and forms ligand-specific interactions within each GPCR. Jmol colouring scheme \cite{JMOL} is applied to non-carbon atoms.}
+    \caption[LIGYSIS analysis of bovine rhodopsin]{\textbf{LIGYSIS analysis of bovine rhodopsin.} \textbf{(A)} Scatter of average site missense enrichment score (MES) \textit{vs}  divergence (DS) for the 16 ligand binding sites defined for bovine rhodopsin (\href{https://www.uniprot.org/uniprotkb/P06299/entry}{P06299}). Binding Site 0 is unconserved (DS = 56) and depleted in missense variation (MES = 0.95); \textbf{(B)} Superposition view of 145 ligands of interest across 49 structures of rhodopsin visualised with 3Dmol.js; \textbf{(C)} MES \textit{vs} DS for the 38 residues in Binding Site 0. Residues within the dashed rectangle are conserved across homologues and missense-depleted in human, indicating common function and constraint across members of the family. However, Glu113, Ala117, Ser186 and Tyr288 in bovine rhodopsin are divergent within the family yet constrained in human, suggesting a substrate specificity determining role; \textbf{(D)} Examples of multiple GPCRs binding to endogenous substrates substrates (I-II) and inverse agonist (III). (I) Bovine rhodopsin binding to retinal (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/RET}{RET}) – PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1jfp}{1JFP} \cite{YEAGLE_2001_GPCRs}. (II) Human lysophosphatidic acid receptor 1 (\href{https://www.uniprot.org/uniprotkb/Q92633/entry}{Q92633}) binding to oleoyl lysophosphatidic acid (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/NKP}{NKP}) - PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/7TD0}{7TD0} \cite{LIU_2022_GPCRs}. (III) Turkey beta-1-adrenergic receptor (\href{https://www.uniprot.org/uniprotkb/P07700/entry}{P07700}) binding to carazolol (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/CAU}{CAU}) – PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/2YCW}{2YCW} \cite{MOUKHAMETZIANOV_2011_GPCRs}. Sequence divergence across members of the family is required to accommodate for a variety of substrates. However, each of these residues is missense-depleted and forms ligand-specific interactions within each GPCR. Jmol colouring scheme \cite{JMOL} is applied to non-carbon atoms.}
     \label{fig:ligysis_rhodopsin}
 \end{figure}
+
+\autoref{fig:ligysis_rhodopsin} illustrates how SDPs can easily be identified in LIGYSIS-web for the example of bovine rhodopsin (GPCR). \autorefpanel{fig:ligysis_rhodopsin}{ A} shows the average site missense enrichment \textit{vs} divergence for the 16 binding sites defined in LIGYSIS from 145 ligands of interest across 45 structures (\autorefpanel{fig:ligysis_rhodopsin}{ B}). Binding Site 0 corresponds to the orthosteric GPCR site and is on average unconserved (DS $>$ 50) and missense-depleted (MES $<$ 1). Four of the 38 residues within this site are significantly depleted in missense variation (\textit{p} $<$ 0.05): Glu113, Ala117, Ser186 and Tyr288 (\autorefpanel{fig:ligysis_rhodopsin}{ C}). \autorefpanel{fig:ligysis_rhodopsin}{ D} exemplifies the specificity role of these positions by showing how different GPCRs bind to their substrates with different amino acids at these positions.
 
 \section{Discussion}
 
 The LIGYSIS web server is a free open resource accessible to all users without any login requirement for the analysis of protein-ligand binding sites. It hosts the LIGYSIS dataset, an integrative protein-ligand complex dataset including 65,000 biologically relevant binding sites across 25,000 proteins with structures on the PDBe. Additionally, users can upload their structures for analysis, visualisation and download. LIGYSIS defines binding sites by clustering protein-ligand interactions and characterises them by evolutionary divergence, missense variation and solvent accessibility, thus offering insight into the likelihood of function of sites as well as individual residues. These results are dynamically displayed on LIGYSIS-web, a Python Flask web application using Chart.js for dynamic graph rendering and 3Dmol.js for structure visualisation.
 
-Future steps include implementing a search by ligand functionality, overcoming the current limitation of multi-occupancy ligand atoms, the implementation of heteromeric protein-ligand complexes or analysing predicted ligand binding sites by methods as P2Rank \cite{KRIVAK_2015_PRANK, KRIVAK_2015_P2RANK, KRIVAK_2018_P2RANK, JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}, fpocket \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2} or IF-SitePred \cite{CARBERY_2024_IFSP}.
+Future steps include implementing a search by ligand functionality, overcoming the current limitation of multi-occupancy ligand atoms, the implementation of heteromeric protein-ligand complexes or analysing predicted ligand binding sites by methods as P2Rank \cite{JENDELE_2019_PRANKWEB, JAKUBEC_2022_PRANKWEB}, fpocket \cite{SCHMIDTKE_2010_FPOCKET2} or IF-SitePred \cite{CARBERY_2024_IFSP}.
