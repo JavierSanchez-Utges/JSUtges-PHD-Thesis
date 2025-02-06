@@ -22,14 +22,16 @@ Messenger RNA (mRNA) corresponds to the sequence of a gene and is read by the ri
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/genetic_code.png}
+    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/genetic_code_CROP.png}
     \caption[Genetic code]{\textbf{Genetic code.} The genetic code illustrates the 64 codons resulting from mRNA used to synthetise proteins during translation. The chemical structure of the amino acid side chains is found next to the amino acid name. Colour indicates basic amino acids (lavender), acidic (pink), polar (green) and nonpolar (yellow). STOP codons are coloured in white. Image borrowed from Wikipedia: the free encyclopedia \cite{genetic_code_image}.}
     \label{fig:genetic_code}
 \end{figure}
 
 \section{Proteins}
 
-Proteins are molecular machines that are involved in virtually all cellular processes including cell division, immune response or metabolism. They result from the process of translation of mRNA. Proteins are natural polymers formed of smaller monomers, called amino acids, linked to each other through peptide bonds.
+Proteins are molecular machines that are involved in virtually all cellular processes including cell division, immune response or metabolism. They result from the process of translation of mRNA. Proteins are natural polymers formed of smaller monomers, called amino acids, linked to each other through peptide bonds. Proteins do not carry their function in isolation, but usually interact with other proteins, nucleic acids, ions or small molecules. Chemical compounds can be used as drugs to modulate or inhibit protein function. The amount, localisation, state and interaction with other molecules of proteins is strictly controlled by complex gene regulation networks, signalling cascades, and environment-dependent conformational changes. Any of these mechanisms failing to work correctly can result in under- or overexpression, hypo- or hypermorphism, truncated, mutated or unfolded proteins, which eventually can lead to disease. %Identifying or predicting the location of where these molecules bind to proteins and the way in which they do so is therefore critical to understand better and modulate protein function.
+
+%\vspace{-13pt} % Adjust this value as needed
 
 \subsection{Amino acid structure}
 
@@ -42,11 +44,12 @@ There are twenty canonical amino acids that are found in all protein sequences. 
     \label{fig:amino_acid}
 \end{figure}
 
+%\vspace{-13pt} % Adjust this value as needed
+%\vspace{-13pt} % Adjust this value as needed
+
 \subsection{Amino acid properties}
 
 The different side chains of amino acids confer them distinct physicochemical properties \cite{SNEATH_1966_PROPERTIES}. \autoref{fig:properties} illustrates the ten main properties, the relationship between them and which amino acids present them \cite{TAYLOR_1986_PROPERTIES}. The three most important properties setting amino acids apart are hydrophobicity, polarity and size. Hydrophobic residues present side chains that are less soluble in water and therefore tend to be located in the interior protein core, whereas hydrophilic residues are present on the surface. Polar residue side chains contain electronegative atoms like nitrogen (N) or oxygen (O) that favour interaction with water and other polar molecules. Size is also relevant as there is a large difference in volume between the twenty amino acids, ranging from 60 \AA{}\textsuperscript{3} (Glycine) to $>$200 \AA{}\textsuperscript{3} (Tryptophan). Within the categories defined by these three properties, other subsets can be found as aliphatic (open chain of carbon atoms), aromatic (closed carbon chain), positively and negatively charged, tiny or proline. Proline has its own category because of its unique cyclical side chain which links back to the backbone \cite{ZVELEBIL_1987_PREDICTION}.
-
-The physicochemical properties of amino acids are crucial to understand the arrangement of protein atoms in three-dimensional (3D) space. Moreover, the conservation of these properties across evolutionarily related proteins is the basis for sequence comparison, analysis as well as protein structure prediction \cite{CHOTHIA_1986_CONSERVATION}.
 
 \begin{figure}[htb!]
     \centering
@@ -54,6 +57,8 @@ The physicochemical properties of amino acids are crucial to understand the arra
     \caption[Amino acid properties]{\textbf{Amino acid properties.} Taylor Venn diagram illustrating the different physicochemical properties of the twenty proteinogenic amino acids. Adapted from the Jalview website \cite{JALVIEW}, which in turn adapted from Livingstone and Barton \cite{LIVINGSTONE_1993_MSA}.}
     \label{fig:properties}
 \end{figure}
+
+The physicochemical properties of amino acids are crucial to understand the arrangement of protein atoms in three-dimensional (3D) space. Moreover, the conservation of these properties across evolutionarily related proteins is the basis for sequence comparison, analysis as well as protein structure prediction \cite{CHOTHIA_1986_CONSERVATION}.
 
 \subsection{Substitution matrices}
 
@@ -108,6 +113,7 @@ The arrangement of protein atoms in three-dimensional space is known as protein 
 \end{figure}
 
 \vspace{-13pt} % Adjust this value as needed
+\vspace{-6pt} % Adjust this value as needed
 
 \subsection{Protein structure determination}
 
@@ -129,6 +135,13 @@ The use of electron microscopy to determine protein structure dates back to 1975
 
 Beyond the determination of the arrangement of atoms in 3D space, proteins can be characterised structurally in multiple ways that offer insight into their physicochemical properties, function, stability, dynamics and interaction with other molecules. These features can then be mapped onto the molecular surface of the proteins and visually analysed (\autoref{fig:protein_features}).
 
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/protein_features.png}
+    \caption[Protein structure features]{\textbf{Protein structure features.} Protein structure features exemplified on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4c38}{4C38} \cite{COUTY_2013_ONCO} of bovine cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). \textbf{(A)} Atomic displacement measured by Debye-Waller factor (DWF); \textbf{(B)} Hydrophobicity measured by molecular lipophilicity potential (MLP); \textbf{(C)} Charge measured by Coulombic electrostatic potential (ESP); \textbf{(D)} Accessibility measured by relative solvent accessibility (RSA); \textbf{(E)} Ligandability as measured by P2Rank's ligandability score. Structure visualisation with ChimeraX \cite{PETTERSEN_2021_CHIMERAX}.}
+    \label{fig:protein_features}
+\end{figure}
+
 \subsubsection{Flexibility}
 
 The Debye-Waller factor (DWF), or B-factor, measures the attenuation of X-ray scattering caused by thermal motion \cite{DEBYE_1913_BFACTOR, WALLER_1923_BFACTOR}. This attenuation is a decrease of intensity in diffraction caused by disorder. This disorder can be dynamic and result from the temperature-dependent vibration of the atoms, or static \cite{SUN_2019_BFACTOR}. Accordingly, low values of B-factor indicate rigid or well-ordered protein regions, while high values can identify flexible or dynamic regions in proteins such as loops or binding sites as well as intrinsically disordered regions (IDR) (\autorefpanel{fig:protein_features}{ A}). IDRs are protein regions that lack a determined three-dimensional structure and might change conformation depending on their biological context.
@@ -140,13 +153,6 @@ The molecular lipophilicity potential (MLP) is a descriptor that represents the 
 \subsubsection{Charge}
 
 Amino acids with charged side chains, e.g., Asp, Glu, His, Lys and Arg, play an important role in the electrostatic potential of a protein, which can be calculated using Coulomb's law \cite{COULOMB_1785_LAW}. Electrostatic potential plays a pivotal role in the field of protein analysis as it underpins processes such as protein folding, enzyme catalysis, molecular recognition and interaction with proteins, nucleic acids and small molecules, or ligands \cite{ZHOU_2018_ESP} (\autorefpanel{fig:protein_features}{ C}). Because of this, protein electrostatics analysis and fine-tuning have applications in protein design \cite{GORHAM_2011_ESP}, protein-ligand binding affinity \cite{KUKIC_2010_ELECTROSTATICS} and biocatalysis optimisation \cite{VASCON_2020_ESP}.
-
-\begin{figure}[htb!]
-    \centering
-    \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/protein_features.png}
-    \caption[Protein structure features]{\textbf{Protein structure features.} Protein structure features exemplified on PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4c38}{4C38} \cite{COUTY_2013_ONCO} of bovine cAMP-dependent protein kinase catalytic subunit alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). \textbf{(A)} Atomic displacement measured by Debye-Waller factor (DWF); \textbf{(B)} Hydrophobicity measured by molecular lipophilicity potential (MLP); \textbf{(C)} Charge measured by Coulombic electrostatic potential (ESP); \textbf{(D)} Accessibility measured by relative solvent accessibility (RSA); \textbf{(E)} Ligandability as measured by P2Rank's ligandability score. Structure visualisation with ChimeraX \cite{PETTERSEN_2021_CHIMERAX}.}
-    \label{fig:protein_features}
-\end{figure}
 
 \subsubsection{Accessibility}
 
@@ -267,6 +273,8 @@ Drug discovery is the process of developing a new drug. It goes from the origina
     \caption[Drug discovery and development pipeline]{\textbf{Drug discovery and development pipeline.}  The pipeline for discovering a drug can be divided in two stages. Stage I focuses on the discovery of a drug and includes target identification and validation, hit identification and lead optimisation. Stage II covers the development of the drug and includes pre-clinical, clinical trials, drug approval and subsequent pharmacovigilance. Adapted from Cui \textit{et al.} \cite{CUI_2020_DRUGS}.}
     \label{fig:drug_discovery}
 \end{figure}
+
+\vspace{-13pt} % Adjust this value as needed
 
 \subsection{Target identification}
 
