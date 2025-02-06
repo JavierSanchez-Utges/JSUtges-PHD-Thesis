@@ -418,18 +418,18 @@
 \cleardoublepage
 \listoftables
 
+% Add List of Equations to the ToC
+\cleardoublepage
+\phantomsection
+\listofmyequations
+\addcontentsline{toc}{chapter}{\listequationsname}
+
 % Add List of Code Blocks to the ToC
 \cleardoublepage
 \renewcommand\lstlistingname{Code Block} % Change to "Code Block"
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s} % Correct spacing
 \lstlistoflistings
 \addcontentsline{toc}{chapter}{\lstlistlistingname}
-
-% Add List of Equations to the ToC
-\cleardoublepage
-\phantomsection
-\listofmyequations
-\addcontentsline{toc}{chapter}{\listequationsname}
 
 % Add List of Abbreviations to the ToC
 \cleardoublepage
