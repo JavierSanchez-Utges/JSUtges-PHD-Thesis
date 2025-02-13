@@ -53,7 +53,7 @@ D = 1 - I_{rel}
 \myequations{Ligand fingerprint distance}
 
 \vspace{-12pt} % Adjust this value as needed
-\vspace{-12pt} % Adjust this value as needed
+%\vspace{-12pt} % Adjust this value as needed
 %\vspace{-12pt} % Adjust this value as needed
 %\vspace{-12pt} % Adjust this value as needed
 
@@ -73,10 +73,10 @@ The canonical sequence for each UniProt accession was used to perform a homologu
 
 Accessible surface area was calculated by DSSP \cite{KABSCH_1983_DSSP} via ProIntVar \cite{MACGOWAN_2020_DRSASP} and normalised \cite{TIEN_2013_RSA} to relative solvent accessibility (RSA). The Keras \cite{CHOLLET_2015_KERAS} multilayer perceptron (MLP) \cite{CYBENKO_1989_MLP} described in \autoref{chap:FRAGSYS} \cite{UTGES_2024_FRAGSYS} was employed to predict site RSA-based cluster labels: C1 – C4. These clusters are differentially enriched in functional sites annotated in UniProt \cite{NIGHTINGALE_2017_API} (OR\textsubscript{C1} $\approx$ 28 $\times$ OR\textsubscript{C4}).
 
-For a binding site $i$, a functional score $FS$ is calculated with \autoref{eq:func_score}. In this equation, $p_{i_{j}}$ represents the probability of site $i$ belonging in Cluster $j$ and $f_j$ denotes the proportion of annotated functional sites within Cluster $j$. The probabilities $p_{i_{j}}$ are derived from the vector $P$ (\autoref{eq:probability_vector}), which is returned by the MLP and provides the probabilities of a site belonging to each class. The vector $F$ (\autoref{eq:func_prob_vector}) contains the proportions of functional sites in each cluster, which were determined through hierarchical clustering and functional classification of the human subset of the LIGYSIS dataset, composed of 13,000 sites across 3500 proteins. Both the functional label and score serve as metrics that indicate the likelihood of a binding site being functional and can be used to rank binding sites within a protein. %This is summarised in \autorefpanel{fig:ligysis_pipeline_OG}{ C}.
+For a binding site $i$, a functional score $FS_i$ is calculated with \autoref{eq:func_score} as the dot product of the $P_i$ and $F$ vectors. In this equation, $p_{i_{j}}$ represents the probability of site $i$ belonging in Cluster $j$ and $f_j$ denotes the proportion of annotated functional sites within Cluster $j$. The probabilities $p_{i_{j}}$ are derived from the vector $P_i$ (\autoref{eq:probability_vector}), which is returned by the MLP and provides the probabilities of a site $i$ belonging to each class. The vector $F$ (\autoref{eq:func_prob_vector}) contains the proportions of functional sites in each cluster, which were determined through hierarchical clustering and functional classification of the human subset of the LIGYSIS dataset, composed of 13,000 sites across 3500 proteins. Both the functional label and score serve as metrics that indicate the likelihood of a binding site being functional and can be used to rank binding sites within a protein. %This is summarised in \autorefpanel{fig:ligysis_pipeline_OG}{ C}.
 
 \begin{equation}
-FS_i = \sum_{j=1}^{4} p_{i_{j}} f_j
+FS_i = P_i \cdot F = \sum_{j=1}^{4} p_{i_{j}} f_j
 \label{eq:func_score}
 \end{equation}
 \myequations{Functional score}
@@ -85,7 +85,7 @@ FS_i = \sum_{j=1}^{4} p_{i_{j}} f_j
 \vspace{-12pt} % Adjust this value as needed
 
 \begin{equation}
-P = [\,p_{c_1},\,p_{c_2},\,p_{c_3},\,p_{c_4}\,]
+P_i = [\,p_{i_{1}},\,p_{i_{2}},\,p_{i_{3}},\,p_{i_{4}}\,]
 \label{eq:probability_vector}
 \end{equation}
 \myequations{RSA cluster probability vector}
@@ -109,7 +109,8 @@ The LIGYSIS customised pipeline is used for the analysis of user-submitted struc
 
 \subsection{Server architecture}
 
-The LIGYSIS web server is implemented using the Python Flask framework \cite{GRINBERG_2018_FLASK}, with dynamic content rendered via Jinja templates \cite{JINJA} and data transferred through Flask routes. The frontend is structured using HTML for content and layout and a combination of Bootstrap \cite{BOOTSTRAP} and plain CSS \cite{HTML_CSS} for styling. JavaScript \cite{JAVASCRIPT} enhances interactivity by integrating a 3Dmol.js structure viewer \cite{REGO_2014_3DMOL, SESHADRI_2020_3DMOL} for molecular visualisation, interactive tables and Chart.js graphs \cite{CHARTJS}. Asynchronous updates are facilitated by jQuery \cite{jQUERY} and
+The LIGYSIS web server is implemented using the Python Flask framework \cite{GRINBERG_2018_FLASK}, with dynamic content rendered via Jinja templates \cite{JINJA} and data transferred through Flask routes. The frontend is structured using HTML for content and layout and a combination of Bootstrap \cite{BOOTSTRAP} and plain CSS \cite{HTML_CSS} for styling. JavaScript \cite{JAVASCRIPT} enhances interactivity by integrating a 3Dmol.js structure viewer \cite{REGO_2014_3DMOL, SESHADRI_2020_3DMOL} for molecular visualisation, interactive tables and Chart.js graphs \cite{CHARTJS}. jQuery \cite{jQUERY} and AJAX \cite{AJAX} requests facilitate asynch-
+%Asynchronous updates are facilitated by jQuery \cite{jQUERY}
 
 \begin{figure}[htbp!]
     \centering
@@ -119,8 +120,8 @@ The LIGYSIS web server is implemented using the Python Flask framework \cite{GRI
 \end{figure}
 
 \noindent
-and AJAX \cite{AJAX} requests, enabling dynamic data exchange between the client and server. Illustrative examples of each of these components can be found in \autoref{html_button} (HTML), \autoref{saveimage_func} (JavaScript), \autoref{CSS_class} (CSS) and \autoref{get_contacts_route} (Python). The LIGYSIS web server can be accessed through: \url{https://www.compbio.dundee.ac.uk/ligysis/} \cite{LIGYSIS_SERVER}.
-
+ronous updates, enabling dynamic data exchange between the client and server. Illustrative examples of each of these components can be found in \autoref{html_button} (HTML), \autoref{saveimage_func} (JavaScript), \autoref{CSS_class} (CSS) and \autoref{get_contacts_route} (Python). The LIGYSIS web server can be accessed through: \url{https://www.compbio.dundee.ac.uk/ligysis/} \cite{LIGYSIS_SERVER}.
+%and AJAX \cite{AJAX} requests, enabling dynamic data exchange between the client and server. Illustrative examples of each of these components can be found in \autoref{html_button} (HTML), \autoref{saveimage_func} (JavaScript), \autoref{CSS_class} (CSS) and \autoref{get_contacts_route} (Python). The LIGYSIS web server can be accessed through: \url{https://www.compbio.dundee.ac.uk/ligysis/} \cite{LIGYSIS_SERVER}.
 
 \lstset{style=mystyle}
 
@@ -205,9 +206,9 @@ The code for the LIGYSIS-web Python Flask application can be found in this GitHu
 
 \subsection{LIGYSIS-web results page}
 
-The LIGYSIS web server can be used in two modes: (1) to explore the LIGYSIS dataset and (2) to submit a set of structures for analysis in the LIGYSIS pipeline. The LIGYSIS dataset comprises $\approx$25,000 proteins with deposited structures of proteins bound to biologically relevant ligands on the PDBe. Results can be explored by searching for a UniProt accession, entry, or name of the protein of interest. Results for user-submitted jobs can be accessed through the provided link when submitting the job, or through the jobs table in the user session tab.
+The LIGYSIS web server can be used in two modes: (1) to explore the LIGYSIS dataset and (2) to submit a set of structures for analysis in the LIGYSIS pipeline. The LIGYSIS dataset comprises $\approx$25,000 proteins with deposited structures of proteins bound to biologically relevant ligands on the PDBe. Results can be explored by searching for a UniProt accession, entry, or name of the protein of interest. User jobs' results can be accessed through the link provided when submitting the job or through the jobs table in the user session tab, and explored just like pre-computed entries.
 
-\autoref{fig:LIGYSIS_web_results_page} illustrates the LIGYSIS-web results page. This page is divided into three panels, from left to right: \textit{Binding Sites}, \textit{Structure} and \textit{Binding Residues} panels. The results page is the same when exploring a LIGYSIS entry and user job results. At the top of the panels, general information about the target protein can be found: UniProt accession (link to UniProt), entry, protein names and number of chains, ligands and binding sites.
+\autoref{fig:LIGYSIS_web_results_page} illustrates the LIGYSIS-web results page. This page is divided into three panels: \textit{Binding Sites}, \textit{Structure} and \textit{Binding Residues} panels. At the top of the panels, general information about the target protein can be found: UniProt accession (link to UniProt), entry, protein names and number of chains, ligands and binding sites.
 
 \begin{figure}[htb!]
     \centering
@@ -240,7 +241,7 @@ The LIGYSIS web server can be used in two modes: (1) to explore the LIGYSIS data
 
 \subsubsection{Binding Residues panel}
 
-The Binding Residues Panel (\autoref{fig:LIGYSIS_web_BINDING_RESIDUES_PANEL}) is similar to the Binding Sites Panel and comprises a chart and a table. However, data points and rows correspond to individual residues and not the selected site as a whole. The table displays the UniProt residue number (UPResNum), the column in the multiple sequence alignment (MSACol), the \textit{N\textsubscript{Shenkin}} divergence score (DS), MES, associated \textit{p}-value, amino acid name (AA), RSA and secondary structure (SS). SS corresponds to the original 8-state DSSP classification: 3\textsubscript{10} helix (G), α-helix (H), π-helix (I), β-sheet (E), β-bridge (B), helix turn (T), bend (S) and coil (C) \cite{KABSCH_1983_DSSP}. Variables on the chart axes can also be changed, and table rows sorted by column. Only hover events are supported for this panel, clicking chart points or table rows has no effect. Refer to \autoref{fig:LIGYSIS_web_BINDING_RESIDUES_PANEL} legend for more details on how to interpret the MES \textit{vs} DS graph.
+\autoref{fig:LIGYSIS_web_BINDING_RESIDUES_PANEL} illustrates the the Binding Residues Panel. This panel is similar to the Binding Sites Panel and also comprises a Chart.js graph and an interactive table. However, data points and table rows correspond to individual binding site residues and not the site as a whole, as they did in the Binding Sites Panel. The table displays the UniProt residue number (UPResNum), the column in the multiple sequence alignment (MSACol), the \textit{N\textsubscript{Shenkin}} divergence score (DS), missense enrichment score (MES) and associated \textit{p}-value, amino acid name (AA), relative solvent accessibility (RSA) and secondary structure (SS). SS corresponds to the original 8-state DSSP classification: 3\textsubscript{10} helix (G), α-helix (H), π-helix (I), β-sheet (E), β-bridge (B), helix turn (T), bend (S) and coil (C) \cite{KABSCH_1983_DSSP}. Variables on the chart axes can also be changed, and table rows sorted by column. Currently, only hover events are supported for this panel, clicking chart points or table rows has no effect. Refer to \autoref{fig:LIGYSIS_web_BINDING_RESIDUES_PANEL} legend for more details on how to interpret the MES \textit{vs} DS graph.
 
 \begin{figure}[htb!]
     \centering
@@ -248,6 +249,9 @@ The Binding Residues Panel (\autoref{fig:LIGYSIS_web_BINDING_RESIDUES_PANEL}) is
     \caption[LIGYSIS-web results page Binding Residues Panel]{\textbf{LIGYSIS-web results page Binding Residues Panel.} Missense Enrichment Score (MES) \textit{vs} Normalised Shenkin Divergence Score (DS) for the 51 residues of Binding Site 0 of PKA C-alpha (\href{https://www.uniprot.org/uniprotkb/P00517/entry}{P00517}). This site corresponds to the ATP binding site of PKA C-alpha. Most residues on this site present MES $<$ 1 (below the dashed line), indicating depletion in human missense variation resulting from selective pressure or constraint. Missense-depleted residues that are also conserved are most likely to be functional and cause an effect on the protein function if targeted. An example is Lys169, which is buried (RSA = 6\%), conserved across homologues (DS = 10) and depleted in missense variation (MES = 0.44, \textit{p} $\approx$ 0). This residue is known to be functionally relevant as it interacts with \href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/ATP}{ATP}, which agrees with the results displayed on the table. Residues are sorted by missense enrichment on the table (lowest at the top) and Lys169, which is the most depleted, is being hovered over (yellow highlight).}
     \label{fig:LIGYSIS_web_BINDING_RESIDUES_PANEL}
 \end{figure}
+
+\vspace{+12pt} % Adjust this value as needed
+\vspace{+12pt} % Adjust this value as needed
 
 \subsection{Data export}
 

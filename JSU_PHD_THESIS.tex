@@ -397,6 +397,10 @@
 \addcontentsline{toc}{chapter}{Dedication}
 
 \cleardoublepage
+\input{Quotation}
+\addcontentsline{toc}{chapter}{Quote}
+
+\cleardoublepage
 \input{Publications}
 \addcontentsline{toc}{chapter}{Publications}
 
@@ -421,8 +425,8 @@
 % Add List of Equations to the ToC
 \cleardoublepage
 \phantomsection
-\listofmyequations
 \addcontentsline{toc}{chapter}{\listequationsname}
+\listofmyequations
 
 % Add List of Code Blocks to the ToC
 \cleardoublepage
@@ -432,10 +436,14 @@
 \addcontentsline{toc}{chapter}{\lstlistlistingname}
 
 % Add List of Abbreviations to the ToC
+%\cleardoublepage
+%\input{abbreviations}
+%\addcontentsline{toc}{chapter}{List of Abbreviations}
+
 \cleardoublepage
-\input{abbreviations}
-%\hypersetup{linkcolor=purple}
+\phantomsection
 \addcontentsline{toc}{chapter}{List of Abbreviations}
+\input{abbreviations}
 
 % Clear the page and start Arabic numerals for the main matter
 \cleardoublepage
