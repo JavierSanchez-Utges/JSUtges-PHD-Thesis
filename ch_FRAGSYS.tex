@@ -23,7 +23,7 @@ The work described in this Chapter is likely to be of interest to groups focusin
 
 \subsection{Structure dataset}
 
-The Pan-Dataset Density Analysis (PanDDA) algorithm characterises a set of related crystallographic data sets of the same crystal form and identifies binding events by isomorphous difference maps \cite{PEARCE_2017_PANDDA}. Initially, 3021 three-dimensional structures determined by X-ray crystallography were selected by querying the PDBe \cite{wwPDB_2019_PDB} for entries containing the string ``PanDDA'' in their title. 1542 of the structures included bound ligands for 39 different proteins. Four proteins which were in multi-protein complexes including additional ligands were excluded to leave single-protein-ligand complexes from 35 different proteins and a total of 1450 structures. The structures presented resolutions from 0.9-3.3 \AA{}, with a mean resolution of $\approx$1.5 \AA{}. Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from the PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. 
+The Pan-Dataset Density Analysis (PanDDA) algorithm characterises a set of related crystallographic datasets of the same crystal form and identifies binding events by isomorphous difference maps \cite{PEARCE_2017_PANDDA}. Initially, 3021 three-dimensional structures determined by X-ray crystallography were selected by querying the PDBe \cite{wwPDB_2019_PDB} for entries containing the string ``PanDDA'' in their title. 1542 of the structures included bound ligands for 39 different proteins. Four proteins which were in multi-protein complexes including additional ligands were excluded to leave single-protein-ligand complexes from 35 different proteins and a total of 1450 structures. The structures presented resolutions from 0.9-3.3 \AA{}, with a mean resolution of $\approx$1.5 \AA{}. Preferred biological assemblies, as defined by PISA \cite{KRISSINEL_2007_PISA}, were downloaded from the PDBe via ProIntVar \cite{MACGOWAN_2020_DRSASP}. 
 
 \subsection{Binding site definition}
 
@@ -305,7 +305,7 @@ Once the model hyperparameters were optimised, 50 models were trained on 10/11 o
 
 \subsection{Site function classification}
 
-Ligand binding sites were divided into two groups -- \textit{known function} and \textit{unknown function} -- by searching UniProt \cite{UNIPROT_2019_UNIPROT} for feature annotations indicative of function, e.g., metal, substrate binding, active site, etc, via the UniProt proteins API \cite{NIGHTINGALE_2017_API}. Seventeen out of the 35 proteins presented at least one UniProt annotated residue in one binding site. Manual curation using protein homology within the proteins in the data set added 9 more functionally annotated proteins. This gave a total of 44 sites from 26 proteins classified as of known function. All other sites were classified as of unknown function.
+Ligand binding sites were divided into two groups -- \textit{known function} and \textit{unknown function} -- by searching UniProt \cite{UNIPROT_2019_UNIPROT} for feature annotations indicative of function, e.g., metal, substrate binding, active site, etc, via the UniProt proteins API \cite{NIGHTINGALE_2017_API}. Seventeen out of the 35 proteins presented at least one UniProt annotated residue in one binding site. Manual curation using protein homology within the proteins in the dataset added 9 more functionally annotated proteins. This gave a total of 44 sites from 26 proteins classified as of known function. All other sites were classified as of unknown function.
 
 \subsection{Statistics and reproducibility}
 
@@ -335,7 +335,7 @@ The focus here is on human proteins to allow the additional information from hum
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=0.65\textwidth]{figures/ch_FRAGSYS/PNG/FIG2_bs_feats_2x2.png}
-    \caption[Variation in binding site features]{\textbf{Variation in binding site features.} Distribution of size \textbf{(A)}, median RSA \textbf{(B)}, average \textit{N\textsubscript{Shenkin}} \textbf{(C)} and MES \textbf{(D)} across the 293 binding sites defined from our data set. Black dashed lines indicate the median of each distribution.}
+    \caption[Variation in binding site features]{\textbf{Variation in binding site features.} Distribution of size \textbf{(A)}, median RSA \textbf{(B)}, average \textit{N\textsubscript{Shenkin}} \textbf{(C)} and MES \textbf{(D)} across the 293 binding sites defined from our dataset. Black dashed lines indicate the median of each distribution.}
     \label{fig:bss_features}
 \end{figure}
 
