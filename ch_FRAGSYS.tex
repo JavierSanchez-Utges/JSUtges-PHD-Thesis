@@ -41,7 +41,7 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
 \end{figure}
 
 \begin{equation}
-    I_{rel} = \frac{A \cap B}{\text{max}(A \cap B)}
+    I_{rel} = \frac{\lvert A \cap B\rvert}{\, \, \, \, \, \, \, \, \lvert A \cap B\rvert_{\text{max}}}
 \label{eq:relative_intersection} % Label for the equation
 \end{equation}
 \myequations{Relative intersection}
@@ -49,7 +49,7 @@ Only non-ion ligands of interest were used for the binding site definition. Thes
 \vspace{-35pt} % Adjust this value as needed
 
 \begin{equation}
-    \text{max}(A \cap B) = \text{min}(\text{len}(A), \text{len}(B))
+    \lvert A \cap B\rvert_{\text{max}} = \text{min}(\text{len}(A), \text{len}(B))
 \label{eq:max_intersection}
 \end{equation}
 \myequations{Maximum intersection}
@@ -137,14 +137,49 @@ The second model is a multi-layer perceptron (MLP) \cite{CYBENKO_1989_MLP}, a ty
 
 \subsubsection{MLP ablation}
 
-A thorough hyperparameter optimisation was carried out by examining the effect that a series of hyperparameter changes had on the prediction accuracy relative to the current ML setup, labelled as \textit{current}. Sixty-four single-hyperparameter changes were performed, one at a time. For each variation, 100 models were trained with different seeds and the average validation accuracies compared to the current MLP. Sixty-four pairwise \textit{t}-tests were conducted to compare the accuracy means, and Benjamini-Hochberg correction \cite{BENJAMINI_1995_FDR} applied. FDR and increment in accuracy, $\Delta_{acc}$ (\autoref{eq:delta_accuracy}) were used to describe the results, where $acc_{current}$ is the average validation accuracy of the {current ML setup across the 100 seeds, and $acc_{variant}$ is the average accuracy across 100 seeds of each one of the 64 variant models. $\Delta_{acc} <$ 0 represents a decrease in performance relative to the current ML architecture, whereas $\Delta_{acc} >$ 0 corresponds to a higher accuracy. The results of this ablation study are described below and graphically represented in \autoref{fig:mlp_ablation} and \autoref{tab:MLP_ablation}.
+A thorough hyperparameter optimisation was carried out by examining the effect that a series of hyperparameter changes had on the prediction accuracy relative to the current ML setup, labelled as \textit{current}, and summarised in \autoref{tab:HP_current_MLP}. Sixty-four single-hyperparameter changes were performed, one at a time. For each variation, 100 models were trained with different seeds and the average validation accuracies compared to the current MLP. Sixty-four pairwise \textit{t}-tests were conducted to compare the accuracy means, and Benjamini-Hochberg correction \cite{BENJAMINI_1995_FDR} applied. FDR and increment in accuracy, $\Delta_{acc}$ (\autoref{eq:delta_accuracy}) were used to describe the results, where $acc_{current}$ is the average validation accuracy of the {current ML setup across the 100 seeds, and $acc_{variant}$ is the average accuracy across 100 seeds of each one of the 64 variant models. $\Delta_{acc} <$ 0 represents a decrease in performance relative to the current ML architecture, whereas $\Delta_{acc} >$ 0 corresponds to a higher accuracy. The results of this ablation study are described below and graphically represented in \autoref{fig:mlp_ablation} and \autoref{tab:MLP_ablation}.
+
+\vspace{+12pt} % Adjust this value as needed
+
+% Please add the following required packages to your document preamble:
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{longtable}[c]{|c|c|}
+\hline
+\textbf{Hyperparameter}      & \textbf{Value}                   \\ \hline
+\endfirsthead
+%
+\endhead
+%
+\# Neurons (\textit{input})           & \texttt{11}                               \\ \hline
+Number of layers             & \texttt{1}                                \\ \hline
+Type of layer                & \texttt{Hidden (fully connected)}         \\ \hline
+\# Neurons (\textit{hidden})          & \texttt{10}                               \\ \hline
+Activation function (\textit{hidden}) & \texttt{ReLU}                             \\ \hline
+\# Neurons (\textit{output})          & \texttt{4}                                \\ \hline
+Activation function (\textit{output}) & \texttt{Softmax}                          \\ \hline
+Loss function                & \texttt{Sparse categorical cross-entropy} \\ \hline
+Weight initialiser           & \texttt{Glorot Uniform}                   \\ \hline
+Optimiser                    & \texttt{Adam}                             \\ \hline
+Learning rate                & \texttt{0.01}                             \\ \hline
+Dropout rate                 & --                               \\ \hline
+Regularisation               & --                               \\ \hline
+Batch size                   & \texttt{32}                               \\ \hline
+Validation split             & \texttt{0.2}                              \\ \hline
+\# Training epochs           & \texttt{300}                              \\ \hline
+\caption[\textit{Current} MLP hyperparameters]{\textbf{\textit{Current} MLP hyperparameters.} Values of the \textit{current} multilayer perceptron hyperparameters. Parameters were optimised to maximise cross-validation accuracy and minimise loss, i.e., sparse categorical cross-entropy. These are the model hyperparameters employed for the final prediction on the blind set.}
+\label{tab:HP_current_MLP}\\
+\end{longtable}
+
+\vspace{-12pt} % Adjust this value as needed
+\vspace{-12pt} % Adjust this value as needed
 
 \begin{equation}
-\Delta_{acc} \text{(\%)} = acc_{variant} - acc_{current}
+\Delta_{acc}\, \text{(\%)} = acc_{variant} - acc_{current}
 \label{eq:delta_accuracy}
 \end{equation}
 \myequations{Increment in MLP accuracy}
-\vspace{-37pt} % Adjust this value as needed
+%\vspace{-37pt} % Adjust this value as needed
 
 \paragraph{Number of layers}
 
@@ -289,7 +324,7 @@ Overall, implementing kernel, bias or activity regularisation techniques did not
 
 \subsubsection{Performance evaluation}
 
-The complete dataset (\textit{N} = 293) was split into a blind test set (1/11 = 27) and a training set (10/11 = 266). Ten repeats of a stratified 10-fold cross-validation were performed to assess the robustness of the ANN and compare it with the KNN model, as well as a baseline of the same models trained on randomly shuffled data, and completely random label assignment (\textit{p} = 0.25). The reliability of the ANN predictions was assessed by means of a confidence score calculated as in Cuff and Barton \cite{CUFF_2000_PROFILES}, which represents how certain the MLP is of each individual prediction (\autoref{eq:confidence_score}). The score is based on the difference between the top first and second probabilities assigned by the network to each of the classes, $p_{1}$, and $p_{2}$, respectively. For example, if the output of the network were \textit{P} = [0.95, 0.02, 0.03, 0.0]. The probabilities would be sorted, so $p_{1}$ = 0.95, $p_{2}$ = 0.03 and a confidence score of 9 would be obtained.
+The complete dataset (\textit{N} = 293) was split into a blind test set (1/11 = 27) and a training set (10/11 = 266). Ten repeats of a stratified 10-fold cross-validation -- with a 20\% validation split within each fold -- were performed to assess the robustness of the ANN and compare it with the KNN model, as well as a baseline of the same models trained on randomly shuffled data, and completely random label assignment (\textit{p} = 0.25). The reliability of the ANN predictions was assessed by means of a confidence score calculated as in Cuff and Barton \cite{CUFF_2000_PROFILES}, which represents how certain the MLP is of each individual prediction (\autoref{eq:confidence_score}). The score is based on the difference between the top first and second probabilities assigned by the network to each of the classes, $p_{1}$, and $p_{2}$, respectively. For example, if the output of the network were \textit{P} = [0.95, 0.02, 0.03, 0.0]. The probabilities would be sorted, so $p_{1}$ = 0.95, $p_{2}$ = 0.03 and a confidence score of 9 would be obtained.
 
 \vspace{-12pt} % Adjust this value as needed
 
@@ -312,7 +347,7 @@ The KNN is based on distances to all training data and therefore consistently gi
     \label{fig:MLP_CV_blind_test}
 \end{figure}
 
-Once the model hyperparameters were optimised, 50 models were trained on 10/11 of the data (\textit{N} = 266) for the 10 different seeds used to initialise the models. From a final pool of 500 models, the one presenting the highest validation accuracy and lowest validation loss was chosen, with a validation accuracy of 96\%. This model, as well as KNN were used to predict on the blind test set. There was no significant difference in performance of the ANN and KNN models. Accuracies were 96\% (26/27), 95\% CI = [82, 99] and 100\% (27/27), 95\% CI = [88, 100], for ANN and KNN, respectively. The adjusted Rand index (ARI) \cite{RAND_1971_ARI, HUBERT_1985_ARI}, as well as adjusted mutual information (AMI) \cite{VINH_2009_AMI, VINH_2010_AMI} were calculated. ARI\textsubscript{ANN} = 0.93, 95\% CI = [0.81, 1.0] \cite{STEINLEY_2016_ARI}, AMI\textsubscript{ANN} = 0.93, 95\% CI = [0.82, 1.0]. ARI\textsubscript{KNN} = 1.0, AMI\textsubscript{KNN} = 1.0. 95\% CI of AMI was calculated by bootstrap resampling (\textit{N} = 10,000). All three metrics agreed on the high performance of the MLP. \autorefpanel{fig:MLP_CV_blind_test}{ C} illustrates how the binding site, which label was wrongly predicted by the ANN model, is located on the limits between adjacent clusters C3 and C4. This result agrees with the \textit{K}-means clustering reliability and confidence score analysis of the cross-validation, where the same inter-cluster regions are highlighted due to their lower clustering reliability and low confidence prediction. This suggests that the core of the clusters is stable, and that the ANN confidence score may be used to identify binding sites that are at the borders of clusters.
+After hyperparameter optimisation on the validation set (20\%), 50 models were trained on 10/11 of the data (\textit{N} = 266) for the 10 different seeds used to initialise the models. From a final pool of 500 models, the one presenting the highest validation accuracy and lowest validation loss was chosen, with a validation accuracy of 96\%. This model, as well as KNN were used to predict on the blind test set. There was no significant difference in performance of the ANN and KNN models. Accuracies were 96\% (26/27), 95\% CI = [82, 99] and 100\% (27/27), 95\% CI = [88, 100], for ANN and KNN, respectively. The adjusted Rand index (ARI) \cite{RAND_1971_ARI, HUBERT_1985_ARI}, as well as adjusted mutual information (AMI) \cite{VINH_2009_AMI, VINH_2010_AMI} were calculated. ARI\textsubscript{ANN} = 0.93, 95\% CI = [0.81, 1.0] \cite{STEINLEY_2016_ARI}, AMI\textsubscript{ANN} = 0.93, 95\% CI = [0.82, 1.0]. ARI\textsubscript{KNN} = 1.0, AMI\textsubscript{KNN} = 1.0. 95\% CI of AMI was calculated by bootstrap resampling (\textit{N} = 10,000). All three metrics agreed on the high performance of the MLP. \autorefpanel{fig:MLP_CV_blind_test}{ C} illustrates how the binding site, which label was wrongly predicted by the ANN model, is located on the limits between adjacent clusters C3 and C4. This result agrees with the \textit{K}-means clustering reliability and confidence score analysis of the cross-validation, where the same inter-cluster regions are highlighted due to their lower clustering reliability and low confidence prediction. This suggests that the core of the clusters is stable, and that the ANN confidence score may be used to identify binding sites that are at the borders of clusters.
 
 \subsection{Site function classification}
 
@@ -332,7 +367,7 @@ The software developed to carry out this analysis, as well as the main summary r
 
 The focus here is on human proteins, allowing the additional information from human population variation data to be explored. Two protein products of the SARS-CoV-2 replicase polyprotein 1ab (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}) were removed, since they did not include any human homologues. The remaining 37 protein domains accounted for 1309 three-dimensional structures that included interactions with 1601 ligands of interest, of which 998 were unique. 293 ligand binding sites were defined across these domains, formed by 2664 unique ligand binding residues. The total number of binding sites per domain ranges from 1 to 24, with 33/37 domains presenting more than one defined binding site. The median number of sites per domain is seven.
 
-\autoref{fig:bs_def_examples} illustrates three examples of the 37 domains for which ligand binding sites were defined by the algorithm presented in this Chapter. The grouping of the ligands into the defined sites reflects the similarity between the interaction fingerprints of the ligands with the protein.
+\autoref{fig:bs_def_examples} illustrates three examples of the 37 proteins for which ligand binding sites were defined by the algorithm presented in this Chapter. The grouping of the ligands into the defined sites reflects the similarity between the interaction fingerprints of the ligands with the protein. See \autoref{tab:proteins_names} for the name, gene, organism and sequence length of these proteins.
 
 \begin{figure}[htb!]
     \centering
@@ -342,6 +377,62 @@ The focus here is on human proteins, allowing the additional information from hu
 \end{figure}
 
 \autoref{fig:bss_features} shows that the 293 defined binding sites are diverse in size (number of amino acids), solvent accessibility, evolutionary divergence and missense depletion. The binding site size ranges from 2-40 residues with a median of 9, while the median site RSA ranges from 4-80\%, with a median of 30\%. For evolutionary divergence, the average site \textit{N\textsubscript{Shenkin}} spreads from 0-80, peaking at 40. Lastly, MES spans \textminus0.75 to 1.0, peaking at neutrality (MES $\approx$ 0).
+
+% Please add the following required packages to your document preamble:
+% \usepackage{lscape}
+% \usepackage{longtable}
+% Note: It may be necessary to compile the document several times to get a multi-page table to line up properly
+\begin{landscape}
+\begin{longtable}{|M{25mm}|M{65mm}|M{25mm}|M{65mm}|M{20mm}|}
+\hline
+\textbf{UniProt ID} & \textbf{Protein name}                                         & \textbf{Gene name} & \textbf{Organism}                                                     & \textbf{Length} \\ \hline
+\endfirsthead
+%
+\multicolumn{5}{c}%
+{{\bfseries Table \thetable} (continued)} \\
+\hline
+\textbf{UniProt ID} & \textbf{Protein name}                                         & \textbf{Gene name} & \textbf{Organism}                                                     & \textbf{Length} \\ \hline
+\endhead
+%
+\href{https://www.uniprot.org/uniprotkb/H0Y4R8/entry}{H0Y4R8}              & SP100 nuclear antigen                                         & \textit{SP100}     & \textit{Homo sapiens} (Human)                                         & 259             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/O15178/entry}{O15178}              & T-box transcription factor T                                  & \textit{TBXT}      & \textit{Homo sapiens}                                                 & 435             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/O43809/entry}{O43809}              & Cleavage and polyadenylation specificity factor subunit 5     & \textit{NUDT21}    & \textit{Homo sapiens}                                                 & 227             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/O95696/entry}{O95696}              & Bromodomain-containing protein 1                              & \textit{BRD1}      & \textit{Homo sapiens}                                                 & 1058            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P01584/entry}{P01584}              & Interleukin-1 beta                                            & \textit{IL1B}      & \textit{Homo sapiens}                                                 & 269             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P06873/entry}{P06873}              & Proteinase K                                                  & \textit{PROK}      & \textit{Parengyodontium album}                                        & 384             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P0C024/entry}{P0C024}              & Peroxisomal coenzyme A diphosphatase NUDT7                    & \textit{NUDT7}     & \textit{Homo sapiens}                                                 & 238             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}              & Replicase polyprotein 1ab                                     & \textit{rep}       & Severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2)         & 7096            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P11838/entry}{P11838}              & Endothiapepsin                                                & \textit{EAPA}      & \textit{Cryphonectria parasitica}                                     & 419             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P15379/entry}{P15379}              & CD44 antigen                                                  & \textit{Cd44}      & \textit{Mus musculus} (Mouse)                                         & 778             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P18031/entry}{P18031}              & Tyrosine-protein phosphatase non-receptor type 1              & \textit{PTPN1}     & \textit{Homo sapiens}                                                 & 435             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P22557/entry}{P22557}              & 5-aminolevulinate synthase, erythroid-specific, mitochondrial & \textit{ALAS2}     & \textit{Homo sapiens}                                                 & 587             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P24821/entry}{P24821}              & Tenascin                                                      & \textit{TNC}       & \textit{Homo sapiens}                                                 & 2201            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/P47811/entry}{P47811}              & Mitogen-activated protein kinase 14                           & \textit{Mapk14}    & \textit{Mus musculus}                                                 & 360             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q12830/entry}{Q12830}              & Nucleosome-remodeling factor subunit BPTF                     & \textit{BPTF}      & \textit{Homo sapiens}                                                 & 3046            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q15047/entry}{Q15047}              & Histone-lysine N-methyltransferase SETDB1                     & \textit{SETDB1}    & \textit{Homo sapiens}                                                 & 1291            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q32ZE1/entry}{Q32ZE1}              & Genome polyprotein                                            & --                 & Zika virus (ZIKV)                                                     & 3419            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q460N5/entry}{Q460N5}              & Protein mono-ADP-ribosyltransferase PARP14                    & \textit{PARP14}    & \textit{Homo sapiens}                                                 & 1801            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q5T0W9/entry}{Q5T0W9}              & Protein FAM83B                                                & \textit{FAM83B}    & \textit{Homo sapiens}                                                 & 1011            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q6B0I6/entry}{Q6B0I6}              & Lysine-specific demethylase 4D                                & \textit{KDM4D}     & \textit{Homo sapiens}                                                 & 523             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q6PJP8/entry}{Q6PJP8}              & DNA cross-link repair 1A protein                              & \textit{DCLRE1A}   & \textit{Homo sapiens}                                                 & 1040            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q6PL18/entry}{Q6PL18}              & ATPase family AAA domain-containing protein 2                 & \textit{ATAD2}     & \textit{Homo sapiens}                                                 & 1390            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q7LBC6/entry}{Q7LBC6}              & Lysine-specific demethylase 3B                                & \textit{KDM3B}     & \textit{Homo sapiens}                                                 & 1761            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q8IU60/entry}{Q8IU60}              & m7GpppN-mRNA hydrolase                                        & \textit{DCP2}      & \textit{Homo sapiens}                                                 & 420             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q8WS26/entry}{Q8WS26}              & Farnesyl diphosphate synthase                                 & --                 & \textit{Trypanosoma cruzi}                                            & 425             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q8WVM7/entry}{Q8WVM7}              & Cohesin subunit SA-1                                          & \textit{STAG1}     & \textit{Homo sapiens}                                                 & 1258            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q8WWQ0/entry}{Q8WWQ0}              & PH-interacting protein                                        & \textit{PHIP}      & \textit{Homo sapiens}                                                 & 1821            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q92835/entry}{Q92835}              & Phosphatidylinositol 3,4,5-trisphosphate 5-phosphatase 1      & \textit{INPP5D}    & \textit{Homo sapiens}                                                 & 1189            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q96HY7/entry}{Q96HY7}              & 2-oxoadipate dehydrogenase complex component E1               & \textit{DHTKD1}    & \textit{Homo sapiens}                                                 & 919             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q9BRQ3/entry}{Q9BRQ3}              & Uridine diphosphate glucose pyrophosphatase NUDT22            & \textit{NUDT22}    & \textit{Homo sapiens}                                                 & 303             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q9UGL1/entry}{Q9UGL1}              & Lysine-specific demethylase 5B                                & \textit{KDM5B}     & \textit{Homo sapiens}                                                 & 1544            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q9UIF8/entry}{Q9UIF8}              & Bromodomain adjacent to zinc finger domain protein 2B         & \textit{BAZ2B}     & \textit{Homo sapiens}                                                 & 2168            \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q9UJM8/entry}{Q9UJM8}              & 2-Hydroxyacid oxidase 1                                       & \textit{HAO1}      & \textit{Homo sapiens}                                                 & 370             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q9UKK9/entry}{Q9UKK9}              & ADP-sugar pyrophosphatase                                     & \textit{NUDT5}     & \textit{Homo sapiens}                                                 & 219             \\ \hline
+\href{https://www.uniprot.org/uniprotkb/Q9Y2J2/entry}{Q9Y2J2}              & Band 4.1-like protein 3                                       & \textit{EPB41L3}   & \textit{Homo sapiens}                                                 & 1087            \\ \hline
+\caption[Protein names and identifiers]{\textbf{Protein names and identifiers.} UniProt accession identifiers (ID), protein name, gene name, organism and sequence length, i.e., number of amino acid residues, for each of the 35 unique proteins analysed in this Chapter. Replicase polyprotein 1ab of SARS-CoV-2 (\href{https://www.uniprot.org/uniprotkb/P0DTD1/entry}{P0DTD1}) and Cohesin subunit SA-1 (\href{https://www.uniprot.org/uniprotkb/Q8WVM7/entry}{Q8WVM7}) presented two fragment screening experiments each, targeting different domains of the protein, resulting in the final 37 protein domains.}
+\label{tab:proteins_names}\\
+\end{longtable}
+\end{landscape}
 
 \begin{figure}[htb!]
     \centering
