@@ -36,13 +36,15 @@ Proteins are molecular machines that are involved in virtually all cellular proc
 \begin{figure}[htb!]
     \centering
     \includegraphics[width=\textwidth]{figures/ch_INTRO/PNG/proteins_interact.png}
-    \caption[Proteins interact with other molecules]{\textbf{Proteins interact with other molecules.} Proteins interact with other molecules to carry out their function, such as other proteins, nucleic acids, i.e., DNA or RNA, ions or small molecule ligands. \textbf{(A)} Haemoglobin subunit alpha (\href{https://www.uniprot.org/uniprotkb/P69905/entry}{P69905}) interacting with haemoglobin subunit beta (\href{https://www.uniprot.org/uniprotkb/P68871/entry}{P68871}) to form the functional haemoglobin heterotetramer. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/8FDL}{8FDL} \cite{POWELL_2023_HAEMOGLOBIN}; \textbf{(B)} Zinc finger and BTB domain-containing protein 38 (\href{https://www.uniprot.org/uniprotkb/Q8NAP3/entry}{Q8NAP3}) interacting with DNA. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/6E94}{6E94} \cite{HUDSON_2018_ZINCFINGER}; \textbf{(C)} Calmodulin-1 (\href{https://www.uniprot.org/uniprotkb/P0DP23/entry}{P0DP23}) interacting with two calcium -- Ca\textsuperscript{2+} -- (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/CA}{CA}) ions. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1CLL}{1CLL} \cite{CHATTOPADHYAYA_1992_CALM1}; \textbf{(D)} Acetylcholinesterase (\href{https://www.uniprot.org/uniprotkb/P22303/entry}{P22303}) binding to donepezil (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/E20}{E20}), which is used to treat symptoms of Alzheimer's disease. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4EY7}{4EY7} \cite{CHEUNG_2012_ACHE}.}
+    \caption[Proteins interact with other molecules]{\textbf{Proteins interact with other molecules.} Proteins interact with other molecules to carry out their function, such as other proteins, nucleic acids, i.e., DNA or RNA, ions or small molecule ligands. \textbf{(A)} Haemoglobin subunit alpha (\href{https://www.uniprot.org/uniprotkb/P69905/entry}{P69905}) interacting with haemoglobin subunit beta (\href{https://www.uniprot.org/uniprotkb/P68871/entry}{P68871}) to form the functional haemoglobin heterotetramer. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/8FDL}{8FDL} \cite{POWELL_2023_HAEMOGLOBIN}; \textbf{(B)} Zinc finger and BTB domain-containing protein 38 (\href{https://www.uniprot.org/uniprotkb/Q8NAP3/entry}{Q8NAP3}) interacting with DNA. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/6E94}{6E94} \cite{HUDSON_2018_ZINCFINGER}; \textbf{(C)} Calmodulin-1 (\href{https://www.uniprot.org/uniprotkb/P0DP23/entry}{P0DP23}) interacting with two calcium, Ca\textsuperscript{2+}, (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/CA}{CA}) ions. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/1CLL}{1CLL} \cite{CHATTOPADHYAYA_1992_CALM1}; \textbf{(D)} Acetylcholinesterase (\href{https://www.uniprot.org/uniprotkb/P22303/entry}{P22303}) binding to donepezil (\href{https://www.ebi.ac.uk/pdbe-srv/pdbechem/chemicalCompound/show/E20}{E20}), which is used to treat symptoms of Alzheimer's disease. PDB: \href{https://www.ebi.ac.uk/pdbe/entry/pdb/4EY7}{4EY7} \cite{CHEUNG_2012_ACHE}.}
     \label{fig:proteins_interact}
 \end{figure}
 
+\vspace{-13pt} % Adjust this value as needed
+
 \subsection{Amino acid structure}
 
-There are twenty canonical amino acids that are found in all protein sequences. They receive this name because of their chemical structure, which includes both an amino and carboxylic acid functional groups. \autoref{fig:amino_acid} shows the general structure of an amino acid. A carbon atom is found in the centre which binds covalently to four different groups. This carbon is known as α-carbon (CA) and is attached to the amino group (--NH2), the carboxyl group (--COOH), a hydrogen atom (H) and a side chain (R) that differs across the twenty amino acid residues.
+There are twenty canonical amino acids that are found in all protein sequences. They receive this name because of their chemical structure, which includes both an amino and carboxylic acid functional groups. \autoref{fig:amino_acid} shows the general structure of an amino acid. A carbon atom -- known as α-carbon (CA) -- is found in the centre and binds covalently to four different groups: an amino group (--NH2), a carboxyl group (--COOH), a hydrogen atom (H) and a side chain (R) that differs across the twenty amino acids residues.
 
 \begin{figure}[htbp!]
     \centering
@@ -52,7 +54,7 @@ There are twenty canonical amino acids that are found in all protein sequences. 
 \end{figure}
 
 %\vspace{-13pt} % Adjust this value as needed
-%\vspace{-13pt} % Adjust this value as needed
+\vspace{-13pt} % Adjust this value as needed
 
 \subsection{Amino acid properties}
 
@@ -194,7 +196,7 @@ In \autoref{chap:FRAGSYS} and \autoref{chap:LIGYSIS_WEB}, ASA is calculated with
 
 \subsubsection{Ligandability}
 
-Ligandability is the conceptual feature aiming to chatacterise the ability of a residue, set of residues or protein to bind a small molecule or ligand. Ligands play a critical role in protein function acting as natural co-factors, substrates, inhibitors and drugs in disease therapy (\autoref{fig:small_molecules}). Identifying where ligands can bind to proteins is therefore of critical importance in understanding and modulating protein function. While X-ray crystallography remains the gold-standard to identify and characterise binding sites \cite{REES_2004_FBLD}, over the last three decades, significant effort has been made to develop computational methods that predict binding sites from an apo three-dimensional protein structure \cite{VOLKAMER_2010_TOPOLOGY}. Ligandability can be predicred by methods like P2Rank \cite{KRIVAK_2018_P2RANK} as the probability of an atom or residue having the ability to bind a ligand, and visualised on a protein surface (\autorefpanel{fig:protein_features}{ E}).
+Ligandability is the conceptual feature aiming to characterise the ability of a residue, set of residues or protein to bind a small molecule or ligand. Ligands play a critical role in protein function acting as natural co-factors, substrates, inhibitors and drugs in disease therapy (\autoref{fig:small_molecules}). Identifying where ligands can bind to proteins is therefore of critical importance in understanding and modulating protein function. While X-ray crystallography remains the gold-standard to identify and characterise binding sites \cite{REES_2004_FBLD}, over the last three decades, significant effort has been made to develop computational methods that predict binding sites from an apo three-dimensional protein structure \cite{VOLKAMER_2010_TOPOLOGY}. Ligandability can be predicred by methods like P2Rank \cite{KRIVAK_2018_P2RANK} as the probability of an atom or residue having the ability to bind a ligand, and visualised on a protein surface (\autorefpanel{fig:protein_features}{ E}).
 
 \begin{figure}[htb!]
     \centering
@@ -206,6 +208,55 @@ Ligandability is the conceptual feature aiming to chatacterise the ability of a 
 Ligand site prediction methods exploit a variety of techniques to suggest binding sites. Geometry-based tools like fpocket \cite{GUILLOUX_2009_FPOCKET}, Ligsite \cite{HENDLICH_1997_LIGSITE} and Surfnet \cite{LASKOWSKI_1995_SURFNET} identify cavities by analysing the geometry of the molecular surface of a protein and rely on the use of grids, gaps, spheres, or tessellation \cite{GUILLOUX_2009_FPOCKET, SCHMIDTKE_2010_FPOCKET2, WEISEL_2007_POCKETPICKER, BRADY_2000_PASS, LIANG_1998_CAVITIES, HENDLICH_1997_LIGSITE, LASKOWSKI_1995_SURFNET, KLEYWEGT_1994_CAVITIES, LEVITT_1992_POCKET}. Energy-based methods such as PocketFinder \cite{AN_2005_POCKETFINDER} rely on the interaction energy between the protein and a chemical group or probe to identify cavities \cite{AN_2005_POCKETFINDER, NGAN_2012_FTSITE, GHERSI_2009_SITEHOUND, LAURIE_2005_QSITEFINDER, AN_2004_PREDICTOR, GOODFORD_1982_PREDICTOR}. Conservation-based methods use sequence evolutionary conservation information to find patterns in multiple sequence alignments and identify conserved key residues for ligand site identification \cite{XIE_2012_CONSPRED, PUPKO_2002_RATE4SITE, ARMON_2001_SCORE}. Template-based methods rely on structural information from homologues and the assumption that structurally conserved proteins might bind ligands at a similar location \cite{ZVELEBIL_1987_PREDICTION, WASS_2010_3DLIGANDSITE, YANG_2013_COFACTOR, LEE_2013_PREDICTION, BRYLINSKI_2013_EFINDSITE, ROY_2012_COFACTOR}. Combined approaches or meta-predictors integrate multiple methods or features to infer ligand binding sites, e.g., geometric features with sequence conservation \cite{GUTTERIDGE_2003_LBSP, HUANG_2006_BU48, GLASER_2006_PREDICTION, HALGREN_2009_PREDICITON, CAPRA_2009_CONCAVITY, HUANG_2009_METAPOCKET, BRAY_2009_SITESIDENTIFY, BRYLINSKI_2009_FINDSITE}. Finally, machine learning (ML) methods utilise a wide range of techniques including random forest and deep, graph, residual, or convolutional neural networks \cite{KRIVAK_2015_PRANK, KRIVAK_2015_P2RANK, JIMENEZ_2017_DEEPSITE, KRIVAK_2018_P2RANK, JENDELE_2019_PRANKWEB, SANTANA_2020_GRaSP, KOZLOVSKII_2020_BITENET, STEPNIEWSKA_2020_KALASANTY, KANDEL_2021_PURESNET, MYOLNAS_2021_DEEPSURF, YAN_2022_POINTSITE, LI_2022_RECURPOCKET, AGGARWAL_2022_DEEPPOCKET, JAKUBEC_2022_PRANKWEB, ABDOLLAHI_2023_NODECODER, EVTEEV_2023_SITERADAR, LI_2023_GLPOCKET, ZHANG_2024_EQUIPOCKET, LIU_2023_REFINEPOCKET, SMITH_2024_GrASP, CARBERY_2024_IFSP, SESTAK_2024_VNEGNN, KANDEL_2024_PURESNET}.
 
 \autoref{chap:LBS_COMP} and \autoref{chap:LBS_IMPROV} describe the largest benchmark of ligand binding site prediction to date by analysing the performance of thirteen methods using a series of metrics on a brand new reference dataset described in \autoref{chap:LIGYSIS_WEB}, \textit{LIGYSIS}.
+
+\subsection{Protein-ligand interactions}
+
+Experimentally determined structures of protein-ligand complexes, such as those in \autoref{fig:small_molecules}, represent static snapshots of a fundamentally dynamic process. This interaction between a protein and a small molecule ligand typically involves reversible non-covalent forces and can be defined as an equilibrium (\autoref{eq:prot_lig_equilibrium}) between the unbound protein ($P$) and ligand ($L$) species and the bound complex ($PL$). This equilibrium can be described by an association constant, $K_a$. $K_a$ measures the strength of the interaction and is calculated as the ratio between the concentration of the $PL$ complex and the product of the concentrations of the unbound $P$ and $L$ species (\autoref{eq:Association_constant}). Alternatively, this interaction can be described by a dissociation constant, $K_d$, which is the inverse of $K_a$ (\autoref{eq:dissociation_constant}). A lower $K_d$ corresponds to a higher binding affinity, as it indicates that the $PL$ complex is favoured over the unbound $P$ and $L$ species at equilibrium \cite{JENCKS_1981_GIBBS}.
+%In the same manner, the predicted ability of a residue or protein to interact with a ligand, i.e., \textit{ligandability}, offers insight into the likelihood of this event, but not its dynamics.
+\begin{equation}
+P + L \rightleftharpoons PL
+\label{eq:prot_lig_equilibrium}
+\end{equation}
+\myequations{Protein-ligand binding equilibrium}
+
+\vspace{-13pt} % Adjust this value as needed
+
+\begin{equation}
+K_a = \frac{[PL]}{[P][L]}
+\label{eq:Association_constant}
+\end{equation}
+\myequations{Association constant}
+
+\vspace{-13pt} % Adjust this value as needed
+
+\begin{equation}
+K_a = \frac{1}{K_d} \rightarrow K_d = \frac{[P][L]}{[PL]}
+\label{eq:dissociation_constant}
+\end{equation}
+\myequations{Dissociation constant}
+
+%\vspace{-13pt} % Adjust this value as needed
+
+The thermodynamics of protein-ligand binding can be understood by examining the Gibbs free energy change ($\Delta G$), which quantifies the spontaneity and driving force of the interaction. This free energy is determined by enthalpic and entropic contributions as described in \autoref{eq:gibbs_free_energy}. Here, $\Delta H$ reflects the enthalpy change associated with interactions such as hydrogen bonds, van der Waals forces and electrostatics, while $\Delta S$ captures the change in entropy due to effects such as desolvation and conformational flexibility. This free energy change is also directly linked to the equilibrium binding constants through \autoref{eq:gibbs_free_energy2}, where $R$ is the universal gas constant and $T$ is the absolute temperature in Kelvin. A more negative $\Delta G$ indicates stronger binding affinity, i.e., favourable interaction, corresponding to a higher $K_a$ (or equivalently, a lower $K_d$) \cite{BRONOWSKA_2011_PLIS}.
+
+\begin{equation}
+\Delta G = \Delta H - T \Delta S
+\label{eq:gibbs_free_energy}
+\end{equation}
+\myequations{Gibbs free energy}
+
+\vspace{-13pt} % Adjust this value as needed
+%\vspace{-13pt} % Adjust this value as needed
+
+\begin{equation}
+\Delta G = -RT \ln K_a \rightarrow \Delta G = RT \ln K_d
+\label{eq:gibbs_free_energy2}
+\end{equation}
+\myequations{Gibbs free energy - II}
+
+\vspace{-13pt} % Adjust this value as needed
+
+Even small changes in Gibbs free energy can lead to large differences in binding affinity. At 298 K, a change of just $\approx$1.4 kcal/mol corresponds to a 10-fold change in the $K_d$ and a $\Delta G \approx$\textminus4 kcal/mol results in a $\approx$1000$\times$ improvement in affinity, e.g., improving $K_d$ from 10 μM to 10 nM. This exponential sensitivity means that weak interactions can appear artificially strong in experimental assays if ligand concentration is high. When ligand concentration greatly exceeds $K_d$, even low-affinity binders can occupy a large fraction of the target protein, leading to false positives or non-specific binding events. Thus, interpreting $K_d$ values in the context of ligand concentration is essential to distinguish physiologically relevant binding from experimental artefacts \cite{KUNTZ_1999_MAX_AFFINITY}.
 
 \subsection{Databases}
 
@@ -237,9 +288,9 @@ While missense mutations, which simply replace one amino acid by another and can
 
 \subsubsection{Impact on phenotype}
 
-Genetic variants can also be classified based on the effect they have on the phenotype, or clinical significance, which usually corresponds to an effect on the concentration, structure, function or activity of a protein \cite{VIHINEN_2022_VARIATION}. Mutations that do not have a harmful effect on the protein are called neutral or benign. Since neutral variants have no noticeable effect on the \textit{fitness} \cite{DARWIN_1859_ORIGIN}, i.e., the ability to leave offspring, they are not under selective pressure and consequently persist in the general population \cite{KIMURA_1968_NEUTRAL}. Conversely, pathogenic variants disrupt biological processes and result in disease. Disease severity will dictate the strength with which natural selection acts upon the causing variant and therefore its frequency in the population. Mutations affecting genes needed for development and survival, or essential genes, might have lethal effects and never be observed in the population \cite{GLUECKSOHN_1963_LETHALITY}.
+Genetic variants can also be classified based on the effect they have on the phenotype, or clinical significance, which usually corresponds to an effect on the concentration, structure, function or activity of a protein \cite{VIHINEN_2022_VARIATION}. Mutations that do not have a harmful effect on the protein are called neutral or benign. Since neutral variants have no noticeable effect on the \textit{fitness} \cite{DARWIN_1859_ORIGIN}, i.e., the ability to leave offspring, they are not under selective pressure and consequently persist in the general population \cite{KIMURA_1968_NEUTRAL}. Conversely, pathogenic variants disrupt biological processes and result in disease. Disease severity will dictate the strength with which natural selection acts upon the causing variant and therefore its frequency in the population. Mutations affecting essential genes, needed for development and survival, might have lethal effects and never be observed in the population \cite{GLUECKSOHN_1963_LETHALITY}.
 
-It is estimated that only 2\% of the more than 4 million observed human missense variants have been clinically classified as pathogenic or benign \cite{LEK_2016_EXAC}. Variants of unknown significance (VUS) therefore represent the vast majority of observed missense variants and the prediction of their effect on fitness is an ongoing challenge in human genetics \cite{MCLAREN_2016_VEP}. Several methods exploiting different technologies have been developed over the years to tackle this challenge including SIFT \cite{KUMAR_2009_SIFT}, PolyPhen \cite{ADZHUBEI_2013_POLYPHEN} and the recent AlphaMissense \cite{CHENG_2023_ALPHAMISSENSE}.
+It is estimated that only 2\% of the more than 4 million observed human missense variants have been clinically classified as pathogenic or benign \cite{LEK_2016_EXAC}. Variants of unknown significance (VUS) therefore represent the vast majority of observed missense variants and the prediction of their effect on fitness is an ongoing challenge in human genetics \cite{MCLAREN_2016_VEP}. Several methods exploiting different technologies have been developed over the years to tackle this challenge including SIFT \cite{KUMAR_2009_SIFT}, PolyPhen \cite{ADZHUBEI_2013_POLYPHEN} and AlphaMissense \cite{CHENG_2023_ALPHAMISSENSE}.
 
 \subsection{Variation is constrained}
 
