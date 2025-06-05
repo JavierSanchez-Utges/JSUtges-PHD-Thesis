@@ -331,30 +331,30 @@
 % Command to handle smaller fonts for charts, captions, and footnotes
 \captionsetup[table]{
     font={footnotesize,stretch=1.25}, % Change the font size of the caption
-    labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
-    textfont={color=darkgray}, % Make the text colored
+    labelfont={bf,color=black}, % Make the label (e.g., "Figure 8") bold
+    textfont={color=black}, % Make the text colored
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
 
 % Command to handle smaller fonts for charts, captions, and footnotes
 \captionsetup[lstlisting]{
     font={footnotesize,stretch=1.25}, % Change the font size of the caption
-    labelfont={bf,color=darkgray}, % Make the label (e.g., "Figure 8") bold
-    textfont={color=darkgray}, % Make the text colored
+    labelfont={bf,color=black}, % Make the label (e.g., "Figure 8") bold
+    textfont={color=black}, % Make the text colored
     labelsep=period % Use period after the label (e.g., "Figure 8.")
 }
 
-\newcommand{\cmark}{\textcolor{CBBlue}{\ding{51}}}%
-\newcommand{\xmark}{\textcolor{CBOrange}{\ding{55}}}%
+\newcommand{\cmark}{\textcolor{black}{\ding{51}}}% CBBlue
+\newcommand{\xmark}{\textcolor{black}{\ding{55}}}% CBOrange
 
 % Hyperlinks setup
 \hypersetup{
     colorlinks=true,
     linktocpage=true,
-    urlcolor=royalblue,
-    citecolor=orange,
+    urlcolor=black, %royalblue
+    citecolor=black, %orange
     breaklinks=true,
-    linkcolor=purple,
+    linkcolor=black, %purple
     %anchorcolor=magenta,
 }
 
@@ -374,15 +374,15 @@
 
 \begin{document}
 
-%\newpage
-%\thispagestyle{empty}
-%\mbox{}
-%\newpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
 
-%\newpage
-%\thispagestyle{empty}
-%\mbox{}
-%\newpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
 
 % Roman numerals for the front matter
 \pagenumbering{roman}
@@ -492,14 +492,14 @@
 \addcontentsline{toc}{chapter}{PhD graphical summary}
 \include{graphical_summary}
 
-%\newpage
-%\thispagestyle{empty}
-%\mbox{}
-%\newpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
 
-%\newpage
-%\thispagestyle{empty}
-%\mbox{}
-%\newpage
+\newpage
+\thispagestyle{empty}
+\mbox{}
+\newpage
 
 \end{document}
